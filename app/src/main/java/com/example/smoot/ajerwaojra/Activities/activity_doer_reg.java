@@ -1,4 +1,4 @@
-package com.example.smoot.ajerwaojra.Activity;
+package com.example.smoot.ajerwaojra.Activities;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.example.smoot.ajerwaojra.Activity.MainActivity;
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
 
 public class splash extends AppCompatActivity {
 

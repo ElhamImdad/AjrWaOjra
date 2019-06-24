@@ -1,21 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="8dp"
         android:layout_marginTop="304dp"
         android:layout_marginEnd="8dp"
         android:text="SignUp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="240dp"
+        tools:layout_editor_absoluteY="463dp" />
+
+    <TextView
+        android:id="@+id/advisoryOpinion"
+        android:layout_width="341dp"
+        android:layout_height="311dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="87dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="65dp"
+        android:text="فتوى العمرة"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/choseTypeOfReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="275dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="21dp"
+        android:text="اختر نوع الحساب"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advisoryOpinion" />
+
+    <!--<ImageView
+        android:id="@+id/doerImag"
+        android:layout_width="91dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="65dp"
+        android:padding="6dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/index"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/requesterImag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advisoryOpinion" />-->
+
+  <!--  <ImageView
+        android:id="@+id/requesterImag"
+        android:layout_width="91dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/index"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/doerImag"
+        app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
+        app:layout_constraintVertical_bias="1.0" />-->
+
+    <ImageButton
+        android:id="@+id/requesterImag"
+        android:layout_width="91dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/index"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="279dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/doerImag"
+        app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
+        app:layout_constraintVertical_bias="1.0"/>
+
+    <ImageButton
+        android:id="@+id/doerImag"
+        android:layout_width="91dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="65dp"
+        android:padding="6dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/index"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="279dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/requesterImag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advisoryOpinion"
+        app:layout_constraintVertical_bias="1.0"/>
+
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
 </android.support.constraint.ConstraintLayout>
