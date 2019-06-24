@@ -9,9 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".Activities.MainActivity"></activity>
         <activity android:name=".Activities.activity_doer_reg"></activity>
         <activity android:name=".Activities.ActivityRequesterReg"></activity>
+=======
+        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.activity_doer_reg"></activity>
+>>>>>>> 6d2993f7adcd043eec1cbc030dd89c1852407af5
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

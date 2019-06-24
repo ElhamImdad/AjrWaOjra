@@ -11,6 +11,12 @@
         android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="304dp"
+        android:layout_marginEnd="8dp"
+>>>>>>> 6d2993f7adcd043eec1cbc030dd89c1852407af5
         android:text="SignUp"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="240dp"
@@ -28,6 +34,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -115,4 +122,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/advisoryOpinion"
         app:layout_constraintVertical_bias="1.0"/>
+=======
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+>>>>>>> 6d2993f7adcd043eec1cbc030dd89c1852407af5
 </android.support.constraint.ConstraintLayout>
