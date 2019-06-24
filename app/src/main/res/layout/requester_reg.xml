@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.activity_doer_reg">
-    android:background="@color/white"
-
+    android:background="@color/white">
 
     <EditText
         android:id="@+id/doerName"
@@ -23,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
-        android:id="@+id/phoneNumber"
+        android:id="@+id/editText2"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="227dp"
@@ -58,29 +55,25 @@
         android:id="@+id/spinner"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="359dp"
-        android:layout_marginBottom="332dp"
+        android:layout_marginTop="491dp"
+        android:layout_marginBottom="200dp"
         android:background="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+
     </Spinner>
 
     <Button
         android:id="@+id/doerRegisterButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginTop="567dp"
-        android:layout_marginBottom="116dp"
-        android:background="@color/lightGreen"
-=======
-        android:layout_marginTop="489dp"
-        android:layout_marginBottom="194dp"
+        android:layout_marginTop="563dp"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/button"
->>>>>>> 63f5fc52e0bf91f157f848cc9290cdc217724379
         android:text="التالي "
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -88,16 +81,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toTopOf="parent"
-        />
-=======
         app:layout_constraintTop_toTopOf="parent" />
 
->>>>>>> 63f5fc52e0bf91f157f848cc9290cdc217724379
 
     <EditText
-        android:id="@+id/inputPassword"
+        android:id="@+id/editText4"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="419dp"
@@ -111,18 +99,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/country"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="354dp"
+        android:layout_marginBottom="337dp"
+        android:background="@drawable/rectangle"
+        android:ems="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="571dp"
+        android:layout_marginTop="631dp"
         android:layout_marginEnd="211dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="76dp"
         android:text="لديك حساب ؟ "
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -131,14 +133,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
-        android:layout_marginTop="571dp"
+        android:layout_marginTop="631dp"
         android:layout_marginEnd="128dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="76dp"
         android:text="سجل من هنا "
         android:textColor="@color/lightGreen"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -148,6 +151,7 @@
         android:layout_height="97dp"
         android:background="@color/lightGreen"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -207,15 +211,15 @@
         android:layout_width="107dp"
         android:layout_height="26dp"
         android:layout_marginStart="79dp"
-        android:layout_marginTop="341dp"
+        android:layout_marginTop="477dp"
         android:layout_marginEnd="226dp"
-        android:layout_marginBottom="364dp"
+        android:layout_marginBottom="228dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="كيف عرفت التطبيق"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -232,6 +236,20 @@
         android:text=" كلمة المرور"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="79dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="343dp"
+        android:layout_marginBottom="361dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="الدولة"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
