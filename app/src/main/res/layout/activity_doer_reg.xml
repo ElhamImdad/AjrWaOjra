@@ -4,12 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     tools:context=".Activities.activity_doer_reg">
-=======
     android:background="@color/white"
-    tools:context=".Activity.activity_doer_reg">
->>>>>>> 6d2993f7adcd043eec1cbc030dd89c1852407af5
+
 
     <EditText
         android:id="@+id/doerName"
@@ -25,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/phoneNumber"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="13dp"
@@ -66,8 +63,6 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
     </Spinner>
 
     <Button
@@ -76,7 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="567dp"
         android:layout_marginBottom="116dp"
-
         android:background="@color/lightGreen"
         android:text="التالي "
         android:textColor="@color/white"
@@ -86,14 +80,10 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         />
 
-
-
-
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/inputPassword"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="500dp"

@@ -1,6 +1,7 @@
 package com.example.smoot.ajerwaojra.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -19,6 +20,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class ActivityRequesterReg extends Activity {
+    private Spinner spinner;
     private EditText textInputEmail;
     private EditText textInputPassword;
     private EditText textphone2;
@@ -50,6 +52,13 @@ public class ActivityRequesterReg extends Activity {
             }
         });
 
+        spinner =findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        Intent i = new Intent();
+        i.getExtras();
+
     }
 
     private boolean validateEmail(){
@@ -75,7 +84,7 @@ public class ActivityRequesterReg extends Activity {
             textInputPassword.requestFocus();
             return false;
         }else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
-            textInputPassword.setError("كلمة السر ضعيفة");
+            textInputPassword.setError("كلمة السر يجب أن تحتوي على حروف صغيرة وكبيرة وارقام");
             textInputPassword.requestFocus();
             return false;
         } else {
