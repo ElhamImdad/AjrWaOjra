@@ -5,12 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     tools:context=".Activities.activity_doer_reg">
-=======
-    android:background="@color/white"
-    tools:context=".Activity.activity_doer_reg">
->>>>>>> 6d2993f7adcd043eec1cbc030dd89c1852407af5
 
     <EditText
         android:id="@+id/doerName"
