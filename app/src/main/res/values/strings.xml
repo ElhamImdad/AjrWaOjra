@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">AjerWaOjra</string>
     <string-array name="howDidKnowUs">
-        <item>From Twitter</item>
-        <item>From FaceBook</item>
-        <item>From Instagram</item>
-        <item>From Snapshot</item>
-        <item>From Other</item>
+        <item>عن طريق تويتر </item>
+        <item>عن طريق إعلانات الفيس بوك </item>
+        <item>عن طريق الانستقرام </item>
+        <item>عن طريق إعلانات سناب شات </item>
+        <item>أخرى </item>
     </string-array>
 
 

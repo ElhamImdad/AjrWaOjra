@@ -9,22 +9,21 @@ import android.widget.Button;
 import com.example.smoot.ajerwaojra.R;
 
 public class MainActivity extends AppCompatActivity {
-
+     Button b ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        configureSignUpButton();
+    b = (Button) findViewById(R.id.btnSignUp);
+    b.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(getApplicationContext() , activity_doer_reg.class);
+           startActivity(i);
+        }
+    });
     }
 
-    private void configureSignUpButton(){
-        Button btnSignUp = (Button)findViewById(R.id.btnSignUp);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-    }
 }

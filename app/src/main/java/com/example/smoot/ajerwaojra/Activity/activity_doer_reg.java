@@ -1,6 +1,7 @@
 package com.example.smoot.ajerwaojra.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -17,5 +18,7 @@ public class activity_doer_reg extends Activity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        Intent i = new Intent();
+        i.getExtras();
     }
 }
