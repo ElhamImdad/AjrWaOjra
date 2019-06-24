@@ -19,14 +19,15 @@
         tools:ignore="MissingConstraints"
         tools:text="Name" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
+    <com.santalu.maskedittext.MaskEditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="+966 500 000 000"
         android:inputType="phone"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="158dp"
+        app:met_mask="+### ### ### ###"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="171dp"
         tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>
