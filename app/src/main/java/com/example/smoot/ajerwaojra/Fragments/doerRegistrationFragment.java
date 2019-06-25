@@ -1,11 +1,15 @@
-package com.example.smoot.ajerwaojra.Activities;
+package com.example.smoot.ajerwaojra.Fragments;
 
-import android.app.Activity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,35 +19,39 @@ import com.example.smoot.ajerwaojra.R;
 
 import java.util.regex.Pattern;
 
-public class activity_doer_reg extends Activity {
+public class doerRegistrationFragment extends Fragment {
+
     Spinner spinner;
     private EditText textName;
     private EditText textInputEmail;
     private EditText textInputPassword;
     private EditText textphone2;
     private Button confirm;
-
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
+    public doerRegistrationFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doer_reg);
-       spinner =findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view =inflater.inflate(R.layout.fragment_doer_registration, container, false);
+        spinner =view.findViewById(R.id.spinner);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinner.setAdapter(adapter);
         Intent i = new Intent();
         i.getExtras();
 
-        textName = findViewById(R.id.doerName);
-        textInputEmail = findViewById(R.id.doerEmail);
-        textInputPassword = findViewById(R.id.inputPassword);
-        textphone2 =  findViewById(R.id.phoneNumber);
-        confirm = (Button)findViewById(R.id.doerRegisterButton);
+        textName = view.findViewById(R.id.doerName);
+        textInputEmail = view.findViewById(R.id.doerEmail);
+        textInputPassword = view.findViewById(R.id.inputPassword);
+        textphone2 =  view.findViewById(R.id.phoneNumber);
+        confirm = (Button) view.findViewById(R.id.doerRegisterButton);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,8 +60,9 @@ public class activity_doer_reg extends Activity {
                 }
             }
         });
+        // Inflate the layout for this fragment
+        return view;
     }
-
     private boolean validateEmail(){
         String emailInput = textInputEmail.getText().toString().trim();
         if (emailInput.isEmpty()){
@@ -69,7 +78,6 @@ public class activity_doer_reg extends Activity {
             return true;
         }
     }
-
     private boolean validatePassword(){
         String passwordInput = textInputPassword.getText().toString().trim();
         if (passwordInput.isEmpty()){
@@ -85,7 +93,6 @@ public class activity_doer_reg extends Activity {
             return true;
         }
     }
-
     private boolean isValidMobile() {
         String regexStr = "^\\+[0-9]{10,13}$";
 
@@ -100,4 +107,5 @@ public class activity_doer_reg extends Activity {
             return true;
         }
     }
+
 }

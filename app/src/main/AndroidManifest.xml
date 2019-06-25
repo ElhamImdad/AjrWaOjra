@@ -11,8 +11,6 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".Activities.MainActivity"></activity>
-        <activity android:name=".Activities.activity_doer_reg"></activity>
-        <activity android:name=".Activities.ActivityRequesterReg"></activity>
 
         <activity android:name=".splash">
             <intent-filter>

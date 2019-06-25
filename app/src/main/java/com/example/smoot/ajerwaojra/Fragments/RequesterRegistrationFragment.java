@@ -1,12 +1,14 @@
-package com.example.smoot.ajerwaojra.Activities;
+package com.example.smoot.ajerwaojra.Fragments;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +21,12 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-public class ActivityRequesterReg extends Activity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class RequesterRegistrationFragment extends Fragment {
+
     private Spinner spinner;
     private EditText textInputEmail;
     private EditText textInputPassword;
@@ -32,16 +39,20 @@ public class ActivityRequesterReg extends Activity {
                     "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requester_reg);
+    public RequesterRegistrationFragment() {
+        // Required empty public constructor
+    }
 
-        textInputEmail = findViewById(R.id.textInputEmail);
-        textInputPassword = findViewById(R.id.textInputPassword);
-        textphone2 =  findViewById(R.id.editTextPhone);
-        confirm = (Button)findViewById(R.id.confirm);
-        countrySpin = (Spinner)findViewById(R.id.countrySpinner);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+         View v=  inflater.inflate(R.layout.fragment_requester_registration, container, false);
+        textInputEmail = v.findViewById(R.id.textInputEmail);
+        textInputPassword = v.findViewById(R.id.textInputPassword);
+        textphone2 =  v.findViewById(R.id.editTextPhone);
+        confirm = (Button) v.findViewById(R.id.confirm);
+        countrySpin = (Spinner) v.findViewById(R.id.countrySpinner);
         getCountryList();
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,15 +63,29 @@ public class ActivityRequesterReg extends Activity {
             }
         });
 
-        spinner =findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinner = v.findViewById(R.id.spinner);
+     //   ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+     //   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+     //   spinner.setAdapter(adapter);
         Intent i = new Intent();
         i.getExtras();
+        // Inflate the layout for this fragment
+        return v;
+    }
+    private void getCountryList(){
+        Locale[] locales = Locale.getAvailableLocales();
+        ArrayList<String> countries = new ArrayList<String>();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length()>0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+       //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, countries);
+       // countrySpin.setAdapter(adapter);
 
     }
-
     private boolean validateEmail(){
         String emailInput = textInputEmail.getText().toString().trim();
         if (emailInput.isEmpty()){
@@ -92,7 +117,6 @@ public class ActivityRequesterReg extends Activity {
             return true;
         }
     }
-
     private boolean isValidMobile() {
         String regexStr = "^\\+[0-9]{10,13}$";
 
@@ -108,18 +132,4 @@ public class ActivityRequesterReg extends Activity {
         }
     }
 
-    private void getCountryList(){
-        Locale[] locales = Locale.getAvailableLocales();
-        ArrayList<String> countries = new ArrayList<String>();
-        for (Locale locale : locales) {
-            String country = locale.getDisplayCountry();
-            if (country.trim().length()>0 && !countries.contains(country)) {
-                countries.add(country);
-            }
-        }
-        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, countries);
-        countrySpin.setAdapter(adapter);
-
-    }
 }
