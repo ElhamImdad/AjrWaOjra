@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <EditText
-        android:id="@+id/doerName"
+        android:id="@+id/requesterName"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextPhone"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="227dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/doerEmail"
+        android:id="@+id/textInputEmail"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="291dp"
@@ -67,8 +67,23 @@
 
     </Spinner>
 
+    <Spinner
+        android:id="@+id/countrySpinner"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="358dp"
+        android:layout_marginBottom="333dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </Spinner>
+
     <Button
-        android:id="@+id/doerRegisterButton"
+        android:id="@+id/confirm"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="563dp"
@@ -85,7 +100,7 @@
 
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/textInputPassword"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="419dp"
@@ -96,19 +111,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/country"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="354dp"
-        android:layout_marginBottom="337dp"
-        android:background="@drawable/rectangle"
-        android:ems="10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -243,9 +245,9 @@
         android:id="@+id/textView8"
         android:layout_width="79dp"
         android:layout_height="27dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="343dp"
-        android:layout_marginBottom="361dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginBottom="364dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="الدولة"

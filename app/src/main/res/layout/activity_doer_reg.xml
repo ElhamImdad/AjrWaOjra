@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.activity_doer_reg">
+<<<<<<< HEAD
+=======
     android:background="@color/white"
 
+>>>>>>> f4cc764843d45ebe503ed17c83b39db172a181ac
 
     <EditText
         android:id="@+id/doerName"
