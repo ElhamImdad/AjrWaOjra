@@ -11,6 +11,7 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -58,18 +59,18 @@ public class DoerRegistrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_doer_registration, container, false);
         spinner =view.findViewById(R.id.spinner);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
-       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
         Intent i = new Intent();
         i.getExtras();
 
         textName = view.findViewById(R.id.doerName);
-        textInputEmail = view.findViewById(R.id.doerEmail);
+        textInputEmail = view.findViewById(R.id.textInputEmail);
         textInputPassword = view.findViewById(R.id.inputPassword);
 
         confirm =view.findViewById(R.id.doerRegisterButton);
-        textphone2 =  view.findViewById(R.id.phoneNumber);
+        textphone2 =  view.findViewById(R.id.editTextPhone);
         confirm =view.findViewById(R.id.doerRegisterButton);
 
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +78,12 @@ public class DoerRegistrationFragment extends Fragment {
             public void onClick(View view) {
                 if (validateEmail() && validatePassword() && isValidMobile()){
                    doerRegister();
+                   Fragment f = new RequesterHomeFragment();
+                   FragmentManager fm = getFragmentManager();
+                   FragmentTransaction ft = fm.beginTransaction();
+                   ft.replace(R.id.container,f);
+                   ft.commit();
+
                 }
             }
 
@@ -114,13 +121,13 @@ public class DoerRegistrationFragment extends Fragment {
                     JSONObject json = new JSONObject(response);
                     JSONObject obj = json.getJSONObject("success");
                     String token = obj.getString("token");
-                     Log.i("Token From API ==", token);
+                     Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
 
                         Toast.makeText(getContext(), obj.getString("success"), Toast.LENGTH_SHORT).show();
                         JSONObject userJson = obj.getJSONObject("user");
 
-                        Doer user = new Doer(
-                                userJson.getString("email"), userJson.getString("username")
+                        Doer user = new Doer(userJson.getString(
+                                "email"), userJson.getString("username"),userJson.getString("mobile")
 
                         );
                         SharedPrefManager.getInstance(getContext()).userLogin(user);
