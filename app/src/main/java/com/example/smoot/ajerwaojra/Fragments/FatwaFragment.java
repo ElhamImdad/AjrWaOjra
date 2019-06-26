@@ -32,7 +32,7 @@ public class FatwaFragment extends Fragment {
                 doerFrag = new doerRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container,doerFrag);
+                ft.replace(R.id.container, doerFrag);
                 ft.commit();
             }
         });
@@ -43,13 +43,12 @@ public class FatwaFragment extends Fragment {
                 requesterFrag = new RequesterRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container,requesterFrag);
+                ft.replace(R.id.container, requesterFrag);
                 ft.commit();
             }
         });
         // Inflate the layout for this fragment
         return view;
-    }
+    }}
 
 
-}

@@ -1,7 +1,6 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -54,8 +52,11 @@ public class doerRegistrationFragment extends Fragment {
         textName = view.findViewById(R.id.doerName);
         textInputEmail = view.findViewById(R.id.doerEmail);
         textInputPassword = view.findViewById(R.id.inputPassword);
-        textphone2 =  view.findViewById(R.id.phoneNumber);
+
         confirm =view.findViewById(R.id.doerRegisterButton);
+        textphone2 =  view.findViewById(R.id.phoneNumber);
+        confirm = (Button) view.findViewById(R.id.doerRegisterButton);
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

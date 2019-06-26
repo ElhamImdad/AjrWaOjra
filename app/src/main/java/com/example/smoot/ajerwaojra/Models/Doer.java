@@ -7,6 +7,15 @@ public class Doer {
     private int doerPhone;
     private String howDoKnowUs;
     private String doerPassword;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getDoerName() {
         return doerName;
