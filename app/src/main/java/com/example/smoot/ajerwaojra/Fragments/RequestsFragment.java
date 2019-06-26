@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.example.smoot.ajerwaojra.R;
 
-public class requests extends Fragment {
+public class RequestsFragment extends Fragment {
 
-    public requests() {
+    public RequestsFragment() {
         // Required empty public constructor
     }
 

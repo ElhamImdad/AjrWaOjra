@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
-    tools:context=".Fragments.requests">
+    tools:context=".Fragments.RequestsFragment">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -113,7 +113,7 @@
         android:layout_marginStart="53dp"
         android:layout_marginTop="49dp"
         android:layout_marginBottom="45dp"
-        android:background="@drawable/noReqImg"
+        android:background="@drawable/noreqimg"
         app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/talabatText" />

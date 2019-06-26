@@ -1,4 +1,4 @@
-package com.example.smoot.ajerwaojra;
+package com.example.smoot.ajerwaojra.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.example.smoot.ajerwaojra.Activities.MainActivity;
+import com.example.smoot.ajerwaojra.R;
 
-public class splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

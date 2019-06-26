@@ -8,6 +8,10 @@ public class Doer {
     private String howDoKnowUs;
     private String doerPassword;
     private String token;
+    public  Doer( String doerEmail,String doerName){
+        this.doerEmail=doerEmail;
+        this.doerName=doerName;
+    }
 
     public String getToken() {
         return token;

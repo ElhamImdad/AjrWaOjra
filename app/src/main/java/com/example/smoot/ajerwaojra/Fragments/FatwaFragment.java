@@ -1,7 +1,4 @@
 package com.example.smoot.ajerwaojra.Fragments;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.smoot.ajerwaojra.Activities.MainActivity;
+import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 
 public class FatwaFragment extends Fragment {
     ImageButton doer ;
@@ -25,11 +23,26 @@ public class FatwaFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_fatwa, container, false);
         doer = view.findViewById(R.id.doer);
         requester = view.findViewById(R.id.requester);
-        doerFrag = new doerRegistrationFragment();
+         // if the user is logged in so go to home page
+        // TODO : change the fragment from requester to doer
+        if(SharedPrefManager.getInstance(getContext()).isLoggedIn()){
+            Doer user = SharedPrefManager.getInstance(getContext()).getUser();
+           Fragment f = new RequesterHomeFragment();
+           FragmentManager fm = getFragmentManager();
+           FragmentTransaction ft = fm.beginTransaction();
+           ft.replace(R.id.container, f);
+           ft.commit();
+        }
+        // if the user is not logged in so go
+       // else{ }
+
+
+
+        doerFrag = new DoerRegistrationFragment();
         doer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doerFrag = new doerRegistrationFragment();
+                doerFrag = new DoerRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container, doerFrag);

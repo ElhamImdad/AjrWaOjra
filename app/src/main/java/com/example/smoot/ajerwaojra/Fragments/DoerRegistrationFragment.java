@@ -15,12 +15,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.URLs;
+import com.android.volley.VolleyError;
+import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-public class doerRegistrationFragment extends Fragment {
+public class DoerRegistrationFragment extends Fragment {
 
     Spinner spinner;
     private EditText textName;
@@ -34,7 +49,7 @@ public class doerRegistrationFragment extends Fragment {
                     "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
-    public doerRegistrationFragment() {
+    public DoerRegistrationFragment() {
         // Required empty public constructor
     }
 
@@ -55,15 +70,17 @@ public class doerRegistrationFragment extends Fragment {
 
         confirm =view.findViewById(R.id.doerRegisterButton);
         textphone2 =  view.findViewById(R.id.phoneNumber);
-        confirm = (Button) view.findViewById(R.id.doerRegisterButton);
+        confirm =view.findViewById(R.id.doerRegisterButton);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateEmail() && validatePassword() && isValidMobile()){
-                    Log.d("every thing is fine", textphone2.getText().toString());
+                   doerRegister();
                 }
             }
+
+
         });
 
 
@@ -81,6 +98,56 @@ public class doerRegistrationFragment extends Fragment {
         });
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void doerRegister() {
+
+        final String username = textName.getText().toString().trim();
+        final String email = textInputEmail.getText().toString().trim();
+        final String password = textInputPassword.getText().toString().trim();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    JSONObject obj = json.getJSONObject("success");
+                    String token = obj.getString("token");
+                     Log.i("Token From API ==", token);
+
+                        Toast.makeText(getContext(), obj.getString("success"), Toast.LENGTH_SHORT).show();
+                        JSONObject userJson = obj.getJSONObject("user");
+
+                        Doer user = new Doer(
+                                userJson.getString("email"), userJson.getString("username")
+
+                        );
+                        SharedPrefManager.getInstance(getContext()).userLogin(user);
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("name",username);
+                params.put("email",email);
+                params.put("password",password);
+                return params;
+            }
+        };
+       VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
     }
     private boolean validateEmail(){
         String emailInput = textInputEmail.getText().toString().trim();

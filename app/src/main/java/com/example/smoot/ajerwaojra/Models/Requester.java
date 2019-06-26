@@ -9,6 +9,11 @@ public class Requester {
     private String hoeDoKnowUs ;
     private String password;
 
+    public  Requester( String email,String name){
+        this.email=email;
+        this.name=name;
+    }
+
     public String getName() {
         return name;
     }
