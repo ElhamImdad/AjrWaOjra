@@ -3,7 +3,7 @@ package com.example.smoot.ajerwaojra.Models;
 public class Requester {
 
     private String name ;
-    private int phonNumber;
+    private int phoneNumber;
     private String email;
     private String country;
     private String hoeDoKnowUs ;
@@ -18,11 +18,11 @@ public class Requester {
     }
 
     public int getPhonNumber() {
-        return phonNumber;
+        return phoneNumber;
     }
 
     public void setPhonNumber(int phonNumber) {
-        this.phonNumber = phonNumber;
+        this.phoneNumber = phonNumber;
     }
 
     public String getEmail() {
