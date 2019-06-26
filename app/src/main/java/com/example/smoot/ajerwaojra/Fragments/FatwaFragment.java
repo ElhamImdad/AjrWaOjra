@@ -18,6 +18,7 @@ public class FatwaFragment extends Fragment {
     ImageButton doer ;
     ImageButton requester;
     Fragment doerFrag;
+    Fragment requesterFrag;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,18 +29,27 @@ public class FatwaFragment extends Fragment {
         doer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              setFragment(new doerRegistrationFragment());
+                doerFrag = new doerRegistrationFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container,doerFrag);
+                ft.commit();
+            }
+        });
 
+        requester.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requesterFrag = new RequesterRegistrationFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container,requesterFrag);
+                ft.commit();
             }
         });
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void setFragment(doerRegistrationFragment doerRegistrationFragment) {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container,doerRegistrationFragment);
-        ft.commit();
-    }
+
 }

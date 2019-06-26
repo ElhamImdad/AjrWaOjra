@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.logInFragment">
 
     <ImageView
@@ -11,7 +11,6 @@
         android:layout_width="413dp"
         android:layout_height="132dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/lightGreen"
         app:layout_constraintBottom_toTopOf="@+id/helloMsg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -92,34 +91,34 @@
         android:id="@+id/forgetPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="244dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="56dp"
         android:text="نسيت كلمة المرور"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/doerRegisterButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword"
-        app:layout_constraintVertical_bias="0.744" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/toRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="95dp"
-        android:layout_marginTop="639dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="68dp"
-        android:text="لديك حساب ؟ "
+        android:layout_marginBottom="236dp"
+        android:text="سجل من هنا"
         android:textSize="18sp"
+        android:textColor="@color/lightGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/logIn"
+        app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/forgetPassword" />
 
     <TextView
         android:id="@+id/logIn"
@@ -129,7 +128,7 @@
         android:layout_marginTop="639dp"
         android:layout_marginEnd="132dp"
         android:layout_marginBottom="68dp"
-        android:text="سجل من هنا "
+        android:text="ليس لديك حساب؟"
         android:textColor="@color/lightGreen"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -154,6 +153,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword"
         app:layout_constraintVertical_bias="0.49" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="156dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="434dp" />
 
 
 </android.support.constraint.ConstraintLayout>
