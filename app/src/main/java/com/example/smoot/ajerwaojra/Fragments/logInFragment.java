@@ -73,7 +73,7 @@ public class logInFragment extends Fragment {
         email = logInEmail.getText().toString().trim();
         password = inputPassword.getText().toString().trim();
         //mobile = phoneNumber.getText().toString();
-        login();
+
         return v;
     }
 
@@ -114,6 +114,14 @@ public class logInFragment extends Fragment {
                     pramas.put("email",email);
                     pramas.put("password", password);
                     return pramas;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+                    headers.put("token", SharedPrefManager.TOKEN);
+                    return headers;
                 }
             };
 

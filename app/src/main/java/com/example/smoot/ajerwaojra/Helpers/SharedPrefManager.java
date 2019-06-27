@@ -11,7 +11,7 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "volleyregisterlogin";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_EMAIL = "keyemail";
-    private static final String TOKEN = "keytoken";
+   public static final String TOKEN = "keytoken";
     private static final String KEY_Phone = "keyPhone";
     private static SharedPrefManager mInstance;
     private static Context ctx;
