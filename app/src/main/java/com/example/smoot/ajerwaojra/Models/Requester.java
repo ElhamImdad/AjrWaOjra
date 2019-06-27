@@ -20,9 +20,9 @@ public class Requester {
         this.name=name;
     }
 
-    public Requester(String name, String phoneNumber, String email) {
+    public Requester(String name, String token, String email) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.token = token;
         this.email = email;
     }
 

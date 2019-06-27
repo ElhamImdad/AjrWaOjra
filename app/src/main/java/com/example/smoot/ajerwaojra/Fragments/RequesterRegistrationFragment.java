@@ -125,9 +125,11 @@ public class RequesterRegistrationFragment extends Fragment {
 //URLs.URL_REGISTER
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
+
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
+
                         try {
                             //converting response to json object
                             JSONObject obj = new JSONObject(response);

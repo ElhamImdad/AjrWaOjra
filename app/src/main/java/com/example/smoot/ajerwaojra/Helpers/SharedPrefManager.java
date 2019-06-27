@@ -11,7 +11,7 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "volleyregisterlogin";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_EMAIL = "keyemail";
-   public static final String TOKEN = "keytoken";
+    public static final String TOKEN = "keytoken";
     private static final String KEY_Phone = "keyPhone";
     private static SharedPrefManager mInstance;
     private static Context ctx;
@@ -67,11 +67,11 @@ public class SharedPrefManager {
     public Requester getRequester() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new Requester(
-                sharedPreferences.getString(KEY_EMAIL, null) ,
                 sharedPreferences.getString(KEY_USERNAME, null),
-                sharedPreferences.getString(KEY_Phone, null)
+                sharedPreferences.getString(TOKEN, null),
+                sharedPreferences.getString(KEY_EMAIL, null)
 
-        );
+                );
     }
 
     //this method will give the logged in user

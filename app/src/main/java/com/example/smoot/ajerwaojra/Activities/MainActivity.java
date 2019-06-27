@@ -8,8 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
-import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
-import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,25 +21,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+    //    if(SharedPrefManager.getInstance(this).isLoggedIn()){
            // Requester RequestUser = SharedPrefManager.getInstance(this).getUserReq();
-            setHomeFragment(new RequestsFragment());
-        }else{
+          //  setHomeFragment(new RequestsFragment());
+       // }else{
             setFragment(new FatwaFragment());
-        }
+     //   }
 
       //  configureDoer_RequesterButton();
     }
 
-    private void setHomeFragment( Fragment home) {
+  /*  private void setHomeFragment( Fragment home) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container,home);
         ft.commit();
 
-    }
+    }*/
     private void setFragment( Fragment fatwa) {
-
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container,fatwa);
