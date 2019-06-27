@@ -3,10 +3,10 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,28 +14,43 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.smoot.ajerwaojra.Activities.MainActivity;
-import com.example.smoot.ajerwaojra.R;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
+import com.example.smoot.ajerwaojra.Models.Requester;
+import com.example.smoot.ajerwaojra.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RequesterRegistrationFragment extends Fragment {
 
-    private Spinner spinner;
+    private Spinner howKnowus;
     private EditText textInputEmail;
     private EditText name;
     private EditText textInputPassword;
     private EditText textphone2;
-    private Button confirm;
+    private Button confirmBtn;
+    private ProgressBar progressBar;
     private Spinner countrySpin;
     Fragment logInFrag;
+    private  String url = "http://testtamayoz.tamayyozz.net/api/register";
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     "(?=.*[A-Z])" +
@@ -54,10 +69,14 @@ public class RequesterRegistrationFragment extends Fragment {
         textInputPassword = v.findViewById(R.id.textInputPassword);
         textphone2 =  v.findViewById(R.id.editTextPhone);
         name = v.findViewById(R.id.requesterName);
-        confirm = v.findViewById(R.id.confirm);
+
+        howKnowus = v.findViewById(R.id.spinner);
         countrySpin = v.findViewById(R.id.countrySpinner);
+        progressBar = v.findViewById(R.id.progressBar);
+        confirmBtn = v.findViewById(R.id.confirm);
         getCountryList();
-        confirm.setOnClickListener(new View.OnClickListener() {
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateEmail() && validatePassword() && isValidMobile()){
@@ -66,10 +85,9 @@ public class RequesterRegistrationFragment extends Fragment {
             }
         });
 
-        spinner = v.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        howKnowus.setAdapter(adapter);
         Intent i = new Intent();
         i.getExtras();
         TextView toLogIn =v.findViewById(R.id.logIn);
@@ -85,7 +103,12 @@ public class RequesterRegistrationFragment extends Fragment {
         });
 
         if (SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
-            startActivity(new Intent(getContext(), MainActivity.class));
+          //  startActivity(new Intent(getContext(), MainActivity.class));
+            Fragment f = new RequestsFragment();
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, f);
+            ft.commit();
 
         }
         // Inflate the layout for this fragment
@@ -93,7 +116,65 @@ public class RequesterRegistrationFragment extends Fragment {
     }
 
     private void registerRequester() {
+        final String phoneNomber = textphone2.getText().toString().trim();
+        final String email = textInputEmail.getText().toString().trim();
+        final String password = textInputPassword.getText().toString().trim();
+        final String Name = name.getText().toString().trim();
+        final String country = countrySpin.toString().trim();
+        final String howKnowUs = howKnowus.toString().trim();
+//URLs.URL_REGISTER
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+                            Log.e("response is :",response.toString());
+                            JSONObject userReq = obj.getJSONObject("success");
+                            Log.e("userReq ", userReq.toString());
 
+                            String token = userReq.getString("token");
+                            Log.e("the token is",token);
+                            Requester user = new Requester(token);
+                                //storing the user in shared preferences
+                            SharedPrefManager.getInstance(getContext()).userLogin(user);
+
+                                //starting the profile fragment
+                            Requester RequestUser = SharedPrefManager.getInstance(getContext()).getUserReq();
+                            Fragment f = new RequestsFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, f);
+                            ft.commit();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }//end onResponse
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("mobile", phoneNomber);
+                params.put("email", email);
+                params.put("password", password);
+                params.put("name", Name);
+                params.put("country", country);
+                params.put("howKnowUs", howKnowUs);
+                Log.e("mobile", phoneNomber);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
     private void getCountryList(){
@@ -106,8 +187,8 @@ public class RequesterRegistrationFragment extends Fragment {
             }
         }
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-       //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, countries);
-       // countrySpin.setAdapter(adapter);
+       ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
+       countrySpin.setAdapter(adapter);
 
     }
     private boolean validateEmail(){
@@ -148,6 +229,10 @@ public class RequesterRegistrationFragment extends Fragment {
 
         if(textphone2.getText().toString().length()<10 || number.length()>13 || number.matches(regexStr)==false  ) {
             textphone2.setError("ادخل رقم الجوال بشكل صحيح");
+            textphone2.requestFocus();
+            return false;
+        }else if (!textphone2.getText().toString().contains("+")){
+            textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
         }else {

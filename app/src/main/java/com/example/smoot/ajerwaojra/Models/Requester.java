@@ -8,10 +8,24 @@ public class Requester {
     private String country;
     private String hoeDoKnowUs ;
     private String password;
+    private String token;
+
 
     public  Requester( String email,String name){
         this.email=email;
         this.name=name;
+    }
+
+    public Requester(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getName() {

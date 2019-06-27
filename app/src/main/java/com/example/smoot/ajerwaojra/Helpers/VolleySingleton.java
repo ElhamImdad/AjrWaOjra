@@ -1,8 +1,11 @@
 package com.example.smoot.ajerwaojra.Helpers;
+
 import android.content.Context;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
 public class VolleySingleton {
 
     private static VolleySingleton mInstance;

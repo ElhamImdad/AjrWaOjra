@@ -11,8 +11,10 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,13 +22,12 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
-import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
-import com.example.smoot.ajerwaojra.Helpers.URLs;
-import com.android.volley.VolleyError;
-import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,12 +38,14 @@ import java.util.regex.Pattern;
 
 public class DoerRegistrationFragment extends Fragment {
 
-    Spinner spinner;
+    private  Spinner howKnowus;
     private EditText textName;
     private EditText textInputEmail;
     private EditText textInputPassword;
-    private EditText textphone2;
+    private EditText textphone;
+    private ProgressBar progressBar;
     private Button confirm;
+    private  String url = "http://testtamayoz.tamayyozz.net/api/register";
     Fragment logInFrag;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
@@ -57,10 +60,11 @@ public class DoerRegistrationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_doer_registration, container, false);
-        spinner =view.findViewById(R.id.spinner);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
-       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(adapter);
+        howKnowus =view.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        howKnowus.setAdapter(adapter);
+
         Intent i = new Intent();
         i.getExtras();
 
@@ -68,8 +72,8 @@ public class DoerRegistrationFragment extends Fragment {
         textInputEmail = view.findViewById(R.id.doerEmail);
         textInputPassword = view.findViewById(R.id.inputPassword);
 
-        confirm =view.findViewById(R.id.doerRegisterButton);
-        textphone2 =  view.findViewById(R.id.phoneNumber);
+        textphone =  view.findViewById(R.id.phoneNumber);
+        progressBar = view.findViewById(R.id.progressBarr);
         confirm =view.findViewById(R.id.doerRegisterButton);
 
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -101,17 +105,19 @@ public class DoerRegistrationFragment extends Fragment {
     }
 
     private void doerRegister() {
-
+        final String phoneNomber = textphone.getText().toString().trim();
         final String username = textName.getText().toString().trim();
         final String email = textInputEmail.getText().toString().trim();
         final String password = textInputPassword.getText().toString().trim();
+        final String howKnowUs = howKnowus.toString().trim();
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progressBar.setVisibility(View.GONE);
                 try {
-                    JSONObject json = new JSONObject(response);
+                    /*JSONObject json = new JSONObject(response);
                     JSONObject obj = json.getJSONObject("success");
                     String token = obj.getString("token");
                      Log.i("Token From API ==", token);
@@ -122,8 +128,21 @@ public class DoerRegistrationFragment extends Fragment {
                         Doer user = new Doer(
                                 userJson.getString("email"), userJson.getString("username")
 
-                        );
-                        SharedPrefManager.getInstance(getContext()).userLogin(user);
+                        );*/
+                    JSONObject obj = new JSONObject(response);
+                    JSONObject userDoer = obj.getJSONObject("success");
+                    String token = userDoer.getString("token");
+
+                    Log.e("Token From API ==",token);
+
+                    Doer user = new Doer(token);
+
+                    SharedPrefManager.getInstance(getContext()).userLogin(user);
+                    Fragment f = new RequestsFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.container, f);
+                    ft.commit();
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -134,19 +153,22 @@ public class DoerRegistrationFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("mobile", phoneNomber);
                 params.put("name",username);
                 params.put("email",email);
                 params.put("password",password);
+                params.put("howKnowUs", howKnowUs);
                 return params;
             }
         };
        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+        Log.e("string Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
 
     }
     private boolean validateEmail(){
@@ -182,14 +204,19 @@ public class DoerRegistrationFragment extends Fragment {
     private boolean isValidMobile() {
         String regexStr = "^\\+[0-9]{10,13}$";
 
-        String number=textphone2.getText().toString();
+        String number=textphone.getText().toString();
 
-        if(textphone2.getText().toString().length()<10 || number.length()>13 || number.matches(regexStr)==false  ) {
-            textphone2.setError("ادخل رقم الجوال بشكل صحيح");
-            textphone2.requestFocus();
+        if(textphone.getText().toString().length()<10 || number.length()>13 || number.matches(regexStr)==false  ) {
+            textphone.setError("ادخل رقم الجوال بشكل صحيح");
+            textphone.requestFocus();
             return false;
-        }else {
-            textphone2.setError(null);
+        }else if (!textphone.getText().toString().contains("+")){
+            textphone.setError("يجب أن يحتوي على + ");
+            textphone.requestFocus();
+            return false;
+        }else
+        {
+            textphone.setError(null);
             return true;
         }
     }

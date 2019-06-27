@@ -7,18 +7,22 @@ public class Doer {
     private int doerPhone;
     private String howDoKnowUs;
     private String doerPassword;
-    private String token;
+    private String DoerToken;
     public  Doer( String doerEmail,String doerName){
         this.doerEmail=doerEmail;
         this.doerName=doerName;
     }
 
-    public String getToken() {
-        return token;
+    public Doer(String token) {
+        this.DoerToken = token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public String getDoerToken() {
+        return DoerToken;
+    }
+
+    public void setDoerToken(String doerToken) {
+        DoerToken = doerToken;
     }
 
     public String getDoerName() {

@@ -220,4 +220,11 @@
         app:layout_constraintStart_toStartOf="@+id/doerRegisterButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+    <ProgressBar
+        android:id="@+id/progressBarr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>
