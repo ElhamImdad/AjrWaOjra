@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="@color/white"
     tools:context=".Fragments.OmrahRequestFragment">
 
     <ImageView
@@ -41,7 +41,7 @@
         android:layout_height="61dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="28dp"
-        android:background="@color/lightGreen"
+        android:background="@color/DarkGreen"
         android:text="موافق "
         android:textColor="@color/cardview_light_background"
         android:textSize="30sp"

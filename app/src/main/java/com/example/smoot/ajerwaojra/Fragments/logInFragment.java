@@ -79,6 +79,7 @@ public class logInFragment extends Fragment {
                 login();
             }
         });
+
         return v;
     }
 
@@ -136,9 +137,10 @@ public class logInFragment extends Fragment {
                     Log.e("my token ", token) ;
                     Log.e("Email ---",email );
                     Log.e("password ---",password );
-                    headers.put("token", token);
                     return headers;
                 }
+
+
 
             };
 

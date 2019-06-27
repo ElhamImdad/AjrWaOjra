@@ -9,8 +9,13 @@ public class Doer {
     private String doerPassword;
     private String DoerToken;
     private String token;
+    private  final  String role = "d" ;
 
-    public  Doer( String doerEmail,String doerName) {
+    public String getRole() {
+        return role;
+    }
+
+    public  Doer(String doerEmail, String doerName) {
         this.doerEmail=doerEmail;
         this.doerName=doerName;
     }
