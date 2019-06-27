@@ -102,7 +102,7 @@ public class RequesterRegistrationFragment extends Fragment {
             }
         });
 
-        if (SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
+      /*  if (SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
           //  startActivity(new Intent(getContext(), MainActivity.class));
             Fragment f = new RequestsFragment();
             FragmentManager fm = getFragmentManager();
@@ -110,7 +110,7 @@ public class RequesterRegistrationFragment extends Fragment {
             ft.replace(R.id.container, f);
             ft.commit();
 
-        }
+        }*/
         // Inflate the layout for this fragment
         return v;
     }

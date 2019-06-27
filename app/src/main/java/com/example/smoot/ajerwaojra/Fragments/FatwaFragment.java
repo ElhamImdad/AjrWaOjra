@@ -1,5 +1,4 @@
 package com.example.smoot.ajerwaojra.Fragments;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,7 +34,7 @@ public class FatwaFragment extends Fragment {
         //    SharedPrefManager.getInstance(getContext()).logout();
             Doer user = SharedPrefManager.getInstance(getContext()).getDoer();
            Fragment f = new logInFragment();
-           FragmentManager fm = getFragmentManager();
+           android.support.v4.app.FragmentManager fm = getFragmentManager();
            FragmentTransaction ft = fm.beginTransaction();
            ft.replace(R.id.container, f);
            ft.commit();
