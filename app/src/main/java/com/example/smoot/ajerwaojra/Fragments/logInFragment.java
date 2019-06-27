@@ -22,8 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Activities.MainActivity;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
+import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
 import org.json.JSONArray;
@@ -67,7 +69,7 @@ public class logInFragment extends Fragment {
         loginButton = v.findViewById(R.id.loginButton);
         inputPassword = v.findViewById(R.id.inputPassword);
         logInEmail = v.findViewById(R.id.logInEmail);
-        phoneNumber = v.findViewById(R.id.editTextPhone);
+       // phoneNumber = v.findViewById(R.id.editTextPhone);
         email = logInEmail.getText().toString().trim();
         password = inputPassword.getText().toString().trim();
         //mobile = phoneNumber.getText().toString();
@@ -83,13 +85,15 @@ public class logInFragment extends Fragment {
                 @Override
                 public void onResponse(String response) {
                     try {
-                        JSONArray obj = new JSONArray(response);
-                        JSONObject success = obj.getJSONObject(0);
-                        String token = success.getString("success");
-
+                        JSONObject obj = new JSONObject(response);
+                        JSONObject success = obj.getJSONObject("success");
+                        String token = success.getString("token");
+                        Requester user = new Requester(token);
+                        SharedPrefManager.getInstance(getContext()).userLogin(user);
                         Log.i("Token Result == ", token);
                         Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
-                        Fragment fragment = new RequesterHomeFragment();
+
+                        Fragment fragment = new RequestsFragment();
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.replace(R.id.container, fragment);
@@ -113,7 +117,8 @@ public class logInFragment extends Fragment {
                 }
             };
 
-            VolleySingleton.getInstance(this.getContext()).addToRequestQueue(stringRequest);
+            VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+            Log.e("Result of log in : ",VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
         }
     }
 }
