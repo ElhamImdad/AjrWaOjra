@@ -4,23 +4,27 @@ public class Doer {
 
     private String doerName;
     private String doerEmail;
-    private int doerPhone;
+    private String doerPhone;
     private String howDoKnowUs;
     private String doerPassword;
     private String DoerToken;
-    public  Doer( String doerEmail,String doerName){
+    private String token;
+
+    public  Doer( String doerEmail,String doerName) {
         this.doerEmail=doerEmail;
         this.doerName=doerName;
     }
-
+    public  Doer( String doerEmail,String doerName, String phone ){
+        this.doerEmail=doerEmail;
+        this.doerName=doerName;
+        this.doerPhone= phone;
+    }
     public Doer(String token) {
         this.DoerToken = token;
     }
-
     public String getDoerToken() {
         return DoerToken;
     }
-
     public void setDoerToken(String doerToken) {
         DoerToken = doerToken;
     }
@@ -41,11 +45,11 @@ public class Doer {
         this.doerEmail = doerEmail;
     }
 
-    public int getDoerPhone() {
+    public String getDoerPhone() {
         return doerPhone;
     }
 
-    public void setDoerPhone(int doerPhone) {
+    public void setDoerPhone(String doerPhone) {
         this.doerPhone = doerPhone;
     }
 

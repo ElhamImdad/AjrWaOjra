@@ -26,7 +26,7 @@ public class FatwaFragment extends Fragment {
          // if the user is logged in so go to home page
         // TODO : change the fragment from requester to doer
         if(SharedPrefManager.getInstance(getContext()).isLoggedIn()){
-            Doer user = SharedPrefManager.getInstance(getContext()).getUser();
+            Doer user = SharedPrefManager.getInstance(getContext()).getDoer();
            Fragment f = new RequesterHomeFragment();
            FragmentManager fm = getFragmentManager();
            FragmentTransaction ft = fm.beginTransaction();

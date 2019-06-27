@@ -69,7 +69,7 @@ public class DoerRegistrationFragment extends Fragment {
         i.getExtras();
 
         textName = view.findViewById(R.id.doerName);
-        textInputEmail = view.findViewById(R.id.doerEmail);
+        textInputEmail = view.findViewById(R.id.textInputEmail);
         textInputPassword = view.findViewById(R.id.inputPassword);
 
         textphone =  view.findViewById(R.id.phoneNumber);
@@ -81,6 +81,12 @@ public class DoerRegistrationFragment extends Fragment {
             public void onClick(View view) {
                 if (validateEmail() && validatePassword() && isValidMobile()){
                    doerRegister();
+                   Fragment f = new RequesterHomeFragment();
+                   FragmentManager fm = getFragmentManager();
+                   FragmentTransaction ft = fm.beginTransaction();
+                   ft.replace(R.id.container,f);
+                   ft.commit();
+
                 }
             }
 
@@ -120,13 +126,13 @@ public class DoerRegistrationFragment extends Fragment {
                     /*JSONObject json = new JSONObject(response);
                     JSONObject obj = json.getJSONObject("success");
                     String token = obj.getString("token");
-                     Log.i("Token From API ==", token);
+                     Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
 
                         Toast.makeText(getContext(), obj.getString("success"), Toast.LENGTH_SHORT).show();
                         JSONObject userJson = obj.getJSONObject("user");
 
-                        Doer user = new Doer(
-                                userJson.getString("email"), userJson.getString("username")
+                        Doer user = new Doer(userJson.getString(
+                                "email"), userJson.getString("username"),userJson.getString("mobile")
 
                         );*/
                     JSONObject obj = new JSONObject(response);
