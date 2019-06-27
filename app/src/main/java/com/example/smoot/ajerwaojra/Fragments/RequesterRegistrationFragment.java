@@ -158,6 +158,7 @@ public class RequesterRegistrationFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("error response", error.toString());
                     }
 
                 }) {
@@ -175,6 +176,7 @@ public class RequesterRegistrationFragment extends Fragment {
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+        Log.e("string Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
     }
 
     private void getCountryList(){
