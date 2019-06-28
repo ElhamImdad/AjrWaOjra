@@ -73,7 +73,7 @@ public class DoerRegistrationFragment extends Fragment {
         textInputPassword = view.findViewById(R.id.inputPassword);
 
         textphone =  view.findViewById(R.id.phoneNumber);
-        progressBar = view.findViewById(R.id.progressBarr);
+      //  progressBar = view.findViewById(R.id.progressBarr);
         confirm =view.findViewById(R.id.doerRegisterButton);
 
         confirm.setOnClickListener(new View.OnClickListener() {
