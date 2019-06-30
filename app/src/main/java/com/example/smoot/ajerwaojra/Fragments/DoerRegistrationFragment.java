@@ -1,8 +1,14 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,30 +34,39 @@ import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class DoerRegistrationFragment extends Fragment {
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-    private  Spinner howKnowus;
+public class DoerRegistrationFragment extends Fragment {
+    private FusedLocationProviderClient client;
+    private Spinner howKnowus;
     private EditText textName;
     private EditText textInputEmail;
     private EditText textInputPassword;
     private EditText textphone;
     private ProgressBar progressBar;
     private Button confirm;
-    private  String url = "http://testtamayoz.tamayyozz.net/api/register";
+    private String url = "http://testtamayoz.tamayyozz.net/api/register";
     Fragment logInFrag;
+    String exactLocation;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
+
     public DoerRegistrationFragment() {
         // Required empty public constructor
     }
@@ -59,9 +74,9 @@ public class DoerRegistrationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_doer_registration, container, false);
-        howKnowus =view.findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+        View view = inflater.inflate(R.layout.fragment_doer_registration, container, false);
+        howKnowus = view.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         howKnowus.setAdapter(adapter);
 
@@ -69,25 +84,55 @@ public class DoerRegistrationFragment extends Fragment {
         i.getExtras();
 
         textName = view.findViewById(R.id.doerName);
-        textInputEmail = view.findViewById(R.id.textInputEmail);
+        textInputEmail = view.findViewById(R.id.doerEmail);
         textInputPassword = view.findViewById(R.id.inputPassword);
 
-        textphone =  view.findViewById(R.id.phoneNumber);
-      //  progressBar = view.findViewById(R.id.progressBarr);
-        confirm =view.findViewById(R.id.doerRegisterButton);
+        textphone = view.findViewById(R.id.phoneNumber);
+        //  progressBar = view.findViewById(R.id.progressBarr);
+        confirm = view.findViewById(R.id.doerRegisterButton);
+        requestPermission();
+        client = LocationServices.getFusedLocationProviderClient(getContext());
+
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validateEmail() && validatePassword() && isValidMobile()){
-                   doerRegister();
-                   Fragment f = new RequestsFragment();
-                   FragmentManager fm = getFragmentManager();
-                   FragmentTransaction ft = fm.beginTransaction();
-                   ft.replace(R.id.container,f);
-                   ft.commit();
-
+                if (ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
                 }
+                client.getLastLocation().addOnSuccessListener( (Activity) getContext(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        try {
+                            Geocoder geocoder = new Geocoder(getContext());
+                            List<Address> addresses = null;
+                            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                            String city, county, state;
+                            city = addresses.get(0).getLocality().concat(" ");
+                            county = addresses.get(0).getCountryName().concat(" ");
+                            state = addresses.get(0).getAdminArea().concat(" ");
+
+                            exactLocation = city;
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                 if (exactLocation=="مكة"){
+                if (validateEmail() && validatePassword() && isValidMobile()) {
+                    doerRegister();
+                    Fragment f = new RequestsFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.container, f);
+                    ft.commit();
+
+                }}
+                 Toast.makeText(getContext(),"You must be in Dammam",Toast.LENGTH_LONG).show();
             }
 
 
@@ -95,7 +140,7 @@ public class DoerRegistrationFragment extends Fragment {
 
 
         // logIn
-        TextView toLogIn =view.findViewById(R.id.logIn);
+        TextView toLogIn = view.findViewById(R.id.logIn);
         toLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +155,10 @@ public class DoerRegistrationFragment extends Fragment {
         return view;
     }
 
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(getActivity(), new String[]{ACCESS_FINE_LOCATION}, 1);
+    }
+
     private void doerRegister() {
         final String phoneNomber = textphone.getText().toString().trim();
         final String username = textName.getText().toString().trim();
@@ -121,7 +170,7 @@ public class DoerRegistrationFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progressBar.setVisibility(View.GONE);
+                //  progressBar.setVisibility(View.GONE);
                 try {
                     /*JSONObject json = new JSONObject(response);
                     JSONObject obj = json.getJSONObject("success");
@@ -139,7 +188,7 @@ public class DoerRegistrationFragment extends Fragment {
                     JSONObject userDoer = obj.getJSONObject("success");
                     String token = userDoer.getString("token");
 
-                    Log.e("Token From API ==",token);
+                    Log.e("Token From API ==", token);
 
                     Doer user = new Doer(token);
 
@@ -159,31 +208,32 @@ public class DoerRegistrationFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("mobile", phoneNomber);
-                params.put("name",username);
-                params.put("email",email);
-                params.put("password",password);
+                params.put("name", username);
+                params.put("email", email);
+                params.put("password", password);
                 params.put("howKnowUs", howKnowUs);
                 return params;
             }
         };
-       VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
         Log.e("string Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
 
     }
-    private boolean validateEmail(){
+
+    private boolean validateEmail() {
         String emailInput = textInputEmail.getText().toString().trim();
-        if (emailInput.isEmpty()){
+        if (emailInput.isEmpty()) {
             textInputEmail.setError("حقل البريد الالكتروني فارغ");
             textInputEmail.requestFocus();
             return false;
-        }else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             textInputEmail.setError("الرجاء إدخال بريد الكتروني صحيح");
             textInputEmail.requestFocus();
             return false;
@@ -192,13 +242,14 @@ public class DoerRegistrationFragment extends Fragment {
             return true;
         }
     }
-    private boolean validatePassword(){
+
+    private boolean validatePassword() {
         String passwordInput = textInputPassword.getText().toString().trim();
-        if (passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             textInputPassword.setError("حقل كلمة السر فارغ");
             textInputPassword.requestFocus();
             return false;
-        }else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             textInputPassword.setError("كلمة السر ضعيفة");
             textInputPassword.requestFocus();
             return false;
@@ -207,24 +258,31 @@ public class DoerRegistrationFragment extends Fragment {
             return true;
         }
     }
+
     private boolean isValidMobile() {
         String regexStr = "^\\+[0-9]{10,13}$";
 
-        String number=textphone.getText().toString();
+        String number = textphone.getText().toString();
 
-        if(textphone.getText().toString().length()<10 || number.length()>13 || number.matches(regexStr)==false  ) {
+        if (textphone.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
             textphone.setError("ادخل رقم الجوال بشكل صحيح");
             textphone.requestFocus();
             return false;
-        }else if (!textphone.getText().toString().contains("+")){
+        } else if (!textphone.getText().toString().contains("+")) {
             textphone.setError("يجب أن يحتوي على + ");
             textphone.requestFocus();
             return false;
-        }else
-        {
+        } else {
             textphone.setError(null);
             return true;
         }
     }
 
+    private void checkLocation() {
+
+
+    }
 }
+
+
+
