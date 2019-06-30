@@ -81,7 +81,7 @@ public class DoerRegistrationFragment extends Fragment {
             public void onClick(View view) {
                 if (validateEmail() && validatePassword() && isValidMobile()){
                    doerRegister();
-                   Fragment f = new RequesterHomeFragment();
+                   Fragment f = new RequestsFragment();
                    FragmentManager fm = getFragmentManager();
                    FragmentTransaction ft = fm.beginTransaction();
                    ft.replace(R.id.container,f);

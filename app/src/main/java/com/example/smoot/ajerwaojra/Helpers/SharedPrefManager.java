@@ -74,15 +74,6 @@ public class SharedPrefManager {
                 );
     }
 
-    //this method will give the logged in user
-    public Requester getUserReq() {
-        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return new Requester(
-                sharedPreferences.getString(KEY_EMAIL, null) ,
-                sharedPreferences.getString(KEY_USERNAME, null)
-
-        );
-    }
     //this method will logout the user
     public void logout() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

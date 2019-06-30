@@ -144,7 +144,7 @@ public class RequesterRegistrationFragment extends Fragment {
                             SharedPrefManager.getInstance(getContext()).userLogin(user);
 
                                 //starting the profile fragment
-                            Requester RequestUser = SharedPrefManager.getInstance(getContext()).getUserReq();
+                            Requester RequestUser = SharedPrefManager.getInstance(getContext()).getRequester();
                             Fragment f = new RequestsFragment();
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
