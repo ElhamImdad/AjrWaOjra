@@ -33,12 +33,12 @@
                 android:id="@+id/helloMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="132dp"
                 android:layout_marginEnd="8dp"
                 android:text="مرحبا بعودتك سجل دخولك للمتابعه"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintHorizontal_bias="0.556"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,6 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/helloMsg" />
+
             <EditText
                 android:id="@+id/inputPassword"
                 android:layout_width="300dp"
@@ -73,13 +74,13 @@
                 android:id="@+id/loginButton"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="56dp"
                 android:background="@drawable/button"
                 android:text="التالي "
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.505"
+                app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
@@ -96,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="200dp"
                 android:text="ليس لديك حساب؟"
                 android:textColor="@color/lightGreen"
@@ -110,19 +111,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="212dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:text="سجل من هنا"
                 android:textColor="@color/lightGreen"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
             <TextView
                 android:id="@+id/forgetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="244dp"
+                android:layout_marginStart="120dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="244dp"
                 android:layout_marginBottom="56dp"
                 android:text="نسيت كلمة المرور"
                 android:textSize="18sp"
@@ -137,13 +139,14 @@
                 android:id="@+id/textView5"
                 android:layout_width="121dp"
                 android:layout_height="26dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="213dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="البريد الالكتروني  "
-                app:layout_constraintEnd_toEndOf="@+id/logInEmail"
-                app:layout_constraintHorizontal_bias="0.921"
-                app:layout_constraintStart_toStartOf="@+id/logInEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/helloMsg" />
 
 
@@ -151,13 +154,14 @@
                 android:id="@+id/passwordMsg"
                 android:layout_width="79dp"
                 android:layout_height="27dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="230dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text=" كلمة المرور  "
-                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-                app:layout_constraintHorizontal_bias="0.855"
-                app:layout_constraintStart_toStartOf="@+id/inputPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logInEmail" />
 
         </android.support.constraint.ConstraintLayout>

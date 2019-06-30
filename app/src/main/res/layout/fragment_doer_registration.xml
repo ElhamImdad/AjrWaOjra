@@ -33,8 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <EditText
                 android:id="@+id/doerName"
+                android:hint="الاسم "
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="480dp"
@@ -48,6 +50,8 @@
 
             <EditText
                 android:id="@+id/phoneNumber"
+                android:hint=" رقم الجوال"
+                android:gravity="right"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="48dp"
@@ -64,6 +68,7 @@
 
             <EditText
                 android:id="@+id/doerEmail"
+                android:hint="البريد الالكتروني "
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
@@ -89,6 +94,8 @@
 
             <EditText
                 android:id="@+id/inputPassword"
+                android:hint="كلمة المرور "
+                android:gravity="right"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
