@@ -101,7 +101,7 @@ public class logInFragment extends Fragment {
                         Requester user = new Requester(token);
                         SharedPrefManager.getInstance(getContext()).userLogin(user);
                         Log.e("Token Result == ", token);
-                        Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
 
                         Fragment fragment = new RequestsFragment();
                         FragmentManager fm = getFragmentManager();
@@ -134,7 +134,7 @@ public class logInFragment extends Fragment {
                     headers.put("email",email);
                     headers.put("password", password);
                     String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                    Log.e("my token ", token) ;
+                    //Log.e("my token ", token) ;
                     Log.e("Email ---",email );
                     Log.e("password ---",password );
                     return headers;
