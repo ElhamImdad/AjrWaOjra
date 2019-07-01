@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,11 +36,12 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
     private RequestQueue mQueue;
     private ImageView addRequestBtn;
     Fragment newReqestFragment;
+    CardView cardView;
 
     RecyclerView recyclerView ;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<OmraInfo>  umraServicesList = new ArrayList<>();
+    ArrayList<OmraInfo>  umraListInProgress = new ArrayList<>();
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -60,7 +62,7 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
                 ft.commit();
             }
         });
-        if (umraServicesList.size() == 0){
+        if (umraListInProgress.size() == 0){
             ImageView imageview =(ImageView) v.findViewById(R.id.noRequestImg);
             imageview.setVisibility(View.VISIBLE);
         }else {
@@ -85,6 +87,7 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+      //  OmraInfo omraInfo = (OmraInfo) recyclerView.getIt
         //open alart dialog page information for doer
 
     }
@@ -103,8 +106,8 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
                                 omraInfoObject = new OmraInfo();
                                 omraInfoObject.setDoerName(jsonArray.getJSONObject(i).getString("name"));
 
-                                umraServicesList.add(omraInfoObject);
-                                adapter = new RequestsAdapter(getContext(), umraServicesList);
+                                umraListInProgress.add(omraInfoObject);
+                                adapter = new RequestsAdapter(getContext(), umraListInProgress);
 
                                 recyclerView.setAdapter(adapter);
                             }

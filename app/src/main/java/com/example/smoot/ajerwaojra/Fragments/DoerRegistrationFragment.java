@@ -69,7 +69,7 @@ public class DoerRegistrationFragment extends Fragment {
         i.getExtras();
 
         textName = view.findViewById(R.id.doerName);
-        textInputEmail = view.findViewById(R.id.textInputEmail);
+        textInputEmail = view.findViewById(R.id.textInputEmaildoer);
         textInputPassword = view.findViewById(R.id.inputPassword);
 
         textphone =  view.findViewById(R.id.phoneNumber);
@@ -144,11 +144,6 @@ public class DoerRegistrationFragment extends Fragment {
                     Doer user = new Doer(token);
 
                     SharedPrefManager.getInstance(getContext()).userLogin(user);
-                    Fragment f = new RequestsFragment();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.container, f);
-                    ft.commit();
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();

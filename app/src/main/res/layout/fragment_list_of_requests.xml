@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragments.ListOfRequestsFragment">
-
-    <android.support.v7.widget.CardView
+<android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+    android:background="@color/white"
         android:id="@+id/cardView"
         android:elevation="3dp"
         app:cardCornerRadius="6dp"
@@ -17,20 +13,70 @@
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
         android:layout_marginEnd="9dp"
-        tools:targetApi="lollipop">
+    tools:context=".Fragments.ListOfRequestsFragment"
+        >
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
 
         <TextView
             android:id="@+id/umraName"
-            android:layout_width="228dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
+            android:layout_width="316dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="28dp"
             android:padding="6dp"
-            tools:text="hello me"
-            android:text="my name is elham"
             android:textColor="@android:color/black"
-            android:textSize="30dp"
-            android:visibility="visible" />
+            android:textSize="24sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/personIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="my name" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:padding="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/calendreIcon"
+            app:layout_constraintTop_toBottomOf="@+id/umraName"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="date" />
+
+        <ImageView
+            android:id="@+id/personIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/umraName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/person_icon" />
+
+        <ImageView
+            android:id="@+id/calendreIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personIcon"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/calender_icon" />
+
+    </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
-
-</FrameLayout>
