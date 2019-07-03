@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,26 +16,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
-import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
-import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RequesterRegistrationFragment extends Fragment {
@@ -80,7 +65,7 @@ public class RequesterRegistrationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (validateEmail() && validatePassword() && isValidMobile()){
-                   registerRequester();
+                 //  registerRequester();
                 }
             }
         });
@@ -115,71 +100,7 @@ public class RequesterRegistrationFragment extends Fragment {
         return v;
     }
 
-    private void registerRequester() {
-        final String phoneNomber = textphone2.getText().toString().trim();
-        final String email = textInputEmail.getText().toString().trim();
-        final String password = textInputPassword.getText().toString().trim();
-        final String Name = name.getText().toString().trim();
-        final String country = countrySpin.toString().trim();
-        final String howKnowUs = howKnowus.toString().trim();
-//URLs.URL_REGISTER
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
 
-                    @Override
-                    public void onResponse(String response) {
-                        progressBar.setVisibility(View.GONE);
-
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-                            Log.e("response is :",response.toString());
-                            JSONObject userReq = obj.getJSONObject("success");
-                            Log.e("userReq ", userReq.toString());
-
-                            String token = userReq.getString("token");
-                            Log.e("the token is",token);
-                            Requester user = new Requester(token);
-                                //storing the user in shared preferences
-                            SharedPrefManager.getInstance(getContext()).userLogin(user);
-
-                                //starting the profile fragment
-                            Requester RequestUser = SharedPrefManager.getInstance(getContext()).getRequester();
-                            Fragment f = new RequestsFragment();
-                            FragmentManager fm = getFragmentManager();
-                            FragmentTransaction ft = fm.beginTransaction();
-                            ft.replace(R.id.container, f);
-                            ft.commit();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }//end onResponse
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("error response", error.toString());
-                    }
-
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("mobile", phoneNomber);
-                params.put("email", email);
-                params.put("password", password);
-                params.put("name", Name);
-                params.put("country", country);
-                params.put("howKnowUs", howKnowUs);
-                Log.e("mobile", phoneNomber);
-                return params;
-            }
-        };
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-        Log.e("string Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
-    }
 
     private void getCountryList(){
         Locale[] locales = Locale.getAvailableLocales();
