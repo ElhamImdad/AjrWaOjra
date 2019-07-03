@@ -13,6 +13,7 @@ public class SharedPrefManager {
     private static final String KEY_EMAIL = "keyemail";
     public static final String TOKEN = "keytoken";
     private static final String KEY_Phone = "keyPhone";
+    private static final String KEY_ROLE = "keyRole";
     private static SharedPrefManager mInstance;
     private static Context ctx;
 
@@ -34,7 +35,7 @@ public class SharedPrefManager {
         editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_USERNAME, user.getPassword());
         editor.putString(KEY_Phone,user.getPhonNumber());
-
+        editor.putString(KEY_ROLE,user.getRole());
         editor.apply();
     }
     public void userLogin(Doer user) {
@@ -44,7 +45,7 @@ public class SharedPrefManager {
         editor.putString(KEY_EMAIL, user.getDoerEmail());
         editor.putString(KEY_USERNAME, user.getDoerName());
         editor.putString(KEY_Phone,user.getDoerPhone());
-
+        editor.putString(KEY_ROLE,user.getRole());
         editor.apply();
     }
 

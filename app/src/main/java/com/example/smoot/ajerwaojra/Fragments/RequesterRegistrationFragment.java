@@ -25,7 +25,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
+import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
@@ -50,12 +52,13 @@ public class RequesterRegistrationFragment extends Fragment {
     private ProgressBar progressBar;
     private Spinner countrySpin;
     Fragment logInFrag;
-    private  String url = "http://testtamayoz.tamayyozz.net/api/register";
+    String token;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
+
     public RequesterRegistrationFragment() {
         // Required empty public constructor
     }
@@ -64,10 +67,10 @@ public class RequesterRegistrationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View v=  inflater.inflate(R.layout.fragment_requester_registration, container, false);
+        View v = inflater.inflate(R.layout.fragment_requester_registration, container, false);
         textInputEmail = v.findViewById(R.id.textInputEmail);
         textInputPassword = v.findViewById(R.id.textInputPassword);
-        textphone2 =  v.findViewById(R.id.editTextPhone);
+        textphone2 = v.findViewById(R.id.editTextPhone);
         name = v.findViewById(R.id.requesterName);
 
         howKnowus = v.findViewById(R.id.spinner);
@@ -79,18 +82,17 @@ public class RequesterRegistrationFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validateEmail() && validatePassword() && isValidMobile()){
-                   registerRequester();
-                }
+                if (validateEmail() && validatePassword() && isValidMobile()) {
+                    registerRequester(); }
             }
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.howDidKnowUs,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         howKnowus.setAdapter(adapter);
         Intent i = new Intent();
         i.getExtras();
-        TextView toLogIn =v.findViewById(R.id.logIn);
+        TextView toLogIn = v.findViewById(R.id.logIn);
         toLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,39 +124,35 @@ public class RequesterRegistrationFragment extends Fragment {
         final String Name = name.getText().toString().trim();
         final String country = countrySpin.toString().trim();
         final String howKnowUs = howKnowus.toString().trim();
+        final String role = "Requester";
 //URLs.URL_REGISTER
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
+                new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
 
                         try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-                            Log.e("response is :",response.toString());
-                            JSONObject userReq = obj.getJSONObject("success");
-                            Log.e("userReq ", userReq.toString());
-
-                            String token = userReq.getString("token");
-                            Log.e("the token is",token);
-                            Requester user = new Requester(token);
-                                //storing the user in shared preferences
-                            SharedPrefManager.getInstance(getContext()).userLogin(user);
-
-                                //starting the profile fragment
-                            Requester RequestUser = SharedPrefManager.getInstance(getContext()).getRequester();
+                            Log.v("Res", response);
+                            JSONObject ob = new JSONObject(response);
+                            token = ob.getString("access_token");
+                            Log.v("access_token", token);
+                            Requester requester = new Requester(token);
+                            SharedPrefManager.getInstance(getContext()).userLogin(requester);
                             Fragment f = new RequestsFragment();
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
                             ft.replace(R.id.container, f);
                             ft.commit();
+                           /*
+                            Requester RequestUser = SharedPrefManager.getInstance(getContext()).getRequester();
+                            */
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                    }//end onResponse
+                    }
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -167,41 +165,41 @@ public class RequesterRegistrationFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("mobile", phoneNomber);
+                params.put("phone", phoneNomber);
                 params.put("email", email);
                 params.put("password", password);
                 params.put("name", Name);
                 params.put("country", country);
-                params.put("howKnowUs", howKnowUs);
-                Log.e("mobile", phoneNomber);
+                params.put("knowUs", howKnowUs);
+                params.put("role", role);
                 return params;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-        Log.e("string Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
     }
 
-    private void getCountryList(){
+    private void getCountryList() {
         Locale[] locales = Locale.getAvailableLocales();
         ArrayList<String> countries = new ArrayList<String>();
         for (Locale locale : locales) {
             String country = locale.getDisplayCountry();
-            if (country.trim().length()>0 && !countries.contains(country)) {
+            if (country.trim().length() > 0 && !countries.contains(country)) {
                 countries.add(country);
             }
         }
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-       ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
-       countrySpin.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
+        countrySpin.setAdapter(adapter);
 
     }
-    private boolean validateEmail(){
+
+    private boolean validateEmail() {
         String emailInput = textInputEmail.getText().toString().trim();
-        if (emailInput.isEmpty()){
+        if (emailInput.isEmpty()) {
             textInputEmail.setError("حقل البريد الالكتروني فارغ");
             textInputEmail.requestFocus();
             return false;
-        }else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             textInputEmail.setError("الرجاء إدخال بريد الكتروني صحيح");
             textInputEmail.requestFocus();
             return false;
@@ -211,13 +209,13 @@ public class RequesterRegistrationFragment extends Fragment {
         }
     }
 
-    private boolean validatePassword(){
+    private boolean validatePassword() {
         String passwordInput = textInputPassword.getText().toString().trim();
-        if (passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             textInputPassword.setError("حقل كلمة السر فارغ");
             textInputPassword.requestFocus();
             return false;
-        }else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             textInputPassword.setError("كلمة السر يجب أن تحتوي على حروف صغيرة وكبيرة وارقام");
             textInputPassword.requestFocus();
             return false;
@@ -226,20 +224,21 @@ public class RequesterRegistrationFragment extends Fragment {
             return true;
         }
     }
+
     private boolean isValidMobile() {
         String regexStr = "^\\+[0-9]{10,13}$";
 
-        String number=textphone2.getText().toString();
+        String number = textphone2.getText().toString();
 
-        if(textphone2.getText().toString().length()<10 || number.length()>13 || number.matches(regexStr)==false  ) {
+        if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
             textphone2.setError("ادخل رقم الجوال بشكل صحيح");
             textphone2.requestFocus();
             return false;
-        }else if (!textphone2.getText().toString().contains("+")){
+        } else if (!textphone2.getText().toString().contains("+")) {
             textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
-        }else {
+        } else {
             textphone2.setError(null);
             return true;
         }

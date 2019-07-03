@@ -2,16 +2,21 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -27,18 +32,28 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +62,7 @@ import java.util.regex.Pattern;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class DoerRegistrationFragment extends Fragment {
-  //  private FusedLocationProviderClient client;
+    private FusedLocationProviderClient client;
     private Spinner howKnowus;
     private EditText textName;
     private EditText textInputEmail;
@@ -55,9 +70,21 @@ public class DoerRegistrationFragment extends Fragment {
     private EditText textphone;
     private ProgressBar progressBar;
     private Button confirm;
-    private String url = "http://testtamayoz.tamayyozz.net/api/register";
     Fragment logInFrag;
-    String exactLocation;
+    String phoneNomber;
+    String username;
+    String email;
+    String password;
+    String howKnowUs;
+    String token;
+    LocationManager locationManager;
+    Location location;
+    String provider;
+    final String role = "Doer";
+    public double lng = 0;
+    public double lat = 0;
+    String doerLoc;
+
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     "(?=.*[A-Z])" +
@@ -88,16 +115,29 @@ public class DoerRegistrationFragment extends Fragment {
         //  progressBar = view.findViewById(R.id.progressBarr);
         confirm = view.findViewById(R.id.doerRegisterButton);
         requestPermission();
-      //  client = LocationServices.getFusedLocationProviderClient(getContext());
-
+        //  client = LocationServices.getFusedLocationProviderClient(getContext());
+     //   doerLoc = getLoc();
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View v) {
+         //       if (doerLoc.equals("مكة")) {
+                    if (validateEmail() && validatePassword() && isValidMobile()) {
+                        doerRegister();
+                    }
+          //      }
+           //     else {
+           //         Toast.makeText(getContext(), "يجب ان يكون موقعك الحالي مكة ", Toast.LENGTH_LONG).show();
+            //    }
+            }
+
+/*        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-//                if (ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    return;
-//                }
-              /*  client.getLastLocation().addOnSuccessListener( (Activity) getContext(), new OnSuccessListener<Location>() {
+                if (ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+               }
+                client.getLastLocation().addOnSuccessListener( (Activity) getContext(), new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         double latitude = location.getLatitude();
@@ -118,24 +158,23 @@ public class DoerRegistrationFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                });*/
-               //  if (exactLocation=="مكة"){
+                });
+
+                 if (exactLocation=="مكة"){
                 if (validateEmail() && validatePassword() && isValidMobile()) {
                     doerRegister();
-                    Fragment f = new RequestsFragment();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.container, f);
-                    ft.commit();
 
-            //    }
-            }
-                 Toast.makeText(getContext(),"You must be in Dammam",Toast.LENGTH_LONG).show();
+
+                     }
+                }
+                 else {
+                     Toast.makeText(getContext(),"يجب ان يكون موقعك الحالي مكة ", Toast.LENGTH_LONG).show();
+                 }
             }
 
 
+        });*/
         });
-
 
         // logIn
         TextView toLogIn = view.findViewById(R.id.logIn);
@@ -155,69 +194,59 @@ public class DoerRegistrationFragment extends Fragment {
 
     private void requestPermission() {
         ActivityCompat.requestPermissions(getActivity(), new String[]{ACCESS_FINE_LOCATION}, 1);
+
     }
 
     private void doerRegister() {
-        final String phoneNomber = textphone.getText().toString().trim();
-        final String username = textName.getText().toString().trim();
-        final String email = textInputEmail.getText().toString().trim();
-        final String password = textInputPassword.getText().toString().trim();
-        final String howKnowUs = howKnowus.toString().trim();
+        phoneNomber = textphone.getText().toString().trim();
+        username = textName.getText().toString().trim();
+        email = textInputEmail.getText().toString().trim();
+        password = textInputPassword.getText().toString().trim();
+        howKnowUs = howKnowus.getSelectedItem().toString().trim();
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //  progressBar.setVisibility(View.GONE);
-                try {
-                    /*JSONObject json = new JSONObject(response);
-                    JSONObject obj = json.getJSONObject("success");
-                    String token = obj.getString("token");
-                     Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.v("Res", response);
+                            JSONObject ob = new JSONObject(response);
+                            token = ob.getString("access_token");
+                            Log.v("access_token", token);
+                            Doer doer = new Doer(token);
+                            SharedPrefManager.getInstance(getContext()).userLogin(doer);
+                            Fragment f = new doerHomeFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, f);
+                            ft.commit();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }) {
 
-                        Toast.makeText(getContext(), obj.getString("success"), Toast.LENGTH_SHORT).show();
-                        JSONObject userJson = obj.getJSONObject("user");
-
-                        Doer user = new Doer(userJson.getString(
-                                "email"), userJson.getString("username"),userJson.getString("mobile")
-
-                        );*/
-                    JSONObject obj = new JSONObject(response);
-                    JSONObject userDoer = obj.getJSONObject("success");
-                    String token = userDoer.getString("token");
-
-                    Log.e("Token From API ==", token);
-
-                    Doer user = new Doer(token);
-
-                    SharedPrefManager.getInstance(getContext()).userLogin(user);
-
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("mobile", phoneNomber);
+                final Map<String, String> params = new HashMap<>();
                 params.put("name", username);
                 params.put("email", email);
+                params.put("phone", phoneNomber);
+                params.put("role", role);
+                params.put("country", "sss");
+                params.put("knowUs", howKnowUs);
                 params.put("password", password);
-                params.put("howKnowUs", howKnowUs);
                 return params;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-        Log.e("string Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
-
     }
 
     private boolean validateEmail() {
@@ -271,11 +300,38 @@ public class DoerRegistrationFragment extends Fragment {
         }
     }
 
-    private void checkLocation() {
+    public String getLoc() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Criteria c = new Criteria();
+        //if we pass false than
+        //it will check first satellite location than Internet and than Sim Network
+        provider = locationManager.getBestProvider(c, false);
+        Toast.makeText(getContext(), provider, Toast.LENGTH_LONG).show();
 
+        if ((ActivityCompat.checkSelfPermission(getContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            location = locationManager.getLastKnownLocation(provider);
+            lng = location.getLongitude();
+            lat = location.getLatitude();
+            Geocoder geocoder = new Geocoder(getContext());
+            List<Address> addresses = null;
+            try {
+                addresses = geocoder.getFromLocation(lat, lng, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("Error ", e.toString());
+            }
+            String city;
+            city = addresses.get(0).getLocality().concat(" ");
+            Log.e("Exact City", city);
 
+            Toast.makeText(getContext(), "the location is makkah ", Toast.LENGTH_LONG).show();
+            return city = city.trim();
+        } else {
+            Toast.makeText(getContext(), "Can not detect the location ", Toast.LENGTH_LONG).show();
+        }
+        return "No Result for Location Detection";
     }
 }
-
-
-

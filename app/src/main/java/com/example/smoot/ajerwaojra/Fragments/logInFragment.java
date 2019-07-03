@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
+import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
@@ -39,7 +40,8 @@ public class logInFragment extends Fragment {
     EditText phoneNumber ;
     Button loginButton;
     private ProgressBar progressBar;
-
+    String role ;
+    String token;
 
     AlertDialog builder;
 
@@ -77,6 +79,23 @@ public class logInFragment extends Fragment {
             public void onClick(View v) {
                 Log.e("hellow ","hellow");
                 login();
+                if (role=="Requester"){
+                    Requester user = new Requester(token);
+                    SharedPrefManager.getInstance(getContext()).userLogin(user);
+                    Fragment fragment = new RequestsFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.container, fragment);
+                    ft.commit();
+                }
+                else {
+                    Doer doer = new Doer(token);
+                    SharedPrefManager.getInstance(getContext()).userLogin(doer);
+                    Fragment f = new doerHomeFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.container, f);
+                    ft.commit();}
             }
         });
 
@@ -93,21 +112,13 @@ public class logInFragment extends Fragment {
                 @Override
                 public void onResponse(String response) {
                     try {
-                        Log.e("response Result == ", response.toString());
-                        progressBar.setVisibility(View.GONE);
+                        Log.e("response Result == ", response);
+                      //  progressBar.setVisibility(View.GONE);
                         JSONObject obj = new JSONObject(response);
-                        JSONObject success = obj.getJSONObject("success");
-                        String token = success.getString("token");
-                        Requester user = new Requester(token);
-                        SharedPrefManager.getInstance(getContext()).userLogin(user);
-                        Log.e("Token Result == ", token);
-                       // Toast.makeText(getContext(),token,Toast.LENGTH_LONG).show();
+                        token = obj.getString("access_token");
+                        JSONObject client = new JSONObject("user");
+                        role = client.getString("role");
 
-                        Fragment fragment = new RequestsFragment();
-                        FragmentManager fm = getFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.container, fragment);
-                        ft.commit();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -115,37 +126,17 @@ public class logInFragment extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("error in log in", error.toString());
+                    Log.e("error in login", error.toString());
                 }
             }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String , String > pramas = new HashMap<String, String>();
-                    pramas.put("email",email);
-                    pramas.put("password", password);
-                    Log.e("Email ---",email );
-                    Log.e("password ---",password );
-                    return pramas;
+                    Map<String , String > paramas = new HashMap<>();
+                    paramas.put("email",email);
+                    paramas.put("password", password);
+                    return paramas;
                 }
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/x-www-form-urlencoded");
-                    headers.put("email",email);
-                    headers.put("password", password);
-                    String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                    //Log.e("my token ", token) ;
-                    Log.e("Email ---",email );
-                    Log.e("password ---",password );
-                    return headers;
-                }
-
-
-
             };
-
             VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-            Log.e("Result of log in : ",VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
-      //  }
     }
 }

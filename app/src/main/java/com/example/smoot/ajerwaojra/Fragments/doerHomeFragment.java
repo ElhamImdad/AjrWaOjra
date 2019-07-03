@@ -4,8 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class doerHomeFragment extends Fragment {
+public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyViewHolder.onCardClick {
 
 
     String url = URLs.URL_GET_REQUSTES_HD;
@@ -49,8 +52,8 @@ public class doerHomeFragment extends Fragment {
     }
 
     public void getAllRequeste(){
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        final RecyclerAdapterHD adapterHD = new RecyclerAdapterHD(umraRequests,this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -72,7 +75,7 @@ public class doerHomeFragment extends Fragment {
                         umraRequests.add(umraRequest);
                     }
                     // getContext() may makes error
-                    final RecyclerAdapterHD adapterHD = new RecyclerAdapterHD(getContext(),umraRequests);
+
                     layoutManager = new GridLayoutManager(getContext(),1);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setHasFixedSize(true);
@@ -84,7 +87,7 @@ public class doerHomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+             error.printStackTrace();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -93,6 +96,14 @@ public class doerHomeFragment extends Fragment {
     }
 
 
-
-
+    @Override
+    public void onCardClickLis(int position) {
+        umraRequests.get(position);
+        Log.d("Click", "Yes Clicked");
+        Fragment f = new RequestDetailFragment();
+        FragmentManager fm = f.getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.container,f);
+        ft.commit();
+    }
 }
