@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -69,33 +70,15 @@ public class logInFragment extends Fragment {
         loginButton = v.findViewById(R.id.loginButton);
         inputPassword = v.findViewById(R.id.inputPassword);
         logInEmail = v.findViewById(R.id.logInEmail);
-       // phoneNumber = v.findViewById(R.id.editTextPhone);
 
         progressBar = v.findViewById(R.id.progressBar3);
-        //mobile = phoneNumber.getText().toString();
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("hellow ","hellow");
 
                 login();
-                if (role=="Requester"){
-                    Requester user = new Requester(token);
-                    SharedPrefManager.getInstance(getContext()).userLogin(user);
-                    Fragment fragment = new RequestsFragment();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.container, fragment);
-                    ft.commit();
-                }
-                else {
-                    Doer doer = new Doer(token);
-                    SharedPrefManager.getInstance(getContext()).userLogin(doer);
-                    Fragment f = new doerHomeFragment();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.container, f);
-                    ft.commit();}
+
             }
         });
 
@@ -104,9 +87,7 @@ public class logInFragment extends Fragment {
     public  void login (){
         final String email = logInEmail.getText().toString().trim();
         final String password = inputPassword.getText().toString().trim();
-     //   if (email.equals("") || password.equals("")) {
-            // TODO 1 : // insert your code
-     //  } else {
+
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -115,8 +96,28 @@ public class logInFragment extends Fragment {
                       //  progressBar.setVisibility(View.GONE);
                         JSONObject obj = new JSONObject(response);
                         token = obj.getString("access_token");
-                        JSONObject client = new JSONObject("user");
+
+                        JSONObject client = obj.getJSONObject("user");
                         role = client.getString("role");
+
+                        Log.e("my role>>>>>>>>",role);
+                        if (role.equalsIgnoreCase("Requester")){
+                            Requester user = new Requester(token);
+                            SharedPrefManager.getInstance(getContext()).userLogin(user);
+                            Fragment fragment = new RequestsFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, fragment);
+                            ft.commit();
+                        }
+                        else {
+                            Doer doer = new Doer(token);
+                            SharedPrefManager.getInstance(getContext()).userLogin(doer);
+                            Fragment f = new doerHomeFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, f);
+                            ft.commit();}
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -136,6 +137,10 @@ public class logInFragment extends Fragment {
                     return paramas;
                 }
             };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }

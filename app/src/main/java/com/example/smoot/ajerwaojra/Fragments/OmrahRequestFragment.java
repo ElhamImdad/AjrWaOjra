@@ -147,7 +147,7 @@ public class OmrahRequestFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
-            //    headers.put("Content-Type", "application/json");
+           //     headers.put("Content-Type", "application/json");
              //   headers.put("X-Requested-With","XMLHttpRequest");
               //  headers.put("Authorization", "Bearer njhnhnj");
                 headers.put("Accept","application/json");
@@ -155,8 +155,6 @@ public class OmrahRequestFragment extends Fragment {
                 Log.e("------------","00");
                 return headers;
             }
-
-
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 5000,

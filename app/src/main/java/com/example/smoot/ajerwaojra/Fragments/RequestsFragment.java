@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 public class RequestsFragment extends Fragment implements AdapterView.OnItemClickListener{
     private TextView textViewUmraName;
     private RequestQueue mQueue;
-    private ImageView addRequestBtn;
+    private ImageView addRequestBtn, norequestImg;
     Fragment newReqestFragment;
     CardView cardView;
 
@@ -85,12 +86,15 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
 
             // call json method
 
-
+        norequestImg =(ImageView) v.findViewById(R.id.noRequestImg);
+        Log.e("list size ", String.valueOf(umraListInProgress.size()));
         if (umraListInProgress.size() == 0){
-            ImageView imageview =(ImageView) v.findViewById(R.id.noRequestImg);
-            imageview.setVisibility(View.VISIBLE);
+            Log.e("visible","???");
+            norequestImg.setVisibility(View.VISIBLE);
+        }else{
+            Log.e("invisible","invisible");
+            norequestImg.setVisibility(View.INVISIBLE);
         }
-
         return v;
     }
     @Override
@@ -136,6 +140,7 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
 
                                 recyclerView.setAdapter(adapter);
                             }
+
                         } catch (JSONException excep) {
                             excep.printStackTrace();
                             Log.e("JSON Exception???",excep.toString());
@@ -148,10 +153,10 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
                 Log.e("volleyErro in list req>",error.toString());
             }
         });
-/*        request.setRetryPolicy(new DefaultRetryPolicy(
+       request.setRetryPolicy(new DefaultRetryPolicy(
                 5000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         mQueue.add(request);
     }

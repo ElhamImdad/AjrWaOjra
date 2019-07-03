@@ -29,10 +29,8 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
         this.umraListInProgress = umraListInProgress;
     }
     public  class MyViewHolder extends RecyclerView.ViewHolder  {
-        TextView textName;
-        TextView date;
-        ImageView personIcon;
-        ImageView calIcon;
+        TextView textName, date;
+        ImageView personIcon, calIcon;
         CardView cardView;
 
 
@@ -59,6 +57,7 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
       //  viewHolder.textName.setText(umraListInProgress.get(i).getUmraName());
         final OmraInfo item = umraListInProgress.get(i);
         viewHolder.textName.setText(item.getUmraName());
+        viewHolder.date.setText(item.getStatus());
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

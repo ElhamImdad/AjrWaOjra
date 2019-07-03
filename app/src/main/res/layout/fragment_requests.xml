@@ -123,8 +123,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView11"
         android:layout_width="333dp"
-        android:layout_height="369dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="385dp"
+        app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
