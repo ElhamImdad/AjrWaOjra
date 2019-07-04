@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.smoot.ajerwaojra.Adapter.RequestsAdapter;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
 
@@ -32,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestsFragment extends Fragment implements AdapterView.OnItemClickListener{
     private TextView textViewUmraName;
@@ -79,21 +83,12 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
             recyclerView.setLayoutManager(layoutManager);
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-          //  recyclerView.setAdapter(adapter);
-
-
-
-
-            // call json method
 
         norequestImg =(ImageView) v.findViewById(R.id.noRequestImg);
         Log.e("list size ", String.valueOf(umraListInProgress.size()));
         if (umraListInProgress.size() == 0){
             Log.e("visible","???");
             norequestImg.setVisibility(View.VISIBLE);
-        }else{
-            Log.e("invisible","invisible");
-            norequestImg.setVisibility(View.INVISIBLE);
         }
         return v;
     }
@@ -122,23 +117,22 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
                             Log.e("list order response>>>",response.toString());
                             JSONArray jsonObj = response.getJSONArray("orders");
 
-                        //    JSONObject jsonObj = response.getJSONObject("order");
                             OmraInfo omraInfoObject;
                            for (int i = 0; i < jsonObj.length(); i++){
                                 omraInfoObject = new OmraInfo();
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getString("name"));
                                omraInfoObject.setStatus(jsonObj.getJSONObject(i).getString("status"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getString("doer_name"));
-                               /* omraInfoObject.setUmraName(jsonObj.getString("name"));
-                                omraInfoObject.setStatus(jsonObj.getString("status"));
-                                omraInfoObject.setUmraPrayer(jsonObj.getString("doaa"));*/
-                       //     Log.e("umra name>---",jsonObj.getJSONObject(i).getString("name") );
-                         //   Log.e("umra status>---",jsonObj.getJSONObject(i).getString("status") );
+
                                 umraListInProgress.add(omraInfoObject);
-                                Log.e("my list is >---",umraListInProgress.toString());
+                               Log.e("my list is >---",umraListInProgress.toString());
                                 adapter = new RequestsAdapter(getContext(), umraListInProgress);
 
                                 recyclerView.setAdapter(adapter);
+                            }
+                            if (umraListInProgress.size() != 0){
+                                Log.e("invisible","invisible");
+                                norequestImg.setVisibility(View.INVISIBLE);
                             }
 
                         } catch (JSONException excep) {
@@ -152,7 +146,24 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
                 error.printStackTrace();
                 Log.e("volleyErro in list req>",error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                 //    headers.put("Content-Type", "application/json;  charset=UTF-8\"");
+                headers.put("Accept","application/json");
+                //     headers.put("Content-Type", "application/json");
+                //   headers.put("X-Requested-With","XMLHttpRequest");
+
+                String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+            //    Log.e("token for user",token);
+                headers.put("Authorization", "Bearer "+token);
+
+
+                Log.e("request fragment--","header");
+                return headers;
+            }
+        };
        request.setRetryPolicy(new DefaultRetryPolicy(
                 5000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

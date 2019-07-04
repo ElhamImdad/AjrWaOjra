@@ -19,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
@@ -103,13 +104,12 @@ public class OmrahRequestFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
-
+                        Log.e("respons of request",response.toString());
                         try {
-                            Log.e("respons of request",response.toString());
+
                             Log.e("Hi girl",":((");
                             //converting response to json object
                             JSONObject jsonObj = new JSONObject(response);
-                            Log.e("respons of request",response.toString());
                             JSONObject orderr = jsonObj.getJSONObject("order");
                             OmraInfo omraInfoObject;
                             //   for (int i = 0; i < jsonArray.length(); i++){
@@ -117,14 +117,15 @@ public class OmrahRequestFragment extends Fragment {
                             omraInfoObject.setUmraName(orderr.getString("name"));
                             omraInfoObject.setStatus(orderr.getString("status"));
                             omraInfoObject.setUmraPrayer(orderr.getString("doaa"));
-                            Log.e("umra name>---",orderr.getString("name") );
-                            Log.e("umra status>---",orderr.getString("status") );
+                       //     Log.e("umra name>---",orderr.getString("name") );
+                         //   Log.e("umra status>---",orderr.getString("status") );
                             umraListInProgress.add(omraInfoObject);
                             Log.e("list container", umraListInProgress.toString());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("catch eroor request,",e.toString());
+
                         }
 
                     }//end onResponse
@@ -132,7 +133,10 @@ public class OmrahRequestFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("error response", error.toString());
+                      //  Log.e("error response", error.toString());
+                        Log.e("hellllll", error.toString());
+                    //    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+
                     }
                 }) {
             @Override
@@ -147,12 +151,16 @@ public class OmrahRequestFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept","application/json");
            //     headers.put("Content-Type", "application/json");
              //   headers.put("X-Requested-With","XMLHttpRequest");
-              //  headers.put("Authorization", "Bearer njhnhnj");
-                headers.put("Accept","application/json");
 
-                Log.e("------------","00");
+                String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+                Log.e("token for user",token);
+                headers.put("Authorization", "Bearer "+token);
+
+
+                Log.e("--------omrah request","header");
                 return headers;
             }
         };

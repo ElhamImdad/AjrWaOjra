@@ -122,7 +122,7 @@ public class RequesterRegistrationFragment extends Fragment {
         final String email = textInputEmail.getText().toString().trim();
         final String password = textInputPassword.getText().toString().trim();
         final String Name = name.getText().toString().trim();
-        final String country = countrySpin.toString().trim();
+        final String country = String.valueOf(Integer.parseInt(countrySpin.toString().trim()));
         final String howKnowUs = howKnowus.toString().trim();
         final String role = "Requester";
 

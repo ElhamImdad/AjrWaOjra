@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
+import com.example.smoot.ajerwaojra.Fragments.RequestDetailsFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.R;
@@ -29,8 +30,12 @@ public class MainActivity extends AppCompatActivity {
         }else{
             setFragment(new FatwaFragment());
         }
+        Intent intent = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null ){
+            setFragmentDetails(new RequestDetailsFragment());
+        }
 
-      //  configureDoer_RequesterButton();
     }
 
    private void setHomeFragment( Fragment home) {
@@ -46,24 +51,10 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.container,fatwa);
         ft.commit();}
 
-   /* private void configureDoer_RequesterButton(){
-        ImageButton doerBtn = (ImageButton) findViewById(R.id.doerImag);
-        ImageButton requesterBtn = (ImageButton) findViewById(R.id.requesterImag);
-
-        doerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, activity_doer_reg.class));
-            //     intent = new Intent(getApplicationContext(), activity_doer_reg.class);
-             //   startActivity(intent);
-            }
-        });
-
-        requesterBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ActivityRequesterReg.class));
-            }
-        });
-    }*/
+    private void setFragmentDetails(Fragment details){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.reqDetailPage,details);
+        ft.commit();
+    }
 }

@@ -100,7 +100,6 @@ public class logInFragment extends Fragment {
                         JSONObject client = obj.getJSONObject("user");
                         role = client.getString("role");
 
-                        Log.e("my role>>>>>>>>",role);
                         if (role.equalsIgnoreCase("Requester")){
                             Requester user = new Requester(token);
                             SharedPrefManager.getInstance(getContext()).userLogin(user);
@@ -135,6 +134,22 @@ public class logInFragment extends Fragment {
                     paramas.put("email",email);
                     paramas.put("password", password);
                     return paramas;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    //    headers.put("Content-Type", "application/json;  charset=UTF-8\"");
+                //    headers.put("Accept","application/json");
+                  ///     headers.put("Content-Type", "application/json");
+                    //   headers.put("X-Requested-With","XMLHttpRequest");
+
+                    String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+                  //  Log.e("token for user",token);
+                 //   headers.put("Authorization", "Bearer Token"+token);
+
+
+                    Log.e("request fragment--","header");
+                    return headers;
                 }
             };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
