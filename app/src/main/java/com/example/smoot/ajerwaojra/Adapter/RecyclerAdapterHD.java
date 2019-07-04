@@ -1,12 +1,18 @@
 package com.example.smoot.ajerwaojra.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.smoot.ajerwaojra.Fragments.RequestDetailFragment;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 import java.util.ArrayList;
@@ -24,7 +30,7 @@ import java.util.ArrayList;
 
         @NonNull
         @Override
-        public RecyclerAdapterHD.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.umrarequestcard,viewGroup,false);
             return new MyViewHolder(view , onCardClick);
 
@@ -48,21 +54,6 @@ import java.util.ArrayList;
             return requestList.size();
         }
 
-        /*  @Override
-          public View getView(int position, View view, ViewGroup parent) {
-              LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-              if (view==null){
-                  view=inflater.inflate(R.layout.umrarequestcard, null); }
-
-              TextView requesterName = (TextView) view.findViewById(R.id.requesterName);
-              TextView countryName = (TextView) view.findViewById(R.id.country);
-              TextView date = (TextView) view.findViewById(R.id.date);
-              // put data int text views
-              requesterName.setText(requestList.get(position).getRequesterName().toString());
-              countryName.setText(requestList.get(position).getCountry().toString());
-              date.setText(requestList.get(position).getDate().toString());
-              return view;
-          }*/
         public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             TextView requesterName;
             TextView countryName;
@@ -83,7 +74,9 @@ import java.util.ArrayList;
 
             @Override
             public void onClick(View v){
-            onCardClick.onCardClickLis(getAdapterPosition());
+           onCardClick.onCardClickLis(getAdapterPosition());
+
+
             }
             public interface onCardClick {
                 void onCardClickLis(int position);

@@ -8,16 +8,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
+import com.example.smoot.ajerwaojra.Fragments.RequestDetailFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
 
 
     private Intent intent;
     private Intent intent2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             setFragment(new FatwaFragment());
         }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
       //  configureDoer_RequesterButton();
     }
@@ -66,4 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }*/
+
+
 }
+

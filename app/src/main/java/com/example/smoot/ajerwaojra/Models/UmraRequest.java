@@ -4,6 +4,8 @@ package com.example.smoot.ajerwaojra.Models;
         private String country;
         private String date;
         private String countryFlagImagePath;
+        private String doaa;
+        private String umraOwner ;
 
         public String getRequesterName() {
             return requesterName;
@@ -35,6 +37,22 @@ package com.example.smoot.ajerwaojra.Models;
 
         public void setCountryFlagImagePath(String countryFlagImagePath) {
             this.countryFlagImagePath = countryFlagImagePath;
+        }
+
+        public String getDoaa() {
+            return doaa;
+        }
+
+        public void setDoaa(String doaa) {
+            this.doaa = doaa;
+        }
+
+        public String getUmraOwner() {
+            return umraOwner;
+        }
+
+        public void setUmraOwner(String umraOwner) {
+            this.umraOwner = umraOwner;
         }
     }
 
