@@ -1,16 +1,25 @@
-package com.example.smoot.ajerwaojra.Helpers;
+package com.example.smoot.ajerwaojra.Models;
 
 public class OmraInfo {
-    String doerName;
+    String umraName;
     String umraPrayer;
     String status;
+    String doerOmraName;
 
     public OmraInfo() {
     }
 
     public OmraInfo(String umraName, String umraPrayer) {
-        this.doerName = umraName;
+        this.umraName = umraName;
         this.umraPrayer = umraPrayer;
+    }
+
+    public String getDoerOmraName() {
+        return doerOmraName;
+    }
+
+    public void setDoerOmraName(String doerOmraName) {
+        this.doerOmraName = doerOmraName;
     }
 
     public String getStatus() {
@@ -21,12 +30,12 @@ public class OmraInfo {
         this.status = status;
     }
 
-    public String getDoerName() {
-        return doerName;
+    public String getUmraName() {
+        return umraName;
     }
 
-    public void setDoerName(String umraName) {
-        this.doerName = umraName;
+    public void setUmraName(String umraName) {
+        this.umraName = umraName;
     }
 
     public String getUmraPrayer() {

@@ -1,7 +1,5 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,12 +9,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -32,28 +28,20 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +103,7 @@ public class DoerRegistrationFragment extends Fragment {
         //  progressBar = view.findViewById(R.id.progressBarr);
         confirm = view.findViewById(R.id.doerRegisterButton);
         requestPermission();
+
         //  client = LocationServices.getFusedLocationProviderClient(getContext());
      //   doerLoc = getLoc();
 
@@ -134,6 +123,17 @@ public class DoerRegistrationFragment extends Fragment {
 /*        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (validateEmail() && validatePassword() && isValidMobile()) {
+                //    doerRegister();
+                    Fragment f = new RequestsFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.container, f);
+                    ft.commit();
+
+            }
+
                 if (ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                }
@@ -171,8 +171,6 @@ public class DoerRegistrationFragment extends Fragment {
                      Toast.makeText(getContext(),"يجب ان يكون موقعك الحالي مكة ", Toast.LENGTH_LONG).show();
                  }
             }
-
-
         });*/
         });
 
@@ -251,6 +249,7 @@ public class DoerRegistrationFragment extends Fragment {
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
 
     private boolean validateEmail() {
         String emailInput = textInputEmail.getText().toString().trim();

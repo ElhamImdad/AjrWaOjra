@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">AjerWaOjra</string>
+    <string name="date_defoult_value" translatable="false">تحت الطلب</string>
     <string-array name="howDidKnowUs">
         <item>عن طريق تويتر </item>
         <item>عن طريق إعلانات الفيس بوك </item>
@@ -7,9 +8,4 @@
         <item>عن طريق إعلانات سناب شات </item>
         <item>أخرى </item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 </resources>

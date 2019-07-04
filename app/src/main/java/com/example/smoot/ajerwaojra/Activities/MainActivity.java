@@ -8,7 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
+
 import com.example.smoot.ajerwaojra.Fragments.RequestDetailFragment;
+
+import com.example.smoot.ajerwaojra.Fragments.RequestDetailsFragment;
+
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
@@ -35,7 +39,13 @@ public class MainActivity extends AppCompatActivity  {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-      //  configureDoer_RequesterButton();
+        Intent intent = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null ){
+            setFragmentDetails(new RequestDetailsFragment());
+        }
+
+
     }
 
    private void setHomeFragment( Fragment home) {
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity  {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container,fatwa);
         ft.commit();}
+
 
    /* private void configureDoer_RequesterButton(){
         ImageButton doerBtn = (ImageButton) findViewById(R.id.doerImag);
@@ -72,6 +83,13 @@ public class MainActivity extends AppCompatActivity  {
         });
     }*/
 
+
+   private void setFragmentDetails(Fragment details){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.reqDetailPage,details);
+        ft.commit();
+    }
 
 }
 

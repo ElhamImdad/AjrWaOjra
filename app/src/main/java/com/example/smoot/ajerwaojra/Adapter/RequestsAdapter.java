@@ -1,7 +1,11 @@
 package com.example.smoot.ajerwaojra.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.smoot.ajerwaojra.Helpers.OmraInfo;
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
+import com.example.smoot.ajerwaojra.Fragments.RequestDetailsFragment;
+import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
 
 import java.util.ArrayList;
@@ -18,17 +24,15 @@ import java.util.ArrayList;
 public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyViewHolder>{
 
     ArrayList<OmraInfo> umraListInProgress;
-    Context c;
+    Context context;
 
     public RequestsAdapter(Context context, ArrayList<OmraInfo> umraListInProgress) {
-        this.c=context;
+        this.context=context;
         this.umraListInProgress = umraListInProgress;
     }
     public  class MyViewHolder extends RecyclerView.ViewHolder  {
-        TextView textName;
-        TextView date;
-        ImageView personIcon;
-        ImageView calIcon;
+        TextView textName, date;
+        ImageView personIcon, calIcon;
         CardView cardView;
 
 
@@ -39,6 +43,15 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
             date = itemView.findViewById(R.id.dateTextView);
             personIcon = itemView.findViewById(R.id.personIcon);
             calIcon = itemView.findViewById(R.id.calendreIcon);
+
+            textName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("details", textName.getText());
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }
@@ -52,11 +65,15 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
 
     @Override
     public void onBindViewHolder(@NonNull RequestsAdapter.MyViewHolder viewHolder, int i) {
-        viewHolder.textName.setText(umraListInProgress.get(i).getDoerName());
+      //  viewHolder.textName.setText(umraListInProgress.get(i).getUmraName());
         final OmraInfo item = umraListInProgress.get(i);
+        viewHolder.textName.setText(item.getUmraName());
+        viewHolder.date.setText(item.getStatus());
+
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
 /////////*****************************************************************************************
             }
@@ -72,7 +89,16 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
         return umraListInProgress.size();
     }
 
-    private void switchFragment(){
+    private void switchFragment(OmraInfo omraInfo){
+        Fragment mFragment = new RequestDetailsFragment();
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelable("item_selected_key", (Parcelable) omraInfo);
+        mFragment.setArguments(mBundle);
+
+        switchContent(R.id.container, mFragment);
+
+    }
+    public void switchContent(int id, Fragment fragment) {
 
     }
 
