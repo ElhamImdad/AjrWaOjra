@@ -54,7 +54,7 @@ public class OmrahRequestFragment extends Fragment {
         sendBtn = view.findViewById(R.id.sendRequestButton);
         umraListInProgress = new ArrayList<>();
 
-        payPalBtn.setOnClickListener(new View.OnClickListener() {
+        /*payPalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ImageView imageview =(ImageView) view.findViewById(R.id.checkbutton2);
@@ -67,7 +67,7 @@ public class OmrahRequestFragment extends Fragment {
                 ImageView imageview =(ImageView) view.findViewById(R.id.checkbutton1master);
                 imageview.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         returnBTN = view.findViewById(R.id.returnBtn);
        returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
