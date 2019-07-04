@@ -8,21 +8,22 @@ public class Doer {
     private String howDoKnowUs;
     private String doerPassword;
     private String DoerToken;
-    private String token;
-    private  final  String role = "d" ;
+    private String role = "Doer" ;
 
     public String getRole() {
         return role;
     }
 
-    public  Doer(String doerEmail, String doerName) {
+    public  Doer(String doerEmail, String doerName ) {
         this.doerEmail=doerEmail;
         this.doerName=doerName;
     }
-    public  Doer( String doerEmail,String doerName, String phone ){
+    public  Doer( String doerEmail,String doerName, String phone,String token, String role ){
         this.doerEmail=doerEmail;
         this.doerName=doerName;
         this.doerPhone= phone;
+        this.role = role;
+        this.DoerToken = token;
     }
     public Doer(String token) {
         this.DoerToken = token;

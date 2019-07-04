@@ -62,37 +62,7 @@ public class RequestDetailFragment extends Fragment {
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Raghad click button"," yes");
-                Doer r = SharedPrefManager.getInstance(getContext()).getDoer();
-                final String name = r.getDoerName();
-                final    String email = r.getDoerEmail();
-                final String token = r.getDoerToken();
-                Log.e("Doer Token ", token);
-                StringRequest request = new StringRequest(Request.Method.POST, URL_OFFER_SERVICE, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            String message = obj.getString("message");
-                            Log.e("Message of API :", message);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){@Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String , String > paramas = new HashMap<>();
-                    paramas.put("token",token);
-
-                    return paramas;
-                }};
-                VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+                offerService();
             }
         });
 
@@ -100,7 +70,51 @@ public class RequestDetailFragment extends Fragment {
 
         return v;
     }
+    public  void offerService(){
+        Log.e("Raghad click button"," yes");
+        Doer r = SharedPrefManager.getInstance(getContext()).getDoer();
 
+        final  String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+         Log.e("Token Shared",token);
+
+
+        StringRequest request = new StringRequest( Request.Method.POST, URL_OFFER_SERVICE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String message = obj.getString("message");
+                    Log.e("Message of API :", message);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String , String > paramas = new HashMap<>();
+                paramas.put("token",token);
+                return paramas;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String , String > headers = new HashMap<>();
+                headers.put("Accept","application/json");
+                headers.put("Authorization", "Bearer "+token);
+                headers.put("token",token);
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+
+    }
     @Override
     public void onActivityCreated( Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

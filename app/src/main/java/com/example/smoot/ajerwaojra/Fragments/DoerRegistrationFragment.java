@@ -212,6 +212,7 @@ public class DoerRegistrationFragment extends Fragment {
                             JSONObject ob = new JSONObject(response);
                             token = ob.getString("access_token");
                             Log.v("access_token", token);
+
                             Doer doer = new Doer(token);
                             Log.e("token From obj ", doer.getDoerToken());
                             SharedPrefManager.getInstance(getContext()).userLogin(doer);

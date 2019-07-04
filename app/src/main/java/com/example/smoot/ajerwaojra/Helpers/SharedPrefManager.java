@@ -61,8 +61,9 @@ public class SharedPrefManager {
         return new Doer(
                 sharedPreferences.getString(KEY_EMAIL, null) ,
                 sharedPreferences.getString(KEY_USERNAME, null),
-                sharedPreferences.getString(KEY_Phone, null)
-
+                sharedPreferences.getString(KEY_Phone, null),
+                sharedPreferences.getString(TOKEN, null),
+                sharedPreferences.getString(KEY_ROLE, "Doer")
         );
     }
     public Requester getRequester() {
@@ -70,7 +71,8 @@ public class SharedPrefManager {
         return new Requester(
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(TOKEN, null),
-                sharedPreferences.getString(KEY_EMAIL, null)
+                sharedPreferences.getString(KEY_EMAIL, null),
+                sharedPreferences.getString(KEY_ROLE,"Requester")
 
                 );
     }
