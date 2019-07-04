@@ -33,11 +33,11 @@ import java.util.ArrayList;
 
 public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyViewHolder.onCardClick {
 
-
-    String url = URLs.URL_GET_REQUSTES_HD;
     ArrayList<UmraRequest> umraRequests = new ArrayList<UmraRequest>();
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    RecyclerAdapterHD  adapterHD ;
+
     public doerHomeFragment() {
         // Required empty public constructor
     }
@@ -47,20 +47,30 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        recyclerView = container.findViewById(R.id.recyclerView);
-        return inflater.inflate(R.layout.fragment_doer_home, container, false);
+        Log.d("doerhomefragment", "inside on create");
+        View v=  inflater.inflate(R.layout.fragment_doer_home, container, false);
+        recyclerView = v.findViewById(R.id.recyclerView);
+        layoutManager = new GridLayoutManager(getContext(),1);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        getAllRequeste();
+        adapterHD= new RecyclerAdapterHD(umraRequests,this);
+        recyclerView.setAdapter(adapterHD);
+        return v;
+
     }
 
     public void getAllRequeste(){
-        final RecyclerAdapterHD adapterHD = new RecyclerAdapterHD(umraRequests,this);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        Log.d("doerhomefragment", "inside get all requests");
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URLs.URL_GET_REQUSTES_HD, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.d("doerhomefragment", "get responce");
                     JSONArray jsonArray = response.getJSONArray("orders");
                     int size = jsonArray.length();
+                    Log.d("Array Size is ", " "+size);
                     // print the number of requests
-                    Toast.makeText(getContext(),size+" ",Toast.LENGTH_LONG).show();
                     for (int i =0; i<size; i++ ){
                         UmraRequest umraRequest= new UmraRequest();
                         // get objects from the array
@@ -71,15 +81,16 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         umraRequest.setCountryFlagImagePath(object.getString("image"));
                         umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
+                        umraRequest.setDoaa(object.getString("doaa"));
+                        umraRequest.setUmraOwner(object.getString("name"));
                         // add the umra object to the arrayList
                         umraRequests.add(umraRequest);
+                        adapterHD.notifyDataSetChanged();
+
                     }
                     // getContext() may makes error
 
-                    layoutManager = new GridLayoutManager(getContext(),1);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(adapterHD);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,12 +109,14 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
     @Override
     public void onCardClickLis(int position) {
-        umraRequests.get(position);
+        UmraRequest umra =umraRequests.get(position);
+        RequestDetailFragment f = new RequestDetailFragment();
         Log.d("Click", "Yes Clicked");
-        Fragment f = new RequestDetailFragment();
-        FragmentManager fm = f.getFragmentManager();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container,f);
+        ft.addToBackStack(null);
         ft.commit();
+
     }
 }

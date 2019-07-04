@@ -9,7 +9,7 @@ public class Requester {
     private String hoeDoKnowUs ;
     private String password;
     private String token;
-    private  final  String role = "r" ;
+    private String role = "Requester" ;
 
     public String getRole() {
         return role;
@@ -20,10 +20,11 @@ public class Requester {
         this.name=name;
     }
 
-    public Requester(String name, String token, String email) {
+    public Requester(String name, String token, String email, String role) {
         this.name = name;
         this.token = token;
         this.email = email;
+        this.role = role;
     }
 
     public Requester(String token) {
