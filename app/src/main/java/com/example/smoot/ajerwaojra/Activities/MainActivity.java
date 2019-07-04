@@ -9,15 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
-
-import com.example.smoot.ajerwaojra.Fragments.RequestDetailFragment;
-
 import com.example.smoot.ajerwaojra.Fragments.RequestDetailsFragment;
-
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.doerHomeFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
-import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 
 public class MainActivity extends AppCompatActivity  {
@@ -34,7 +29,7 @@ public class MainActivity extends AppCompatActivity  {
 
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
             Log.e("Tag ", "outer if ");
-            if (SharedPrefManager.getInstance(this).getDoer() != null){
+            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")){
                 Log.e("inner "," ineer if ");
                 setHomeFragment(new doerHomeFragment());
             }else{
@@ -47,12 +42,12 @@ public class MainActivity extends AppCompatActivity  {
         }
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
+*/
         Intent intent = getIntent();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null ){
             setFragmentDetails(new RequestDetailsFragment());
-        }*/
+        }
 
 
     }
