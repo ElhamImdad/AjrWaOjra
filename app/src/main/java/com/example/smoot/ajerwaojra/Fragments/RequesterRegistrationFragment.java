@@ -24,6 +24,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
@@ -31,6 +32,7 @@ import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,7 +124,8 @@ public class RequesterRegistrationFragment extends Fragment {
         final String email = textInputEmail.getText().toString().trim();
         final String password = textInputPassword.getText().toString().trim();
         final String Name = name.getText().toString().trim();
-        final String country = String.valueOf(Integer.parseInt(countrySpin.toString().trim()));
+        final String country = (countrySpin.toString().trim());
+      //  Log.e("country int >>", country);
         final String howKnowUs = howKnowus.toString().trim();
         final String role = "Requester";
 
@@ -169,7 +172,7 @@ public class RequesterRegistrationFragment extends Fragment {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("name", Name);
-                params.put("country", country);
+                params.put("country_id", "600");
                 params.put("knowUs", howKnowUs);
                 params.put("role", role);
                 return params;
@@ -183,6 +186,52 @@ public class RequesterRegistrationFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
     private void getCountryList() {
+        Locale[] locales = Locale.getAvailableLocales();
+        ArrayList<String> countries = new ArrayList<String>();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
+        countrySpin.setAdapter(adapter);
+
+    }
+    private void getCountryListFromApi() {
+        String url = "http://ajrandojra.website/api/listRequestsR";
+
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonObj = response.getJSONArray("countries");
+
+                            for (int i = 0; i < jsonObj.length(); i++){
+
+                            }
+
+                        } catch (JSONException excep) {
+                            excep.printStackTrace();
+                            Log.e("JSON Exception???",excep.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.e("volleyErro in list req>",error.toString());
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+      //  mQueue.add(request);
+
         Locale[] locales = Locale.getAvailableLocales();
         ArrayList<String> countries = new ArrayList<String>();
         for (Locale locale : locales) {

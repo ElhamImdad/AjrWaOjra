@@ -101,6 +101,7 @@ public class logInFragment extends Fragment {
                         role = client.getString("role");
 
                         if (role.equalsIgnoreCase("Requester")){
+                            Log.e("Requester","Requester");
                             Requester user = new Requester(token);
                             SharedPrefManager.getInstance(getContext()).userLogin(user);
                             Fragment fragment = new RequestsFragment();
