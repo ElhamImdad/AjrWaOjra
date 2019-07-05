@@ -6,6 +6,15 @@ package com.example.smoot.ajerwaojra.Models;
         private String countryFlagImagePath;
         private String doaa;
         private String umraOwner ;
+        private  int id ;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
 
         public String getRequesterName() {
             return requesterName;

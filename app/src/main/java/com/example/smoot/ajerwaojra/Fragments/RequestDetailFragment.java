@@ -42,6 +42,7 @@ public class RequestDetailFragment extends Fragment {
     TextView umraOwner ;
     TextView doaa ;
     Button offerService ;
+    int id;
     public RequestDetailFragment() {
         // Required empty public constructor
     }
@@ -59,6 +60,10 @@ public class RequestDetailFragment extends Fragment {
         umraOwner = v.findViewById(R.id.umraOwner);
         doaa = v.findViewById(R.id.doaa);
         offerService = v.findViewById(R.id.btn_offerService);
+
+        Bundle bundle = getArguments();
+         id = bundle.getInt("id");
+        //date.setText(id);
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +105,7 @@ public class RequestDetailFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String , String > paramas = new HashMap<>();
                 paramas.put("token",token);
+                paramas.put("id",String.valueOf(id));
                 return paramas;
             }
 

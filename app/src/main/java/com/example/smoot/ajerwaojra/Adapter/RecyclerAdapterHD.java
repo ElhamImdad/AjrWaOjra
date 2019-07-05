@@ -51,7 +51,7 @@ import java.util.ArrayList;
 
         @Override
         public int getItemCount() {
-            return requestList.size();
+            return requestList.size()-1;
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

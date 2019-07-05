@@ -1,5 +1,7 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,6 +39,8 @@ import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +50,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import android.provider.Settings;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -66,12 +72,9 @@ public class DoerRegistrationFragment extends Fragment {
     String howKnowUs;
     String token;
     LocationManager locationManager;
-    Location location;
-    String provider;
+    String exactLocation = "";
     final String role = "Doer";
-    public double lng = 0;
-    public double lat = 0;
-    String doerLoc;
+double longitude , latitude;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
@@ -102,77 +105,7 @@ public class DoerRegistrationFragment extends Fragment {
         textphone = view.findViewById(R.id.phoneNumber);
         //  progressBar = view.findViewById(R.id.progressBarr);
         confirm = view.findViewById(R.id.doerRegisterButton);
-        requestPermission();
 
-        //  client = LocationServices.getFusedLocationProviderClient(getContext());
-     //   doerLoc = getLoc();
-
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-         //       if (doerLoc.equals("مكة")) {
-                    if (validateEmail() && validatePassword() && isValidMobile()) {
-                        doerRegister();
-                    }
-          //      }
-           //     else {
-           //         Toast.makeText(getContext(), "يجب ان يكون موقعك الحالي مكة ", Toast.LENGTH_LONG).show();
-            //    }
-            }
-
-/*        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (validateEmail() && validatePassword() && isValidMobile()) {
-                //    doerRegister();
-                    Fragment f = new RequestsFragment();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.container, f);
-                    ft.commit();
-
-            }
-
-                if (ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-               }
-                client.getLastLocation().addOnSuccessListener( (Activity) getContext(), new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-                        try {
-                            Geocoder geocoder = new Geocoder(getContext());
-                            List<Address> addresses = null;
-                            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                            String city, county, state;
-                            city = addresses.get(0).getLocality().concat(" ");
-                            county = addresses.get(0).getCountryName().concat(" ");
-                            state = addresses.get(0).getAdminArea().concat(" ");
-
-                            exactLocation = city;
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                 if (exactLocation=="مكة"){
-                if (validateEmail() && validatePassword() && isValidMobile()) {
-                    doerRegister();
-
-
-                     }
-                }
-                 else {
-                     Toast.makeText(getContext(),"يجب ان يكون موقعك الحالي مكة ", Toast.LENGTH_LONG).show();
-                 }
-            }
-        });*/
-        });
 
         // logIn
         TextView toLogIn = view.findViewById(R.id.logIn);
@@ -186,14 +119,25 @@ public class DoerRegistrationFragment extends Fragment {
                 ft.commit();
             }
         });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if (isValidMobile() && validateEmail() && validatePassword()){
+                doerRegister();
+            }
+            }
+
+
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{ACCESS_FINE_LOCATION}, 1);
 
-    }
+
+
 
     private void doerRegister() {
         phoneNomber = textphone.getText().toString().trim();
@@ -212,7 +156,6 @@ public class DoerRegistrationFragment extends Fragment {
                             JSONObject ob = new JSONObject(response);
                             token = ob.getString("access_token");
                             Log.v("access_token", token);
-
                             Doer doer = new Doer(token);
                             Log.e("token From obj ", doer.getDoerToken());
                             SharedPrefManager.getInstance(getContext()).userLogin(doer);
@@ -303,38 +246,5 @@ public class DoerRegistrationFragment extends Fragment {
         }
     }
 
-    public String getLoc() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        Criteria c = new Criteria();
-        //if we pass false than
-        //it will check first satellite location than Internet and than Sim Network
-        provider = locationManager.getBestProvider(c, false);
-        Toast.makeText(getContext(), provider, Toast.LENGTH_LONG).show();
 
-        if ((ActivityCompat.checkSelfPermission(getContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getContext(),
-                android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            location = locationManager.getLastKnownLocation(provider);
-            lng = location.getLongitude();
-            lat = location.getLatitude();
-            Geocoder geocoder = new Geocoder(getContext());
-            List<Address> addresses = null;
-            try {
-                addresses = geocoder.getFromLocation(lat, lng, 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("Error ", e.toString());
-            }
-            String city;
-            city = addresses.get(0).getLocality().concat(" ");
-            Log.e("Exact City", city);
-
-            Toast.makeText(getContext(), "the location is makkah ", Toast.LENGTH_LONG).show();
-            return city = city.trim();
-        } else {
-            Toast.makeText(getContext(), "Can not detect the location ", Toast.LENGTH_LONG).show();
-        }
-        return "No Result for Location Detection";
-    }
 }
