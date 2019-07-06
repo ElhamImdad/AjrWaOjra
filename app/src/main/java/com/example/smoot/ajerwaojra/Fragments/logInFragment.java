@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -126,6 +127,7 @@ public class logInFragment extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "البريد الالكتروني/كلمة السر خاطئة", Toast.LENGTH_LONG).show();
                     Log.e("error in login", error.toString());
                 }
             }) {

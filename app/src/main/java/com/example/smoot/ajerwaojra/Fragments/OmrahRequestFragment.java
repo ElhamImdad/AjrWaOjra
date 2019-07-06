@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -84,7 +85,8 @@ public class OmrahRequestFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //call method json
-                addNewRequest();
+                    addNewRequest();
+
                 Fragment f = new RequestsFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -95,19 +97,21 @@ public class OmrahRequestFragment extends Fragment {
         return view;
     }//end onCreateView method
 
-    private void addNewRequest(){
+    private void addNewRequest() {
         final String name = inputOmrahName.getText().toString().trim();
         final String pryer = inputOmrahPrayer.getText().toString().trim();
-
+        if (name.isEmpty() || pryer.isEmpty()) {
+            Toast.makeText(getContext(), "الرجاء إدخال جميع البيانات", Toast.LENGTH_LONG).show();
+        } else {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
-                        Log.e("respons of request",response.toString());
+                        Log.e("respons of request", response.toString());
                         try {
 
-                            Log.e("Hi girl",":((");
+                            Log.e("Hi girl", ":((");
                             //converting response to json object
                             JSONObject jsonObj = new JSONObject(response);
                             JSONObject orderr = jsonObj.getJSONObject("order");
@@ -117,14 +121,12 @@ public class OmrahRequestFragment extends Fragment {
                             omraInfoObject.setUmraName(orderr.getString("name"));
                             omraInfoObject.setStatus(orderr.getString("status"));
                             omraInfoObject.setUmraPrayer(orderr.getString("doaa"));
-                       //     Log.e("umra name>---",orderr.getString("name") );
-                         //   Log.e("umra status>---",orderr.getString("status") );
                             umraListInProgress.add(omraInfoObject);
                             Log.e("list container", umraListInProgress.toString());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("catch eroor request,",e.toString());
+                            Log.e("catch eroor request,", e.toString());
 
                         }
 
@@ -133,9 +135,9 @@ public class OmrahRequestFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                      //  Log.e("error response", error.toString());
+                        //  Log.e("error response", error.toString());
                         Log.e("hellllll", error.toString());
-                    //    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        //    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 }) {
@@ -144,23 +146,24 @@ public class OmrahRequestFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);
                 params.put("doaa", pryer);
-             //   params.put("requester_id", String.valueOf(3));
+                //   params.put("requester_id", String.valueOf(3));
                 Log.e("doaa>-----", pryer);
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Accept","application/json");
-           //     headers.put("Content-Type", "application/json");
-             //   headers.put("X-Requested-With","XMLHttpRequest");
+                headers.put("Accept", "application/json");
+                //     headers.put("Content-Type", "application/json");
+                //   headers.put("X-Requested-With","XMLHttpRequest");
 
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                Log.e("token for user",token);
-                headers.put("Authorization", "Bearer "+token);
+                Log.e("token for user", token);
+                headers.put("Authorization", "Bearer " + token);
 
 
-                Log.e("--------omrah request","header");
+                Log.e("--------omrah request", "header");
                 return headers;
             }
         };
@@ -172,7 +175,7 @@ public class OmrahRequestFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
         Log.e("umra Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
 
-
+    }
     }//end method add new request
 
 }//end class

@@ -75,7 +75,7 @@ public class DoerRegistrationFragment extends Fragment {
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
-                    "(?=.*[A-Z])" +
+                  //  "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
 
@@ -104,20 +104,14 @@ public class DoerRegistrationFragment extends Fragment {
         confirm = view.findViewById(R.id.doerRegisterButton);
         requestPermission();
 
-        //  client = LocationServices.getFusedLocationProviderClient(getContext());
-     //   doerLoc = getLoc();
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-         //       if (doerLoc.equals("مكة")) {
                     if (validateEmail() && validatePassword() && isValidMobile()) {
                         doerRegister();
                     }
-          //      }
-           //     else {
-           //         Toast.makeText(getContext(), "يجب ان يكون موقعك الحالي مكة ", Toast.LENGTH_LONG).show();
-            //    }
+
             }
 
 /*        confirm.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +212,7 @@ public class DoerRegistrationFragment extends Fragment {
                             SharedPrefManager.getInstance(getContext()).userLogin(doer);
                             String print = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
                             Log.e("Token from shared pref", print);
+                            Toast.makeText(getContext(), "تم تسجيلك بنجاح", Toast.LENGTH_LONG).show();
                             Fragment f = new doerHomeFragment();
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
@@ -275,7 +270,7 @@ public class DoerRegistrationFragment extends Fragment {
             textInputPassword.requestFocus();
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            textInputPassword.setError("كلمة السر ضعيفة");
+            textInputPassword.setError("كلمة السر يجب أن تحتوي على حروف صغيرة وارقام");
             textInputPassword.requestFocus();
             return false;
         } else {

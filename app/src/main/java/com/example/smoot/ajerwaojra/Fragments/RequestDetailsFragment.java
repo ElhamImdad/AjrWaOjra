@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,10 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
-import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,10 +31,16 @@ import java.util.Map;
 public class RequestDetailsFragment extends Fragment {
     private ImageView returnBTN;
     private RequestQueue mQueue;
+    private TextView omraName, doerName, omraDate, omraDuration;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_details, container, false);
+        omraName = view.findViewById(R.id.textViewOmraName);
+        doerName = view.findViewById(R.id.textDoeName);
+        omraDate = view.findViewById(R.id.textViewDate);
+        omraDuration = view.findViewById(R.id.textViewTime);
+
         returnBTN = view.findViewById(R.id.returnBtn);
         returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,14 +53,14 @@ public class RequestDetailsFragment extends Fragment {
             }
         });
         mQueue = Volley.newRequestQueue(getContext());
-
+        showRequest();
         return view;
     }
 
     private void showRequest(){
         mQueue.start();
 
-        String url = "http://ajrandojra.website/api/listRequestsR";
+        String url = "http://ajrandojra.website/api/listRequest";
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject>() {
@@ -63,17 +68,12 @@ public class RequestDetailsFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             Log.e("list order response>>>",response.toString());
-                            JSONArray jsonObj = response.getJSONArray("orders");
+                            JSONObject orderInfo = response.getJSONObject("order");
 
-                            OmraInfo omraInfoObject;
-                            for (int i = 0; i < jsonObj.length(); i++){
-                                omraInfoObject = new OmraInfo();
-                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getString("name"));
-                                omraInfoObject.setStatus(jsonObj.getJSONObject(i).getString("status"));
-                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getString("doer_name"));
-
-                            }
-
+                            omraName.setText(orderInfo.getString("name"));
+                            doerName.setText(orderInfo.getString("doer_name"));
+                            omraDate.setText(orderInfo.getString("date"));
+                            omraDuration.setText(orderInfo.getString("time"));
                         } catch (JSONException excep) {
                             excep.printStackTrace();
                             Log.e("Exception details???",excep.toString());
@@ -89,15 +89,13 @@ public class RequestDetailsFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json;  charset=UTF-8");
-                //    headers.put("X-Requested-With","XMLHttpRequest");
-
+                headers.put("Accept","application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                Log.e("token for user",token);
-                headers.put("Authorization", token);
-                //   headers.put("Accept","application/json");
-//  headers.put("Authorization", "Bearer "+token);
-                Log.e("------------","00555");
+                Log.e("token in details",token);
+                headers.put("Authorization", "Bearer "+token);
+
+
+                Log.e("--------omrah request","header");
                 return headers;
             }
         };
