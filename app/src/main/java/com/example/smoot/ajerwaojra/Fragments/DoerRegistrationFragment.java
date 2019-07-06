@@ -3,6 +3,7 @@ package com.example.smoot.ajerwaojra.Fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -15,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -71,11 +73,10 @@ public class DoerRegistrationFragment extends Fragment {
     String password;
     String howKnowUs;
     String token;
-    LocationManager locationManager;
-    String exactLocation = "";
+    String exactLocation ;
     final String role = "Doer";
-double longitude , latitude;
-
+    double longitude, latitude;
+   public String city;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     "(?=.*[A-Z])" +
@@ -89,6 +90,10 @@ double longitude , latitude;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+         city = getLocation();
+
+
         View view = inflater.inflate(R.layout.fragment_doer_registration, container, false);
         howKnowus = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
@@ -123,20 +128,57 @@ double longitude , latitude;
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (isValidMobile() && validateEmail() && validatePassword()){
-                doerRegister();
-            }
+                if (exactLocation=="مكة") {
+                    Log.e("outer  if ","yse");
+                    if (isValidMobile() && validateEmail() && validatePassword()) {
+                        Log.e("inner if ","yes");
+                        doerRegister();
+                    }
+                }
+                else{
+                    showMessage();
+                }
             }
 
 
         });
 
+
         // Inflate the layout for this fragment
         return view;
     }
 
+    public String getLocation() {
+        client = LocationServices.getFusedLocationProviderClient(getContext());
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        Log.e("afte if of permission" ,"uuu");
+        client.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+
+                try {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    Geocoder geocoder = new Geocoder(getContext());
+                    List<Address> addresses = null;
+                    addresses = geocoder.getFromLocation(latitude,longitude,1);
+                    String city , county ,state ;
+                    city = addresses.get(0).getLocality().concat("");
 
 
+                    exactLocation=  city ;
+                     Log.e("lll", ""+exactLocation);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return  exactLocation;
+    }
 
 
     private void doerRegister() {
@@ -246,5 +288,21 @@ double longitude , latitude;
         }
     }
 
+    public void showMessage(){
 
+        AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("عذرا.....");
+        alert.setMessage("يجب أن يكون موقعك الحالي مكة لإكمال تسجيل الاشتراك ");
+        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FatwaFragment fragment = new FatwaFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container, fragment);
+                ft.commit();
+            }
+        });
+        alert.show();
+    }
 }

@@ -1,8 +1,15 @@
 package com.example.smoot.ajerwaojra.Fragments;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +26,7 @@ public class FatwaFragment extends Fragment {
     Fragment doerFrag;
     Fragment requesterFrag;
     TextView advisoryOpinion;
+    LocationManager locationManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,11 +56,12 @@ public class FatwaFragment extends Fragment {
         doer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doerFrag = new DoerRegistrationFragment();
+               showMessage();
+              /*  doerFrag = new DoerRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container, doerFrag);
-                ft.commit();
+                ft.commit();*/
             }
         });
 
@@ -68,6 +77,40 @@ public class FatwaFragment extends Fragment {
         });
         // Inflate the layout for this fragment
         return view;
-    }}
+    }
+    public void showMessage(){
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("صلاحيات الوصول......");
+        alert.setMessage("يجب أن يصل التطبيق الى موقعك الحالي ");
+        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if ( !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    // if the GPS is not enabled
+                    Log.e("i am in if", "hi ");
+                    Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    goDoerRegistration();
+                }
+                else
+                {
+                    // the GPS is enabled so go to Doer Registration fragment
+                    goDoerRegistration();
+                }
+
+            }
+        });
+        alert.show();
+    }
+    public void goDoerRegistration(){
+        doerFrag = new DoerRegistrationFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.container, doerFrag);
+        ft.commit();
+    }
+}
 
 
