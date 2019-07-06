@@ -1,6 +1,5 @@
 package com.example.smoot.ajerwaojra.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
-import com.example.smoot.ajerwaojra.Fragments.RequestDetailsFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.doerHomeFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
@@ -35,11 +33,11 @@ public class MainActivity extends AppCompatActivity  {
             setFragment(new FatwaFragment());
         }
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null ){
             setFragmentDetails(new RequestDetailsFragment());
-        }
+        }*/
 
 
     }

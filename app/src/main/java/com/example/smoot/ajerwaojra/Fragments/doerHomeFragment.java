@@ -1,7 +1,5 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -83,6 +80,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         umraRequest.setRequesterName(object.getString("requester_name"));
                         umraRequest.setDoaa(object.getString("doaa"));
                         umraRequest.setUmraOwner(object.getString("name"));
+                        umraRequest.setId(object.getInt("id"));
                         // add the umra object to the arrayList
                         umraRequests.add(umraRequest);
                         adapterHD.notifyDataSetChanged();
@@ -110,10 +108,13 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     @Override
     public void onCardClickLis(int position) {
         UmraRequest umra =umraRequests.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",umra.getId());
         RequestDetailFragment f = new RequestDetailFragment();
         Log.d("Click", "Yes Clicked");
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        f.setArguments(bundle);
         ft.replace(R.id.container,f);
         ft.addToBackStack(null);
         ft.commit();

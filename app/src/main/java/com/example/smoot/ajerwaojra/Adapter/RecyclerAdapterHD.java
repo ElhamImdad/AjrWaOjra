@@ -1,20 +1,16 @@
 package com.example.smoot.ajerwaojra.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.smoot.ajerwaojra.Fragments.RequestDetailFragment;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
+
 import java.util.ArrayList;
 
     public class RecyclerAdapterHD extends  RecyclerView.Adapter<RecyclerAdapterHD.MyViewHolder> {
@@ -51,7 +47,7 @@ import java.util.ArrayList;
 
         @Override
         public int getItemCount() {
-            return requestList.size();
+            return requestList.size()-1;
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

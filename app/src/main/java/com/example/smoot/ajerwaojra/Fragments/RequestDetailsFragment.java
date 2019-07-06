@@ -32,6 +32,7 @@ public class RequestDetailsFragment extends Fragment {
     private ImageView returnBTN;
     private RequestQueue mQueue;
     private TextView omraName, doerName, omraDate, omraDuration;
+    private int id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +41,9 @@ public class RequestDetailsFragment extends Fragment {
         doerName = view.findViewById(R.id.textDoeName);
         omraDate = view.findViewById(R.id.textViewDate);
         omraDuration = view.findViewById(R.id.textViewTime);
+
+        Bundle bundle = getArguments();
+        id = bundle.getInt("id");
 
         returnBTN = view.findViewById(R.id.returnBtn);
         returnBTN.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +70,9 @@ public class RequestDetailsFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e("list order response>>>",response.toString());
                         try {
-                            Log.e("list order response>>>",response.toString());
+
                             JSONObject orderInfo = response.getJSONObject("order");
 
                             omraName.setText(orderInfo.getString("name"));
