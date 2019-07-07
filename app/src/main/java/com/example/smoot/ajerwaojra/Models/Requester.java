@@ -10,6 +10,15 @@ public class Requester {
     private String password;
     private String token;
     private String role = "Requester" ;
+    private int countryID ;
+
+    public int getCountryID() {
+        return countryID;
+    }
+
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
+    }
 
     public String getRole() {
         return role;

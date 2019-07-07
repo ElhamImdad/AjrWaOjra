@@ -76,6 +76,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="122dp"
+                android:layout_marginEnd="122dp"
+                android:fontFamily="@font/arabic_light_0"
+                android:shadowColor="@color/DarkGreen"
+                android:text="تم الاطلاع على الفتوى"
+                android:textColor="@color/DarkGreen"
+                android:textColorHighlight="@color/DarkGreen"
+                android:textColorHint="@color/DarkGreen"
+                android:textColorLink="@color/DarkGreen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
 
         </android.support.constraint.ConstraintLayout>
     </FrameLayout>
