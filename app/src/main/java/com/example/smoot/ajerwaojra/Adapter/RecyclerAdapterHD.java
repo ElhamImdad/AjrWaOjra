@@ -42,12 +42,16 @@ import java.util.ArrayList;
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
         public int getItemCount() {
-            return requestList.size()-1;
+            return requestList.size();
+        }
+        @Override
+        public int getItemViewType(int position) {
+            return position;
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

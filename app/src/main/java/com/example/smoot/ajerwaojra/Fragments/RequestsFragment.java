@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +49,7 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
     RecyclerView.LayoutManager layoutManager;
     private DividerItemDecoration dividerItemDecoration;
     ArrayList<OmraInfo>  umraListInProgress ;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -59,6 +61,18 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
         View v=  inflater.inflate(R.layout.fragment_requests, container, false);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
         umraListInProgress = new ArrayList<>();
+        swipeRefreshLayout = v.findViewById(R.id.swapRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(swipeRefreshLayout.isRefreshing()){
+
+                    showRequest();
+                    if (umraListInProgress.size() != 0){  umraListInProgress.clear();}
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         addRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +90,7 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
             recyclerView = v.findViewById(R.id.recyclerView11);
         mQueue = Volley.newRequestQueue(getContext());
         showRequest();
+        if (umraListInProgress.size() !=0){umraListInProgress.clear();}
             layoutManager = new LinearLayoutManager(getContext());
 
             recyclerView.setHasFixedSize(true);
