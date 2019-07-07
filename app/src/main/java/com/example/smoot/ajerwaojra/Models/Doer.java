@@ -9,6 +9,9 @@ public class Doer {
     private String doerPassword;
     private String DoerToken;
     private String role = "Doer" ;
+    private String profileImage;
+    private  int requestsNo;
+
 
     public String getRole() {
         return role;
