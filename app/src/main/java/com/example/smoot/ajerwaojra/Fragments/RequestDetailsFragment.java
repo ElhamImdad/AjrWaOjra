@@ -76,6 +76,7 @@ public class RequestDetailsFragment extends Fragment {
                             JSONObject orderInfo = response.getJSONObject("order");
 
                             omraName.setText(orderInfo.getString("name"));
+                            Log.e("omra name >>.",(orderInfo.getString("name") ));
                             doerName.setText(orderInfo.getString("doer_name"));
                             omraDate.setText(orderInfo.getString("date"));
                             omraDuration.setText(orderInfo.getString("time"));
