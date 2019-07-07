@@ -2,15 +2,12 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -28,7 +25,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -53,10 +49,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import android.provider.Settings;
-
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-
 public class DoerRegistrationFragment extends Fragment {
     private FusedLocationProviderClient client;
     private Spinner howKnowus;
@@ -79,7 +71,7 @@ public class DoerRegistrationFragment extends Fragment {
    public String city;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
-                    "(?=.*[A-Z])" +
+                  //  "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
 
@@ -126,23 +118,19 @@ public class DoerRegistrationFragment extends Fragment {
         });
 
         confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (exactLocation=="مكة") {
-                    Log.e("outer  if ","yse");
-                    if (isValidMobile() && validateEmail() && validatePassword()) {
-                        Log.e("inner if ","yes");
-                        doerRegister();
-                    }
-                }
-                else{
-                    showMessage();
-                }
-            }
-
-
-        });
-
+                                       @Override
+                                       public void onClick(View v) {
+                                           if (exactLocation == "مكة") {
+                                               Log.e("outer  if ", "yse");
+                                               if (isValidMobile() && validateEmail() && validatePassword()) {
+                                                   Log.e("inner if ", "yes");
+                                                   doerRegister();
+                                               }
+                                           } else {
+                                               showMessage();
+                                           }
+                                       }
+                                   });
 
         // Inflate the layout for this fragment
         return view;

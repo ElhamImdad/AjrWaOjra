@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestsFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class RequestsFragment extends Fragment implements RequestsAdapter.MyViewHolder.onCardClick2{
     private TextView textViewUmraName;
     private RequestQueue mQueue;
     private ImageView addRequestBtn, norequestImg;
@@ -45,7 +44,7 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
     CardView cardView;
 
     RecyclerView recyclerView ;
-    RecyclerView.Adapter adapter;
+    RequestsAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     private DividerItemDecoration dividerItemDecoration;
     ArrayList<OmraInfo>  umraListInProgress ;
@@ -83,7 +82,9 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
             recyclerView.setLayoutManager(layoutManager);
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        adapter = new RequestsAdapter(umraListInProgress, this);
 
+        recyclerView.setAdapter(adapter);
         norequestImg =(ImageView) v.findViewById(R.id.noRequestImg);
         Log.e("list size ", String.valueOf(umraListInProgress.size()));
         if (umraListInProgress.size() == 0){
@@ -92,7 +93,7 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
         }
         return v;
     }
-    @Override
+  /*  @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
       //  OmraInfo omraInfo = (OmraInfo) recyclerView.getIt
         //open alart dialog page information for doer
@@ -102,7 +103,7 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
         ft.replace(R.id.container, f);
         ft.commit();
 
-    }
+    }*/
 
     private void showRequest(){
         mQueue.start();
@@ -123,18 +124,16 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getString("name"));
                                omraInfoObject.setStatus(jsonObj.getJSONObject(i).getString("status"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getString("doer_name"));
-
+                               omraInfoObject.setId(jsonObj.getJSONObject(i).getInt("id"));
                                 umraListInProgress.add(omraInfoObject);
                                Log.e("my list is >---",umraListInProgress.toString());
-                                adapter = new RequestsAdapter(getContext(), umraListInProgress);
 
-                                recyclerView.setAdapter(adapter);
                             }
                             if (umraListInProgress.size() != 0){
                                 Log.e("invisible","invisible");
                                 norequestImg.setVisibility(View.INVISIBLE);
                             }
-
+                            adapter.notifyDataSetChanged();
                         } catch (JSONException excep) {
                             excep.printStackTrace();
                             Log.e("JSON Exception???",excep.toString());
@@ -173,4 +172,19 @@ public class RequestsFragment extends Fragment implements AdapterView.OnItemClic
     }
 
 
+    @Override
+    public void onCardClickLis(int position) {
+        OmraInfo umra =umraListInProgress.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",umra.getId());
+        RequestDetailsFragment f = new RequestDetailsFragment();
+        Log.d("Click card", "requester home");
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        f.setArguments(bundle);
+        ft.replace(R.id.container,f);
+        ft.addToBackStack(null);
+        ft.commit();
+
+    }
 }

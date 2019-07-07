@@ -2,7 +2,6 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +19,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
-import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -5,6 +5,7 @@ public class OmraInfo {
     String umraPrayer;
     String status;
     String doerOmraName;
+    int id;
 
     public OmraInfo() {
     }
@@ -12,6 +13,14 @@ public class OmraInfo {
     public OmraInfo(String umraName, String umraPrayer) {
         this.umraName = umraName;
         this.umraPrayer = umraPrayer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDoerOmraName() {

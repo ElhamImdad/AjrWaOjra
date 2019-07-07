@@ -24,15 +24,14 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
+import com.example.smoot.ajerwaojra.Models.Countries;
 import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,10 +45,9 @@ import java.util.regex.Pattern;
 public class RequesterRegistrationFragment extends Fragment {
 
     private Spinner howKnowus;
-    private EditText textInputEmail;
-    private EditText name;
-    private EditText textInputPassword;
-    private EditText textphone2;
+    private EditText textInputEmail, name, textInputPassword, textphone2;
+    private ArrayList<Countries> goodModelArrayList;
+    private ArrayList<String> names = new ArrayList<String>();
     private Button confirmBtn;
     private ProgressBar progressBar;
     private Spinner countrySpin;
@@ -57,7 +55,7 @@ public class RequesterRegistrationFragment extends Fragment {
     String token;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
-                    "(?=.*[A-Z])" +
+                 //   "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
 
@@ -77,6 +75,8 @@ public class RequesterRegistrationFragment extends Fragment {
 
         howKnowus = v.findViewById(R.id.spinner);
         countrySpin = v.findViewById(R.id.countrySpinner);
+
+
         progressBar = v.findViewById(R.id.progressBar);
         confirmBtn = v.findViewById(R.id.confirm);
         getCountryList();
@@ -124,9 +124,9 @@ public class RequesterRegistrationFragment extends Fragment {
         final String email = textInputEmail.getText().toString().trim();
         final String password = textInputPassword.getText().toString().trim();
         final String Name = name.getText().toString().trim();
-        final String country = (countrySpin.toString().trim());
+        final String country = (countrySpin.getSelectedItem().toString().trim());
       //  Log.e("country int >>", country);
-        final String howKnowUs = howKnowus.toString().trim();
+        final String howKnowUs = howKnowus.getSelectedItem().toString().trim();
         final String role = "Requester";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
@@ -143,6 +143,7 @@ public class RequesterRegistrationFragment extends Fragment {
                             Log.v("access_token", token);
                             Requester requester = new Requester(token);
                             SharedPrefManager.getInstance(getContext()).userLogin(requester);
+                            Toast.makeText(getContext(), "تم تسجيلك بنجاح", Toast.LENGTH_LONG).show();
                             Fragment f = new RequestsFragment();
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
@@ -200,49 +201,6 @@ public class RequesterRegistrationFragment extends Fragment {
 
     }
     private void getCountryListFromApi() {
-        String url = "http://ajrandojra.website/api/listRequestsR";
-
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonObj = response.getJSONArray("countries");
-
-                            for (int i = 0; i < jsonObj.length(); i++){
-
-                            }
-
-                        } catch (JSONException excep) {
-                            excep.printStackTrace();
-                            Log.e("JSON Exception???",excep.toString());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Log.e("volleyErro in list req>",error.toString());
-            }
-        });
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-      //  mQueue.add(request);
-
-        Locale[] locales = Locale.getAvailableLocales();
-        ArrayList<String> countries = new ArrayList<String>();
-        for (Locale locale : locales) {
-            String country = locale.getDisplayCountry();
-            if (country.trim().length() > 0 && !countries.contains(country)) {
-                countries.add(country);
-            }
-        }
-        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
-        countrySpin.setAdapter(adapter);
 
     }
 
@@ -269,7 +227,7 @@ public class RequesterRegistrationFragment extends Fragment {
             textInputPassword.requestFocus();
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            textInputPassword.setError("كلمة السر يجب أن تحتوي على حروف صغيرة وكبيرة وارقام");
+            textInputPassword.setError("كلمة السر يجب أن تحتوي على حروف صغيرة وارقام");
             textInputPassword.requestFocus();
             return false;
         } else {
@@ -282,13 +240,12 @@ public class RequesterRegistrationFragment extends Fragment {
         String regexStr = "^\\+[0-9]{10,13}$";
 
         String number = textphone2.getText().toString();
-
-        if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
-            textphone2.setError("ادخل رقم الجوال بشكل صحيح");
+        if (!textphone2.getText().toString().contains("+")) {
+            textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
-        } else if (!textphone2.getText().toString().contains("+")) {
-            textphone2.setError("يجب أن يحتوي على + ");
+        }else if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
+            textphone2.setError("ادخل رقم الجوال بشكل صحيح");
             textphone2.requestFocus();
             return false;
         } else {
