@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="395dp"
         android:layout_height="615dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,10 +46,10 @@
                 android:layout_height="40dp"
                 android:background="@drawable/rectangle"
                 android:ems="10"
+                android:gravity="right"
                 android:hint="e.g. +966XXXXXXXXX"
                 android:inputType="phone"
                 android:paddingBottom="10dp"
-                android:gravity="right"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
