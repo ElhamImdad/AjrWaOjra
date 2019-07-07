@@ -1,15 +1,19 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.Adapter.RecyclerAdapterHD;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
@@ -34,7 +39,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapterHD  adapterHD ;
-
+    SwipeRefreshLayout swipeRefreshLayout;
+/*    int c1 = getResources().getColor(R.color.lightGreen);
+    int c2 = getResources().getColor(R.color.DarkGreen);
+    int c3 = getResources().getColor(R.color.darkWhite);*/
     public doerHomeFragment() {
         // Required empty public constructor
     }
@@ -50,9 +58,28 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         layoutManager = new GridLayoutManager(getContext(),1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        swipeRefreshLayout = v.findViewById(R.id.swapRefresh);
+       // swipeRefreshLayout.setColorSchemeColors(c1 , c2 , c3 );
         getAllRequeste();
+        // it is so importent to clear the array list in order to prevent items from duplication
+        if (umraRequests.size() != 0){  umraRequests.clear();}
+
         adapterHD= new RecyclerAdapterHD(umraRequests,this);
         recyclerView.setAdapter(adapterHD);
+       // recyclerView.setItemViewCacheSize(umraRequests.size());
+
+        // set onRefresh method
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(swipeRefreshLayout.isRefreshing()){
+
+                getAllRequeste();
+                    if (umraRequests.size() != 0){  umraRequests.clear();}
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return v;
 
     }
@@ -86,19 +113,25 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         adapterHD.notifyDataSetChanged();
 
                     }
+
+                    Log.e("requests No ", ""+umraRequests.size());
                     // getContext() may makes error
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
              error.printStackTrace();
             }
-        });
+        }
+
+        );
+
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
 
@@ -123,7 +156,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         FragmentTransaction ft = fm.beginTransaction();
 
         ft.replace(R.id.container,f);
-      //  ft.addToBackStack(null);
+        ft.addToBackStack(null);
         ft.commit();
 
     }

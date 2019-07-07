@@ -30,6 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:id="@+id/swapRefresh"
+                android:layout_height="match_parent">
+
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
@@ -38,7 +46,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></android.support.v7.widget.RecyclerView>
+                app:layout_constraintTop_toTopOf="parent">
+
+            </android.support.v7.widget.RecyclerView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+
         </android.support.constraint.ConstraintLayout>
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>
