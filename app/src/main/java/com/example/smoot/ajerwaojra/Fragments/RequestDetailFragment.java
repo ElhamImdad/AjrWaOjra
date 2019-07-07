@@ -57,18 +57,21 @@ public class RequestDetailFragment extends Fragment {
         umraOwner = v.findViewById(R.id.umraOwner);
         doaa = v.findViewById(R.id.doaa);
         offerService = v.findViewById(R.id.btn_offerService);
-
+        // get the data from the bundle
         Bundle bundle = getArguments();
-         id = bundle.getInt("id");
-        //date.setText(id);
+        Log.e("Bundle ", bundle.toString());
+        id = bundle.getInt("id");
+        requester.setText( bundle.getString("requester"));
+        country.setText(bundle.getString("country"));
+        date.setText(bundle.getString("date"));
+        umraOwner.setText(bundle.getString("umraOwner"));
+        doaa.setText(bundle.getString("doaa"));
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 offerService();
             }
         });
-
-
 
         return v;
     }

@@ -110,13 +110,20 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         UmraRequest umra =umraRequests.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id",umra.getId());
+        Log.e("id"," "+umra.getId());
+        bundle.putString("requester",umra.getRequesterName());
+        bundle.putString("date",umra.getDate());
+        bundle.putString("country",umra.getCountry());
+        bundle.putString("doaa",umra.getDoaa());
+        bundle.putString("umraOwner",umra.getUmraOwner());
         RequestDetailFragment f = new RequestDetailFragment();
+        f.setArguments(bundle);
         Log.d("Click", "Yes Clicked");
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        f.setArguments(bundle);
+
         ft.replace(R.id.container,f);
-        ft.addToBackStack(null);
+      //  ft.addToBackStack(null);
         ft.commit();
 
     }

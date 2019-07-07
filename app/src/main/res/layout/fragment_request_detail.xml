@@ -45,21 +45,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    android:text="Requester Name" />
+                    android:text="Requester Name"
+                    android:id="@+id/requesterName"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    android:text="Requester Country " />
+                    android:text="Requester Country "
+                    android:id="@+id/country"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    android:text="Date Of Request" />
+                    android:text="Date Of Request"
+                    android:id="@+id/date"/>
 
             </LinearLayout>
 
