@@ -22,9 +22,11 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
@@ -32,6 +34,7 @@ import com.example.smoot.ajerwaojra.Models.Countries;
 import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +44,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import static android.R.layout.simple_spinner_item;
 
 public class RequesterRegistrationFragment extends Fragment {
 
@@ -76,7 +81,6 @@ public class RequesterRegistrationFragment extends Fragment {
         howKnowus = v.findViewById(R.id.spinner);
         countrySpin = v.findViewById(R.id.countrySpinner);
 
-
         progressBar = v.findViewById(R.id.progressBar);
         confirmBtn = v.findViewById(R.id.confirm);
         getCountryList();
@@ -106,16 +110,6 @@ public class RequesterRegistrationFragment extends Fragment {
             }
         });
 
-      /*  if (SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
-          //  startActivity(new Intent(getContext(), MainActivity.class));
-            Fragment f = new RequestsFragment();
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.container, f);
-            ft.commit();
-
-        }*/
-        // Inflate the layout for this fragment
         return v;
     }
 
@@ -124,8 +118,8 @@ public class RequesterRegistrationFragment extends Fragment {
         final String email = textInputEmail.getText().toString().trim();
         final String password = textInputPassword.getText().toString().trim();
         final String Name = name.getText().toString().trim();
-        final String country = (countrySpin.getSelectedItem().toString().trim());
-      //  Log.e("country int >>", country);
+        final String country = getCountryListFromApi();
+        Log.e("country int >>", country);
         final String howKnowUs = howKnowus.getSelectedItem().toString().trim();
         final String role = "Requester";
 
@@ -173,7 +167,7 @@ public class RequesterRegistrationFragment extends Fragment {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("name", Name);
-                params.put("country_id", "600");
+                params.put("country_id", country);
                 params.put("knowUs", howKnowUs);
                 params.put("role", role);
                 return params;
@@ -200,8 +194,70 @@ public class RequesterRegistrationFragment extends Fragment {
         countrySpin.setAdapter(adapter);
 
     }
-    private void getCountryListFromApi() {
+    private String getCountryListFromApi() {
+        String URLstring = "http://ajrandojra.website/api/getCountries";
+        final String[] id = {""};
 
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLstring,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.e("strrrrr", ">>" + response.toString());
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            goodModelArrayList = new ArrayList<>();
+                            JSONArray dataArray  = obj.getJSONArray("countries");
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+
+                                Countries playerModel = new Countries();
+                                JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                playerModel.setName(dataobj.getString("name"));
+                                playerModel.setId(dataobj.getString("id"));
+                                playerModel.setImgURL(dataobj.getString("image"));
+
+                                goodModelArrayList.add(playerModel);
+
+                            }
+
+                            for (int i = 0; i < goodModelArrayList.size(); i++){
+                                names.add(goodModelArrayList.get(i).getName().toString());
+                            }
+
+                            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), simple_spinner_item, names);
+                            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                            countrySpin.setAdapter(spinnerArrayAdapter);
+                            String country = countrySpin.getSelectedItem().toString();
+
+                            for (int i = 0; i < goodModelArrayList.size(); i++){
+                                if (country.equals(goodModelArrayList.get(i).getName().toString())){
+                                    id[0] = goodModelArrayList.get(i).getId();
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        requestQueue.add(stringRequest);
+
+    return id[0];
     }
 
     private boolean validateEmail() {
