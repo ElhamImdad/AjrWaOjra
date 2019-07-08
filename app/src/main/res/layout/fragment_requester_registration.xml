@@ -32,47 +32,53 @@
 
             <EditText
                 android:id="@+id/requesterName"
+                android:textColor="@color/DarkGreen"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rectangle"
+                android:layout_marginTop="64dp"
+                android:background="@drawable/edittextbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/editTextPhone"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rectangle"
+                android:textColor="@color/DarkGreen"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/edittextbox"
                 android:ems="10"
-                android:gravity="right"
+                android:gravity="left"
                 android:hint="e.g. +966XXXXXXXXX"
                 android:inputType="phone"
                 android:paddingBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/requesterName" />
 
             <EditText
                 android:id="@+id/textInputEmail"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rectangle"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/edittextbox"
                 android:ems="10"
+                android:textColor="@color/DarkGreen"
                 android:hint="e.g. example@email.com"
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
             <Button
                 android:id="@+id/confirm"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/button"
                 android:text="التالي "
                 android:textColor="@color/white"
@@ -86,11 +92,13 @@
                 android:id="@+id/countrySpinner"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rectangle"
+                android:textColor="@color/DarkGreen"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/edittextbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8">
+                app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
 
 
             </Spinner>
@@ -99,24 +107,28 @@
                 android:id="@+id/textInputPassword"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rectangle"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/edittextbox"
                 android:ems="10"
                 android:gravity="right"
+                android:textColor="@color/DarkGreen"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                app:layout_constraintTop_toBottomOf="@+id/countrySpinner" />
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@drawable/rectangle"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/edittextbox"
+                android:textColor="@color/DarkGreen"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"></Spinner>
+                app:layout_constraintTop_toBottomOf="@+id/textInputPassword"></Spinner>
 
             <TextView
                 android:id="@+id/textView"
@@ -152,13 +164,13 @@
                 android:layout_width="79dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="250dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="رقم الجوال"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/requesterName" />
 
@@ -182,12 +194,13 @@
                 android:layout_width="121dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="212dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="البريد الالكتروني"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
@@ -196,7 +209,7 @@
                 android:layout_width="107dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="226dp"
                 android:background="@color/white"
                 android:gravity="center"
@@ -211,13 +224,13 @@
                 android:layout_width="79dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="250dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text=" كلمة المرور"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/countrySpinner" />
 
@@ -226,12 +239,13 @@
                 android:layout_width="79dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="250dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="الدولة"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputEmail" />
 

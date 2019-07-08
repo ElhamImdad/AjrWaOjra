@@ -2,6 +2,7 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,12 +14,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,13 +68,13 @@ public class DoerRegistrationFragment extends Fragment {
     String password;
     String howKnowUs;
     String token;
-    String exactLocation ;
+    String exactLocation;
     final String role = "Doer";
     double longitude, latitude;
-   public String city;
+    public String city;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
-                  //  "(?=.*[A-Z])" +
+                    //  "(?=.*[A-Z])" +
                     // "(?=.*[@#$%^&+=!])" +
                     "(?=\\S+$).{4,}$");
 
@@ -82,9 +85,9 @@ public class DoerRegistrationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-         city = getLocation();
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getLocation();
+        Log.e("LLLLLLLL", "PP: "+exactLocation);
 
         View view = inflater.inflate(R.layout.fragment_doer_registration, container, false);
         howKnowus = view.findViewById(R.id.spinner);
@@ -118,55 +121,61 @@ public class DoerRegistrationFragment extends Fragment {
         });
 
         confirm.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                           if (exactLocation == "مكة") {
-                                               Log.e("outer  if ", "yse");
-                                               if (isValidMobile() && validateEmail() && validatePassword()) {
-                                                   Log.e("inner if ", "yes");
-                                                   doerRegister();
-                                               }
-                                           } else {
-                                               showMessage();
-                                           }
-                                       }
-                                   });
+            @Override
+            public void onClick(View v) {
+                if (exactLocation == "مكة") {
+                    Log.e("outer  if ", "yse");
+                    if (isValidMobile() && validateEmail() && validatePassword()) {
+                        Log.e("inner if ", "yes");
+                        doerRegister();
+                    }
+                } else {
+                    showMessage();
+                }
+            }
+        });
+
+     ///   getLocation();
+
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    public String getLocation() {
+    public void getLocation() {
         client = LocationServices.getFusedLocationProviderClient(getContext());
-
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            Log.e("inside if  ", "----");
+            return;
         }
-        Log.e("afte if of permission" ,"uuu");
+        LocationServices.getSettingsClient(getContext());
         client.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-
-                try {
+                if (location != null ){
+                    Log.e("Location ","not null ");
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
-                    Geocoder geocoder = new Geocoder(getContext());
-                    List<Address> addresses = null;
-                    addresses = geocoder.getFromLocation(latitude,longitude,1);
-                    String city , county ,state ;
-                    city = addresses.get(0).getLocality().concat("");
+                    try {
+                        Geocoder geocoder = new Geocoder(getContext());
+                        List<Address> addresses = null;
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        String c;
+                        c = addresses.get(0).getLocality().concat(" ");
 
+                        exactLocation = c;
+                        Log.e("LLLLLLLL", "PP: "+exactLocation);
+                    } catch (IOException e) {
 
-                    exactLocation=  city ;
-                     Log.e("lll", ""+exactLocation);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    }
                 }
             }
         });
-        return  exactLocation;
     }
+
 
 
     private void doerRegister() {
@@ -276,9 +285,9 @@ public class DoerRegistrationFragment extends Fragment {
         }
     }
 
-    public void showMessage(){
+    public void showMessage() {
 
-        AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("عذرا.....");
         alert.setMessage("يجب أن يكون موقعك الحالي مكة لإكمال تسجيل الاشتراك ");
         alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
