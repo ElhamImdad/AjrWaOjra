@@ -2,17 +2,16 @@ package com.example.smoot.ajerwaojra.Models;
 
 public class OmraInfo {
     String umraName;
-    String umraPrayer;
     String status;
-    String doerOmraName;
+    String doerOmraName, doaa,date,time;
     int id;
 
     public OmraInfo() {
     }
 
-    public OmraInfo(String umraName, String umraPrayer) {
+    public OmraInfo(String umraName, String doaa) {
         this.umraName = umraName;
-        this.umraPrayer = umraPrayer;
+        this.doaa = doaa;
     }
 
     public int getId() {
@@ -47,11 +46,27 @@ public class OmraInfo {
         this.umraName = umraName;
     }
 
-    public String getUmraPrayer() {
-        return umraPrayer;
+    public String getDoaa() {
+        return doaa;
     }
 
-    public void setUmraPrayer(String umraPrayer) {
-        this.umraPrayer = umraPrayer;
+    public void setDoaa(String doaa) {
+        this.doaa = doaa;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

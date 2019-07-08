@@ -120,7 +120,7 @@ public class OmrahRequestFragment extends Fragment {
                             omraInfoObject = new OmraInfo();
                             omraInfoObject.setUmraName(orderr.getString("name"));
                             omraInfoObject.setStatus(orderr.getString("status"));
-                            omraInfoObject.setUmraPrayer(orderr.getString("doaa"));
+                            omraInfoObject.setDoaa(orderr.getString("doaa"));
                             umraListInProgress.add(omraInfoObject);
                             Log.e("list container", umraListInProgress.toString());
 

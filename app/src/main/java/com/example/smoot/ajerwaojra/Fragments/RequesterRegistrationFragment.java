@@ -85,7 +85,7 @@ public class RequesterRegistrationFragment extends Fragment {
 
         progressBar = v.findViewById(R.id.progressBar);
         confirmBtn = v.findViewById(R.id.confirm);
-        getCountryList();
+        getCountryListFromApi();
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +172,9 @@ public class RequesterRegistrationFragment extends Fragment {
                 params.put("country_id", country);
                 params.put("knowUs", howKnowUs);
                 params.put("role", role);
+                params.put("payment", String.valueOf(0));
+                params.put("review", String.valueOf(0));
+
                 return params;
             }
 
@@ -204,9 +207,6 @@ public class RequesterRegistrationFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.e("strrrrr", ">>" + response.toString());
-
                         try {
 
                             JSONObject obj = new JSONObject(response);

@@ -13,15 +13,14 @@
         android:id="@+id/noRequestImg"
         android:layout_width="191dp"
         android:layout_height="192dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/noreqimg"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/plusOpr"
+        app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/talabatText" />
+        app:layout_constraintTop_toBottomOf="@+id/talabatText"
+        app:layout_constraintVertical_bias="0.61" />
 
 
     <ImageView
@@ -35,57 +34,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="413dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/DarkGreen"
+    <Button
+        android:id="@+id/requestUmrabutton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button"
+        android:text="طلب عمرة"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/requestUmrabutton"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/circle"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/requestText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="15dp"
-        android:text="طلب عمرة"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/requestUmrabutton"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/plusOpr"
-        android:layout_width="28dp"
-        android:layout_height="30dp"
-        android:background="@drawable/plus"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/requestUmrabutton"
-        app:layout_constraintEnd_toEndOf="@+id/requestUmrabutton"
-        app:layout_constraintStart_toStartOf="@+id/requestUmrabutton"
-        app:layout_constraintTop_toTopOf="@+id/requestUmrabutton"
-        app:layout_constraintVertical_bias="0.461" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/talabatText"
@@ -95,9 +56,11 @@
         android:layout_marginTop="108dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/ordertext"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:text="الطلبات"
         android:textAlignment="center"
-        android:textSize="28sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,12 +71,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="الرئيسية"
         android:textColor="@android:color/background_light"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/talabatText"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.075"
@@ -121,31 +84,68 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/swapRefreshLayout"
+        android:layout_width="333dp"
+        android:layout_height="380dp"
+        app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/swapRefreshLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView11"
-            android:layout_width="333dp"
-            android:layout_height="385dp"
-
-            android:paddingStart="10dp"
-            android:paddingTop="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/talabatText">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         </android.support.v7.widget.RecyclerView>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="300dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangle_green"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/talabatText">
+
+        <Button
+            android:id="@+id/inProgressBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:text="قيد التنفيذ"
+            android:textColor="#0E9447" />
+
+        <Button
+            android:id="@+id/donBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:text="المكتملة"
+            android:textColor="#0E9447" />
+
+        <Button
+            android:id="@+id/waitingBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:text="قيد الانتظار"
+            android:textColor="#0E9447" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

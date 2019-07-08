@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -38,18 +40,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestsFragment extends Fragment implements RequestsAdapter.MyViewHolder.onCardClick2{
-    private TextView textViewUmraName;
-    private RequestQueue mQueue;
-    private ImageView addRequestBtn, norequestImg;
     Fragment newReqestFragment;
     CardView cardView;
-
     RecyclerView recyclerView ;
     RequestsAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    private DividerItemDecoration dividerItemDecoration;
     ArrayList<OmraInfo>  umraListInProgress ;
+    ArrayList<OmraInfo>  umraListDone ;
+    ArrayList<OmraInfo>  umraListPending;
     SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textViewUmraName;
+    private RequestQueue mQueue;
+    private ImageView  norequestImg;
+    private Button addRequestBtn, pendingBTN, doneBTN, inProgressBTN;
+    private LinearLayout linearLayout;
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -58,17 +62,33 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=  inflater.inflate(R.layout.fragment_requests, container, false);
+        View v = inflater.inflate(R.layout.fragment_requests, container, false);
+        linearLayout = v.findViewById(R.id.linearLayout);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
+        norequestImg = (ImageView) v.findViewById(R.id.noRequestImg);
+        pendingBTN = v.findViewById(R.id.waitingBtn);
+        doneBTN = v.findViewById(R.id.donBtn);
+        inProgressBTN = v.findViewById(R.id.inProgressBtn);
         umraListInProgress = new ArrayList<>();
+        umraListDone = new ArrayList<>();
+        umraListPending = new ArrayList<>();
+
         swipeRefreshLayout = v.findViewById(R.id.swapRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
 
                     showRequest();
-                    if (umraListInProgress.size() != 0){  umraListInProgress.clear();}
+                    if (umraListInProgress.size() != 0 ) {
+                        umraListInProgress.clear();
+                    }
+                    if (umraListPending.size() !=0){
+                        umraListPending.clear();
+                    }
+                    if (umraListDone.size() !=0){
+                        umraListDone.clear();
+                    }
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -84,28 +104,49 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
             }
         });
 
-
-
-            Log.e("Hello my request","Fragment class");
-            recyclerView = v.findViewById(R.id.recyclerView11);
+        recyclerView = v.findViewById(R.id.recyclerView11);
         mQueue = Volley.newRequestQueue(getContext());
         showRequest();
-        if (umraListInProgress.size() !=0){umraListInProgress.clear();}
-            layoutManager = new LinearLayoutManager(getContext());
 
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(layoutManager);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        adapter = new RequestsAdapter(umraListInProgress, this);
 
-        recyclerView.setAdapter(adapter);
-        norequestImg =(ImageView) v.findViewById(R.id.noRequestImg);
-        Log.e("list size ", String.valueOf(umraListInProgress.size()));
-        if (umraListInProgress.size() == 0){
-            Log.e("visible","???");
+        inProgressBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickImProgress();
+            }
+        });
+        pendingBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickPending();
+            }
+        });
+        doneBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickDone();
+            }
+        });
+        if (umraListInProgress.size() == 0 && umraListPending.size() == 0 && umraListDone.size() ==0) {
+            Log.e("visible", "333");
             norequestImg.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.INVISIBLE);
         }
+        if (umraListInProgress.size() != 0 ) {
+            umraListInProgress.clear();
+        }
+        if (umraListPending.size() !=0){
+            umraListPending.clear();
+        }
+        if (umraListDone.size() !=0){
+            umraListDone.clear();
+        }
+
         return v;
     }
   /*  @Override
@@ -119,7 +160,34 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
         ft.commit();
 
     }*/
+    private void clickImProgress(){
+        if (umraListInProgress.size() == 0 ) {
+            Log.e("visible", "???");
+            norequestImg.setVisibility(View.VISIBLE);
+        }
+        adapter = new RequestsAdapter(umraListInProgress, this);
+        recyclerView.setAdapter(adapter);
 
+
+    }
+    private void clickPending(){
+        if (umraListPending.size() == 0 ) {
+            Log.e("visible", "???");
+            norequestImg.setVisibility(View.VISIBLE);
+        }
+        adapter = new RequestsAdapter(umraListPending, this);
+        recyclerView.setAdapter(adapter);
+
+    }
+    private void clickDone(){
+        if (umraListDone.size() == 0) {
+            Log.e("visible", "???");
+            norequestImg.setVisibility(View.VISIBLE);
+        }
+        adapter = new RequestsAdapter(umraListDone, this);
+        recyclerView.setAdapter(adapter);
+
+    }
     private void showRequest(){
         mQueue.start();
 
@@ -130,25 +198,42 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.e("list order response>>>",response.toString());
+                            Log.e("list order respons>>---",response.toString());
                             JSONArray jsonObj = response.getJSONArray("orders");
 
                             OmraInfo omraInfoObject;
                            for (int i = 0; i < jsonObj.length(); i++){
+                               String status = jsonObj.getJSONObject(i).getString("status");
+
                                 omraInfoObject = new OmraInfo();
-                               omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getString("name"));
-                               omraInfoObject.setStatus(jsonObj.getJSONObject(i).getString("status"));
-                               omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getString("doer_name"));
                                omraInfoObject.setId(jsonObj.getJSONObject(i).getInt("id"));
-                                umraListInProgress.add(omraInfoObject);
+                               omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getString("doer_name"));
+                               omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getString("name"));
+                               omraInfoObject.setDoaa(jsonObj.getJSONObject(i).getString("doaa"));
+                               omraInfoObject.setStatus(status);
+                               omraInfoObject.setDate(jsonObj.getJSONObject(i).getString("time"));
+                               omraInfoObject.setTime(jsonObj.getJSONObject(i).getString("date"));
+
+                               if (status.equalsIgnoreCase("in progress")){
+                                   umraListInProgress.add(omraInfoObject);
+                                //   adapter.notifyDataSetChanged();
+
+                               }else if (status.equalsIgnoreCase("pending")){
+                                   umraListPending.add(omraInfoObject);
+                               //    adapter.notifyDataSetChanged();
+                               }else {
+                                   umraListDone.add(omraInfoObject);
+                                //   adapter.notifyDataSetChanged();
+                               }
+
                                Log.e("my list is >---",umraListInProgress.toString());
 
                             }
-                            if (umraListInProgress.size() != 0){
+                            if (umraListInProgress.size() != 0&& umraListPending.size() !=0 && umraListDone.size()!=0){
                                 Log.e("invisible","invisible");
                                 norequestImg.setVisibility(View.INVISIBLE);
                             }
-                            adapter.notifyDataSetChanged();
+
                         } catch (JSONException excep) {
                             excep.printStackTrace();
                             Log.e("JSON Exception???",excep.toString());
@@ -164,17 +249,9 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
-                 //    headers.put("Content-Type", "application/json;  charset=UTF-8\"");
                 headers.put("Accept","application/json");
-                //     headers.put("Content-Type", "application/json");
-                //   headers.put("X-Requested-With","XMLHttpRequest");
-
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-            //    Log.e("token for user",token);
                 headers.put("Authorization", "Bearer "+token);
-
-
-                Log.e("request fragment--","header");
                 return headers;
             }
         };
