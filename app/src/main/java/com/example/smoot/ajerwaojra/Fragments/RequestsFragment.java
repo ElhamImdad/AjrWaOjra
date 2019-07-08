@@ -135,7 +135,7 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
         if (umraListInProgress.size() == 0 && umraListPending.size() == 0 && umraListDone.size() ==0) {
             Log.e("visible", "333");
             norequestImg.setVisibility(View.VISIBLE);
-            linearLayout.setVisibility(View.INVISIBLE);
+         //   linearLayout.setVisibility(View.INVISIBLE);
         }
         if (umraListInProgress.size() != 0 ) {
             umraListInProgress.clear();
@@ -266,17 +266,45 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
 
     @Override
     public void onCardClickLis(int position) {
-        OmraInfo umra =umraListInProgress.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("id",umra.getId());
-        RequestDetailsFragment f = new RequestDetailsFragment();
-        Log.d("Click card", "requester home");
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        f.setArguments(bundle);
-        ft.replace(R.id.container,f);
-        ft.addToBackStack(null);
-        ft.commit();
+        Log.e("position", String.valueOf(position));
+        if (umraListDone.size()!= 0 && umraListDone.get(position).getStatus().equalsIgnoreCase("done")){
+            OmraInfo umraDone =umraListDone.get(position);
 
+            Log.e("list omra done",umraDone.getStatus().toString());
+            Bundle bundle = new Bundle();
+            bundle.putInt("id",umraDone.getId());
+            RequestDetailsFragment f = new RequestDetailsFragment();
+            Log.e("Click card id", String.valueOf(umraDone.getId()));
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            f.setArguments(bundle);
+            ft.replace(R.id.container,f);
+            ft.addToBackStack(null);
+            ft.commit();
+        }else if (umraListInProgress.size()!= 0 && umraListInProgress.get(position).getStatus().equalsIgnoreCase("in progress")){
+            OmraInfo umraProgress =umraListInProgress.get(position);
+            Bundle bundle2 = new Bundle();
+            bundle2.putInt("id2",umraProgress.getId());
+            InprogressRequestsFragment f2 = new InprogressRequestsFragment();
+            Log.e("Click card 22", "requester fragment 222");
+            FragmentManager fm2 = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft2 = fm2.beginTransaction();
+            f2.setArguments(bundle2);
+            ft2.replace(R.id.container,f2);
+            ft2.addToBackStack(null);
+            ft2.commit();
+        }else if (umraListPending.size()!= 0 && umraListPending.get(position).getStatus().equalsIgnoreCase("pending")){
+            OmraInfo umraPending =umraListPending.get(position);
+            Bundle bundle3 = new Bundle();
+            bundle3.putInt("id3",umraPending.getId());
+            InprogressRequestsFragment f3 = new InprogressRequestsFragment();
+            Log.e("Click card 22", "requester fragment 222");
+            FragmentManager fm3 = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft3 = fm3.beginTransaction();
+            f3.setArguments(bundle3);
+            ft3.replace(R.id.container,f3);
+            ft3.addToBackStack(null);
+            ft3.commit();
+        }
     }
 }
