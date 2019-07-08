@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,6 +41,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapterHD  adapterHD ;
     SwipeRefreshLayout swipeRefreshLayout;
+    Button goSetting;
 /*    int c1 = getResources().getColor(R.color.lightGreen);
     int c2 = getResources().getColor(R.color.DarkGreen);
     int c3 = getResources().getColor(R.color.darkWhite);*/
@@ -49,11 +51,12 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("doerhomefragment", "inside on create");
         View v=  inflater.inflate(R.layout.fragment_doer_home, container, false);
+        goSetting = v.findViewById(R.id.goSetting);
         recyclerView = v.findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(getContext(),1);
         recyclerView.setLayoutManager(layoutManager);
@@ -78,6 +81,18 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                     if (umraRequests.size() != 0){  umraRequests.clear();}
                 }
                 swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        goSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingFragment f = new SettingFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container,f);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
         return v;

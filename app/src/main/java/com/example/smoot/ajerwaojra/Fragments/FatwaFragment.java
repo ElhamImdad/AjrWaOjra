@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -27,10 +28,12 @@ public class FatwaFragment extends Fragment {
     Fragment requesterFrag;
     TextView advisoryOpinion;
     LocationManager locationManager;
+    CheckBox checked ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_fatwa, container, false);
+        checked = view.findViewById(R.id.checkBox);
         doer = view.findViewById(R.id.doer);
         requester = view.findViewById(R.id.requester);
         advisoryOpinion = view.findViewById(R.id.advisoryOpinion);
@@ -48,7 +51,6 @@ public class FatwaFragment extends Fragment {
            ft.commit();
         }
         // if the user is not logged in so go
-       // else{ }
 
 
 
@@ -56,7 +58,7 @@ public class FatwaFragment extends Fragment {
         doer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               showMessage();
+                showMessage();
               /*  doerFrag = new DoerRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -68,11 +70,17 @@ public class FatwaFragment extends Fragment {
         requester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!checked.isChecked()){
+                 readFatwaMessage();
+                }
+                else
+                {
                 requesterFrag = new RequesterRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container, requesterFrag);
-                ft.commit();
+                ft.addToBackStack(null);
+                ft.commit();}
             }
         });
         // Inflate the layout for this fragment
@@ -104,11 +112,18 @@ public class FatwaFragment extends Fragment {
         });
         alert.show();
     }
+    public void readFatwaMessage(){
+        AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("عذرا......");
+        alert.setMessage("يجب الاطلاع على الفتوى ");
+        alert.show();
+    }
     public void goDoerRegistration(){
         doerFrag = new DoerRegistrationFragment();
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container, doerFrag);
+        ft.addToBackStack(null);
         ft.commit();
     }
 }

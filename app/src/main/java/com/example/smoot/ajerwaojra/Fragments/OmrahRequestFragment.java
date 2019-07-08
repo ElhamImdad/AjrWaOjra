@@ -49,8 +49,8 @@ public class OmrahRequestFragment extends Fragment {
         final View view =  inflater.inflate(R.layout.fragment_omra_request, container, false);
         inputOmrahName = view.findViewById(R.id.OmraName);
         inputOmrahPrayer = view.findViewById(R.id.prayer);
-        payPalBtn = view.findViewById(R.id.payPal);
-        masterCardBtn = view.findViewById(R.id.masterCard);
+       /* payPalBtn = view.findViewById(R.id.payPal);
+        masterCardBtn = view.findViewById(R.id.masterCard);*/
         progressBar = view.findViewById(R.id.progressBar2);
         sendBtn = view.findViewById(R.id.sendRequestButton);
         umraListInProgress = new ArrayList<>();
