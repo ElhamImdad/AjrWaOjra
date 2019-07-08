@@ -1,10 +1,7 @@
 package com.example.smoot.ajerwaojra.Adapter;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.smoot.ajerwaojra.Fragments.RequestDetailsFragment;
 import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
 
@@ -24,11 +20,13 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
     ArrayList<OmraInfo> umraListInProgress;
     Context context;
     MyViewHolder.onCardClick2 onCardClick;
+    View.OnClickListener onClickListener;
 
     public RequestsAdapter(ArrayList<OmraInfo> umraListInProgress, MyViewHolder.onCardClick2 onCardClick) {
         this.onCardClick = onCardClick;
         this.umraListInProgress = umraListInProgress;
     }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textName, date;
         ImageView personIcon, calIcon;
@@ -91,17 +89,5 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
         return umraListInProgress.size();
     }
 
-    private void switchFragment(OmraInfo omraInfo){
-        Fragment mFragment = new RequestDetailsFragment();
-        Bundle mBundle = new Bundle();
-        mBundle.putParcelable("item_selected_key", (Parcelable) omraInfo);
-        mFragment.setArguments(mBundle);
-
-        switchContent(R.id.container, mFragment);
-
-    }
-    public void switchContent(int id, Fragment fragment) {
-
-    }
 
 }
