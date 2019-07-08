@@ -4,13 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Fragments.RequestDetailFragment">
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@color/DarkGreen"
+        android:layout_height="130dp"
+        android:src="@drawable/headerrectangle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/goSetting"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="45dp"
+        android:background="@drawable/setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="235dp"
+        android:text="تفاصيل العمرة"
+        android:fontFamily="@font/arabic_light_0"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="250dp"
                 android:gravity="right"
                 android:orientation="vertical"
@@ -41,28 +69,35 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/requesterName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/arabic_medium_0"
                     android:layout_weight="1"
-                    android:text="Requester Name"
-                    android:id="@+id/requesterName"/>
+                    android:text="Requester Name" />
 
                 <TextView
+                    android:id="@+id/country"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/arabic_light_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="fill_horizontal"
                     android:layout_weight="1"
-                    android:text="Requester Country "
-                    android:id="@+id/country"/>
+                    android:drawableRight="@drawable/pen"
+                    android:gravity="center"
+                    android:text="Requester Country " />
 
                 <TextView
+                    android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:fontFamily="@font/arabic_altra_light_0"
                     android:layout_weight="1"
-                    android:text="Date Of Request"
-                    android:id="@+id/date"/>
+                    android:text="Date Of Request" />
 
             </LinearLayout>
 
@@ -71,7 +106,7 @@
                 android:layout_width="88dp"
                 android:layout_height="78dp"
                 android:layout_marginStart="295dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/ic_flag_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +118,7 @@
                 android:layout_width="379dp"
                 android:layout_height="4dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="164dp"
+                android:layout_marginTop="150dp"
                 android:layout_marginEnd="8dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,10 +129,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="280dp"
-                android:text="العمرة باسم :"
+                android:text="العمرة نيابة عن "
                 android:textSize="18dp"
+                android:textColor="@color/darkGray"
+                android:fontFamily="@font/arabic_light_0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,10 +145,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="95dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="55dp"
                 android:layout_marginEnd="192dp"
                 android:text="اسم من له العمرة "
+                android:fontFamily="@font/arabic_medium_0"
                 android:textSize="18dp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,9 +160,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="92dp"
+                android:layout_marginTop="85dp"
                 android:layout_marginEnd="280dp"
-                android:text="الدعاء :"
+                android:text="الدعاء المطلوب "
+                android:textColor="@color/darkGray"
+                android:fontFamily="@font/arabic_light_0"
                 android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,23 +172,25 @@
 
             <Button
                 android:id="@+id/btn_offerService"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="236dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="65dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/button"
                 android:text="موافق"
+                android:fontFamily="@font/arabic_medium_0"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
 
             <ScrollView
                 android:id="@+id/scrollView3"
-                android:layout_width="375dp"
-                android:layout_height="136dp"
-                android:layout_marginTop="116dp"
+                android:layout_width="353dp"
+                android:layout_height="107dp"
+                android:layout_marginTop="110dp"
 
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,11 +206,59 @@
                         android:id="@+id/doaa"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/arabic_medium_0"
                         android:layout_margin="30dp"
+                        android:textColor="@color/black"
                         android:text="اللهم لا سهل الا ما جعلته سهلا
 اللهم اجعل اندرويد سهلا" />
                 </LinearLayout>
             </ScrollView>
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/arabic_light_0"
+                android:text="يجب تنفيذ العمرة في موعد أقصاها 7 أيام من تاريخ قبول الطلب"
+                android:textColor="@color/DarkGreen"
+                android:textColorHighlight="@color/DarkGreen"
+                android:textColorHint="@color/DarkGreen"
+                android:textColorLink="@color/DarkGreen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittextbox"
+                android:ems="10"
+                android:inputType="date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="256dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/white"
+                android:padding="2dp"
+                android:text="تاريخ بدء العمرة"
+                android:fontFamily="@font/arabic_light_0"
+                app:layout_constraintBottom_toBottomOf="@+id/editText"
+                app:layout_constraintEnd_toEndOf="@+id/editText"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </FrameLayout>
