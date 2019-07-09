@@ -1,6 +1,9 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +30,11 @@ import com.example.smoot.ajerwaojra.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static com.example.smoot.ajerwaojra.Helpers.URLs.URL_OFFER_SERVICE;
 
@@ -40,6 +49,9 @@ public class RequestDetailFragment extends Fragment {
     TextView doaa ;
     Button offerService ;
     int id;
+    CheckBox checkBox;
+    EditText umraDate ;
+    DatePickerDialog.OnDateSetListener object;
     public RequestDetailFragment() {
         // Required empty public constructor
     }
@@ -72,7 +84,33 @@ public class RequestDetailFragment extends Fragment {
                 offerService();
             }
         });
+        checkBox= v.findViewById(R.id.checkBox2);
+        umraDate = v.findViewById(R.id.editText);
+        umraDate.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Locale[] locale = Locale.getAvailableLocales();
+                TimeZone tz1 = TimeZone.getTimeZone("AST");
+                Calendar cal = Calendar.getInstance(tz1);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getActivity(),
+                        android.R.style.Theme_Material_Light_Dialog_NoActionBar,
+                        object,year,month,day);
+        dialog.show();
 
+            }
+        });
+        object= new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                // = month+1 ;
+                String date = year + "/" + month + "/" + dayOfMonth;
+                umraDate.setText(date);
+            }
+        };
         return v;
     }
     public  void offerService(){

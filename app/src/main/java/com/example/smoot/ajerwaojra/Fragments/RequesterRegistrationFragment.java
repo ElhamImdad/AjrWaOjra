@@ -39,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -137,7 +138,9 @@ public class RequesterRegistrationFragment extends Fragment {
                             JSONObject ob = new JSONObject(response);
                             token = ob.getString("access_token");
                             Log.v("access_token", token);
+                            String countryId = ob.getJSONObject("message").getString("country_id");
                             Requester requester = new Requester(token);
+                            requester.setCountry(countryId);
                             SharedPrefManager.getInstance(getContext()).userLogin(requester);
                             Toast.makeText(getContext(), "تم تسجيلك بنجاح", Toast.LENGTH_LONG).show();
                             Fragment f = new RequestsFragment();
@@ -185,25 +188,24 @@ public class RequesterRegistrationFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-    private void getCountryList() {
-        Locale[] locales = Locale.getAvailableLocales();
-        ArrayList<String> countries = new ArrayList<String>();
-        for (Locale locale : locales) {
-            String country = locale.getDisplayCountry();
-            if (country.trim().length() > 0 && !countries.contains(country)) {
-                countries.add(country);
-            }
-        }
-        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
-        countrySpin.setAdapter(adapter);
-
-    }
+//    private void getCountryList() {
+//        Locale[] locales = Locale.getAvailableLocales();
+//        ArrayList<String> countries = new ArrayList<String>();
+//        for (Locale locale : locales) {
+//            String country = locale.getDisplayCountry();
+//            if (country.trim().length() > 0 && !countries.contains(country)) {
+//                countries.add(country);
+//            }
+//        }
+//        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
+//        countrySpin.setAdapter(adapter);
+//
+//    }
     private String getCountryListFromApi() {
-        String URLstring = "http://ajrandojra.website/api/getCountries";
         final String[] id = {""};
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLstring,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_COUNTRY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

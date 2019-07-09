@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.Adapter.RecyclerAdapterHD;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
+import com.example.smoot.ajerwaojra.Models.Countries;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 
@@ -65,10 +66,13 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
        // swipeRefreshLayout.setColorSchemeColors(c1 , c2 , c3 );
         getAllRequeste();
         // it is so importent to clear the array list in order to prevent items from duplication
-        if (umraRequests.size() != 0){  umraRequests.clear();}
+        if (umraRequests.size() != 0){
+            Log.e("size",String.valueOf(umraRequests.size()));
+            umraRequests.clear();}
 
         adapterHD= new RecyclerAdapterHD(umraRequests,this);
         recyclerView.setAdapter(adapterHD);
+        Log.e("Adapter ",adapterHD.toString());
        // recyclerView.setItemViewCacheSize(umraRequests.size());
 
         // set onRefresh method
@@ -87,6 +91,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 SettingFragment f = new SettingFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -110,13 +116,14 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                     int size = jsonArray.length();
                     Log.d("Array Size is ", " "+size);
                     // print the number of requests
-                    for (int i =0; i<size; i++ ){
-                        UmraRequest umraRequest= new UmraRequest();
+                    for (int i =0; i<size; i++ ) {
+                        UmraRequest umraRequest = new UmraRequest();
                         // get objects from the array
                         JSONObject object = jsonArray.getJSONObject(i);
                         // get the data from the object
                         // set the attributes of the umra object
                         umraRequest.setCountry(object.getString("country"));
+                        umraRequest.setCountry_id(object.getInt("country_id"));
                         umraRequest.setCountryFlagImagePath(object.getString("image"));
                         umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
@@ -164,6 +171,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         bundle.putString("country",umra.getCountry());
         bundle.putString("doaa",umra.getDoaa());
         bundle.putString("umraOwner",umra.getUmraOwner());
+        bundle.putInt("country_id",umra.getCountry_id());
         RequestDetailFragment f = new RequestDetailFragment();
         f.setArguments(bundle);
         Log.d("Click", "Yes Clicked");
@@ -175,4 +183,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         ft.commit();
 
     }
+
+
+
+
 }

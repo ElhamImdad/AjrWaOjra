@@ -10,15 +10,7 @@ public class Requester {
     private String password;
     private String token;
     private String role = "Requester" ;
-    private int countryID ;
 
-    public int getCountryID() {
-        return countryID;
-    }
-
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
-    }
 
     public String getRole() {
         return role;
@@ -29,11 +21,12 @@ public class Requester {
         this.name=name;
     }
 
-    public Requester(String name, String token, String email, String role) {
+    public Requester(String name, String token, String email, String role ,String country) {
         this.name = name;
         this.token = token;
         this.email = email;
         this.role = role;
+        this.country=country;
     }
 
     public Requester(String token) {
