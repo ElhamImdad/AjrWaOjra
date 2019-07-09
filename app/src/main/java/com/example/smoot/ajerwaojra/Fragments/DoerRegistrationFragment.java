@@ -71,7 +71,9 @@ public class DoerRegistrationFragment extends Fragment {
     String password;
     String howKnowUs;
     String token;
+    Double longitude, latitude;
     final String role = "Doer";
+    String exactLocation ;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     //  "(?=.*[A-Z])" +
@@ -259,4 +261,64 @@ public class DoerRegistrationFragment extends Fragment {
         });
         alert.show();
     }
+    public void getLocation() {
+        client = LocationServices.getFusedLocationProviderClient(getContext());
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            Log.e("inside if  ", "----");
+           // runTimePermission();
+            return;
+        }
+        LocationServices.getSettingsClient(getContext());
+        client.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null ){
+                    Log.e("Location ","not null ");
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    try {
+                        Geocoder geocoder = new Geocoder(getContext());
+                        List<Address> addresses = null;
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        String c;
+                        c = addresses.get(0).getLocality().concat(" ");
+
+                        exactLocation = c;
+                        Log.e("onsuccess", "PP:"+exactLocation);
+                    } catch (IOException e) {
+                        showMessage();
+                    }
+                }
+            }
+        });
+    }
+    private boolean runTimePermission(){
+        if (Build.VERSION.SDK_INT >= 23
+                && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION} ,100);
+            return  true;
+        }
+        return  false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 ){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
+            {
+                getLocation();
+            }
+            else runTimePermission();
+        }
+    }
+
 }

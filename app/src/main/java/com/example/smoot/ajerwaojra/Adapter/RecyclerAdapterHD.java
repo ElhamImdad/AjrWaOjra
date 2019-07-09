@@ -38,12 +38,9 @@ import java.util.ArrayList;
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int i) {
-            // holder.countryFlag.setImageResource(requestList.get(i).getCountryFlagImagePath());
             holder.requesterName.setText(requestList.get(i).getRequesterName());
             holder.countryName.setText(requestList.get(i).getCountry());
             holder.date.setText(requestList.get(i).getDate());
-
-
         }
 
         @Override

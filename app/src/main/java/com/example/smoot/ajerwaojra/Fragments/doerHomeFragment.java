@@ -43,9 +43,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     RecyclerAdapterHD  adapterHD ;
     SwipeRefreshLayout swipeRefreshLayout;
     Button goSetting;
-/*    int c1 = getResources().getColor(R.color.lightGreen);
-    int c2 = getResources().getColor(R.color.DarkGreen);
-    int c3 = getResources().getColor(R.color.darkWhite);*/
+
     public doerHomeFragment() {
         // Required empty public constructor
     }
@@ -114,6 +112,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                     Log.d("doerhomefragment", "get responce");
                     JSONArray jsonArray = response.getJSONArray("orders");
                     int size = jsonArray.length();
+
                     Log.d("Array Size is ", " "+size);
                     // print the number of requests
                     for (int i =0; i<size; i++ ) {
@@ -122,7 +121,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         JSONObject object = jsonArray.getJSONObject(i);
                         // get the data from the object
                         // set the attributes of the umra object
-                        umraRequest.setCountry(object.getString("country"));
+                       // umraRequest.setCountry(object.getString("country"));
                         umraRequest.setCountry_id(object.getInt("country_id"));
                         umraRequest.setCountryFlagImagePath(object.getString("image"));
                         umraRequest.setDate(object.getString("date"));
@@ -177,7 +176,6 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         Log.d("Click", "Yes Clicked");
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-
         ft.replace(R.id.container,f);
         ft.addToBackStack(null);
         ft.commit();

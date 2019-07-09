@@ -2,10 +2,14 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,8 +54,9 @@ public class RequestDetailFragment extends Fragment {
     Button offerService ;
     int id;
     CheckBox checkBox;
-    EditText umraDate ;
+    TextView umraDate ;
     DatePickerDialog.OnDateSetListener object;
+    String expectedDate;
     public RequestDetailFragment() {
         // Required empty public constructor
     }
@@ -81,6 +86,16 @@ public class RequestDetailFragment extends Fragment {
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+               /* if (expectedDate.isEmpty()){
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle("عذرا.....");
+                    alert.setMessage("يجب اختيار الوقت المتوقع لأداء العمرة ");
+                    alert.show();
+                }*/
+                if (!checkBox.isChecked()){
+                  showMessage();
+                }
                 offerService();
             }
         });
@@ -97,8 +112,9 @@ public class RequestDetailFragment extends Fragment {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
                         getActivity(),
-                        android.R.style.Theme_Material_Light_Dialog_NoActionBar,
+                        android.R.style.Theme_Material_Dialog_NoActionBar,
                         object,year,month,day);
+               // dialog.getWindow().setBackgroundDrawableResource(R.color.DarkGreen);
         dialog.show();
 
             }
@@ -107,8 +123,8 @@ public class RequestDetailFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 // = month+1 ;
-                String date = year + "/" + month + "/" + dayOfMonth;
-                umraDate.setText(date);
+                expectedDate = year + "/" + month + "/" + dayOfMonth;
+                umraDate.setText(expectedDate);
             }
         };
         return v;
@@ -144,6 +160,7 @@ public class RequestDetailFragment extends Fragment {
                 Map<String , String > paramas = new HashMap<>();
                 paramas.put("token",token);
                 paramas.put("id",String.valueOf(id));
+                paramas.put("date",expectedDate);
                 return paramas;
             }
 
@@ -164,6 +181,14 @@ public class RequestDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //String text = getArguments().getString("message tag");
         // textView.setText(text);
+
+    }
+    public void showMessage() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("عذرا.....");
+        alert.setMessage("يجب الموافقة على الشرط ");
+        alert.show();
 
     }
 }
