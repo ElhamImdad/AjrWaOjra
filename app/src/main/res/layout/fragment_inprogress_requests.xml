@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Fragments.RequestDetailsFragment">
+    tools:context=".Fragments.InprogressRequestsFragment">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/dinnext_arabic_regula_0"
-        android:text="عمرة مكتملة"
+        android:text="عمرة قيد التنفيذ"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
@@ -51,7 +51,7 @@
         android:id="@+id/name_Omra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/arabic_light_0"
         android:text="العمرة نيابةً عن"
         android:textColor="#555555"
@@ -208,24 +208,10 @@
         tools:text="omra time" />
 
     <TextView
-        android:id="@+id/Textphoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:fontFamily="@font/arabic_light_0"
-        android:gravity="center"
-        android:text="الصور"
-        android:textColor="#555555"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateIcon" />
-
-    <TextView
         android:id="@+id/TextDoaa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/arabic_light_0"
         android:gravity="center"
         android:text="الدعاء المخصص"
@@ -234,17 +220,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="462dp" />
+        app:layout_constraintTop_toBottomOf="@+id/dateIcon" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="360dp"
-        android:layout_height="140dp"
+        android:layout_height="210dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextDoaa"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintVertical_bias="0.16000003">
 
         <TextView
             android:id="@+id/prayer"
