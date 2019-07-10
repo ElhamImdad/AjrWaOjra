@@ -106,9 +106,10 @@ public class RequesterRegistrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 logInFrag = new logInFragment();
+                UploadImagesFragment f = new UploadImagesFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, logInFrag);
+                ft.replace(R.id.container, f);
                 ft.commit();
             }
         });

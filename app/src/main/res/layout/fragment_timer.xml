@@ -7,7 +7,6 @@
     android:background="@color/white"
     tools:context="Fragments.timerFragment">
 
-
     <TextView
         android:id="@+id/textView16"
         android:layout_width="match_parent"
@@ -117,6 +116,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
+    <Button
+        android:id="@+id/stopUmra"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="65dp"
+        android:background="@drawable/circle_button"
+        android:fontFamily="@font/arabic_medium_0"
+        android:shadowColor="@color/gray"
+        android:text="إنهاء العمرة"
+        android:textColor="@color/DarkGreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
@@ -187,4 +201,5 @@
                 android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

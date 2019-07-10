@@ -183,9 +183,11 @@ public class DoerRegistrationFragment extends Fragment {
                 params.put("email", email);
                 params.put("phone", phoneNomber);
                 params.put("role", role);
-                params.put("country", "sss");
+                params.put("country_id","807");
                 params.put("knowUs", howKnowUs);
                 params.put("password", password);
+                params.put("payment", String.valueOf(0));
+                params.put("review", String.valueOf(0));
                 return params;
             }
         };
