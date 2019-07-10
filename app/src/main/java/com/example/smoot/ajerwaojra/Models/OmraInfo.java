@@ -1,9 +1,7 @@
 package com.example.smoot.ajerwaojra.Models;
 
 public class OmraInfo {
-    String umraName;
-    String status;
-    String doerOmraName, doaa,date,time;
+    String status, umraName, doerOmraName, doaa,date,time;
     int id;
 
     public OmraInfo() {

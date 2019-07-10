@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/returnBtn"
+        android:id="@+id/returnBtnn3"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -39,10 +40,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/dinnext_arabic_regula_0"
+        android:fontFamily="@font/arabic_medium_0"
         android:text="طلب عمرة"
         android:textColor="@android:color/background_light"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
@@ -54,6 +55,10 @@
         android:layout_height="40dp"
         android:background="@drawable/edittextbox"
         android:maxLines="1"
+        android:textSize="18sp"
+        android:fontFamily="@font/arabic_light_0"
+        android:textColor="@color/black"
+        android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,30 +67,33 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="79dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="250dp"
         android:background="@color/white"
+        android:fontFamily="@font/arabic_medium_0"
         android:gravity="center"
         android:text="العمرة نيابة عن "
+        android:textColor="@color/gray"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="79dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="250dp"
         android:background="@color/white"
+        android:fontFamily="@font/arabic_medium_0"
         android:gravity="center"
         android:text="دعاء مخصص"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OmraName" />
 
@@ -102,15 +110,17 @@
             android:id="@+id/prayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="9dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="2dp"
             android:background="@null"
             android:hint="محتوى الدعاء"
+            android:fontFamily="@font/arabic_light_0"
             android:inputType="text"
-            android:lineSpacingExtra="12sp"
-            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -121,17 +131,16 @@
 
     <TextView
         android:id="@+id/paymentTextView"
-        android:layout_width="79dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="270dp"
         android:fontFamily="@font/arabic_medium_0"
         android:gravity="center"
         android:text="طريقة الدفع "
         android:textColor="@android:color/black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -142,7 +151,8 @@
         android:layout_height="45dp"
         android:background="@drawable/button"
         android:text="التالي"
-        android:textColor="@color/cardview_light_background"
+        android:fontFamily="@font/arabic_medium_0"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -165,6 +175,7 @@
         android:fontFamily="@font/arabic_medium_0"
         android:text="تكلفة العمرة    135 دولار"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
@@ -190,8 +201,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/checkbox">
+            android:paddingRight="15dp">
 
             <ImageView
                 android:layout_width="50dp"
@@ -202,6 +212,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/arabic_medium_0"
                 android:text="باي بال"
                 android:textSize="18sp" />
@@ -215,8 +226,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/checkbox">
+            android:paddingRight="15dp">
 
             <ImageView
                 android:layout_width="50dp"
@@ -228,6 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/arabic_medium_0"
+                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="فيزا/ماستركارد"
                 android:textSize="18sp"/>

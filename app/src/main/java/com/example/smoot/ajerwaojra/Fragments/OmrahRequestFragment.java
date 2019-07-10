@@ -33,43 +33,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OmrahRequestFragment extends Fragment {
-    private EditText inputOmrahName;
-    private EditText inputOmrahPrayer;
+    private EditText inputOmrahName, inputOmrahPrayer;
     private Button sendBtn;
     private ImageView payPalBtn;
     private ImageView masterCardBtn;
     private ImageView returnBTN;
     private ProgressBar progressBar;
-    private ArrayList<OmraInfo> umraListInProgress;
+    private ArrayList<OmraInfo> umraList;
     private String url= "http://ajrandojra.website/api/createRequest";
+
+    public OmrahRequestFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view =  inflater.inflate(R.layout.fragment_omra_request, container, false);
+         View view =  inflater.inflate(R.layout.fragment_omra_request, container, false);
         inputOmrahName = view.findViewById(R.id.OmraName);
         inputOmrahPrayer = view.findViewById(R.id.prayer);
        /* payPalBtn = view.findViewById(R.id.payPal);
         masterCardBtn = view.findViewById(R.id.masterCard);*/
         progressBar = view.findViewById(R.id.progressBar2);
         sendBtn = view.findViewById(R.id.sendRequestButton);
-        umraListInProgress = new ArrayList<>();
+        umraList = new ArrayList<>();
 
-        /*payPalBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageView imageview =(ImageView) view.findViewById(R.id.checkbutton2);
-                imageview.setVisibility(View.VISIBLE);
-            }
-        });
-        masterCardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageView imageview =(ImageView) view.findViewById(R.id.checkbutton1master);
-                imageview.setVisibility(View.VISIBLE);
-            }
-        });*/
-        returnBTN = view.findViewById(R.id.returnBtn);
+        returnBTN = view.findViewById(R.id.returnBtnn3);
        returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,8 +109,8 @@ public class OmrahRequestFragment extends Fragment {
                             omraInfoObject.setUmraName(orderr.getString("name"));
                             omraInfoObject.setStatus(orderr.getString("status"));
                             omraInfoObject.setDoaa(orderr.getString("doaa"));
-                            umraListInProgress.add(omraInfoObject);
-                            Log.e("list container", umraListInProgress.toString());
+                            umraList.add(omraInfoObject);
+                            Log.e("list container", umraList.toString());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
