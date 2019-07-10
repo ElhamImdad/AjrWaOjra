@@ -7,6 +7,15 @@ package com.example.smoot.ajerwaojra.Models;
         private String doaa;
         private String umraOwner ;
         private  int id ;
+        private int country_id;
+
+        public int getCountry_id() {
+            return country_id;
+        }
+
+        public void setCountry_id(int country_id) {
+            this.country_id = country_id;
+        }
 
         public int getId() {
             return id;

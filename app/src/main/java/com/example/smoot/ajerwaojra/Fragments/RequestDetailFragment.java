@@ -1,13 +1,23 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +34,14 @@ import com.example.smoot.ajerwaojra.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static com.example.smoot.ajerwaojra.Helpers.URLs.URL_OFFER_SERVICE;
 
@@ -34,22 +50,27 @@ public class RequestDetailFragment extends Fragment {
 
     ImageView flag;
     TextView requester;
-    TextView country ;
-    TextView date ;
-    TextView umraOwner ;
-    TextView doaa ;
-    Button offerService ;
+    TextView country;
+    TextView date;
+    TextView umraOwner;
+    TextView doaa;
+    Button offerService;
     int id;
+    CheckBox checkBox;
+    TextView umraDate;
+    DatePickerDialog.OnDateSetListener object;
+    String expectedDate;
+    String stringDate;
     public RequestDetailFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_request_detail, container, false);
+        View v = inflater.inflate(R.layout.fragment_request_detail, container, false);
         flag = v.findViewById(R.id.countryFlag);
         requester = v.findViewById(R.id.requesterName);
         country = v.findViewById(R.id.country);
@@ -61,29 +82,82 @@ public class RequestDetailFragment extends Fragment {
         Bundle bundle = getArguments();
         Log.e("Bundle ", bundle.toString());
         id = bundle.getInt("id");
-        requester.setText( bundle.getString("requester"));
+        requester.setText(bundle.getString("requester"));
         country.setText(bundle.getString("country"));
         date.setText(bundle.getString("date"));
         umraOwner.setText(bundle.getString("umraOwner"));
         doaa.setText(bundle.getString("doaa"));
+
+        final Bundle bundle1 = new Bundle();
+        bundle1.putString("umraUner",bundle.getString("umraOwner"));
+        bundle1.putString("doaa",bundle.getString("doaa"));
+        bundle1.putInt("id",id);
+
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                offerService();
+
+                if (expectedDate != null) {
+                    if (checkBox.isChecked()) {
+                      //  offerService();
+                        timerFragment f = new timerFragment();
+                        f.setArguments(bundle1);
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.container, f);
+                        ft.commit();
+                    } else {
+                        showMessage();
+                    }
+
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle("عذرا.....");
+                    alert.setMessage("يجب اختيار الوقت المتوقع لأداء العمرة ");
+                    alert.show();
+                }
             }
         });
+        checkBox = v.findViewById(R.id.checkBox2);
+        umraDate = v.findViewById(R.id.editText);
+        umraDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Locale[] locale = Locale.getAvailableLocales();
+                TimeZone tz1 = TimeZone.getTimeZone("AST");
+                Calendar cal = Calendar.getInstance(tz1);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getActivity(),
+                        android.R.style.Theme_Material_Dialog_NoActionBar,
+                        object, year, month, day);
+                // dialog.getWindow().setBackgroundDrawableResource(R.color.DarkGreen);
+                dialog.show();
 
+            }
+        });
+        object = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                // = month+1 ;
+                expectedDate = year + "/" + month + "/" + dayOfMonth;
+                umraDate.setText(expectedDate);
+            }
+        };
         return v;
     }
-    public  void offerService(){
-        Log.e("Raghad click button"," yes");
+
+    public void offerService() {
+        Log.e("Raghad click button", " yes");
         Doer r = SharedPrefManager.getInstance(getContext()).getDoer();
 
-        final  String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
-         Log.e("Token Shared",token);
+        final String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+        Log.e("Token Shared", token);
 
 
-        StringRequest request = new StringRequest( Request.Method.POST, URL_OFFER_SERVICE, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, URL_OFFER_SERVICE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -100,32 +174,43 @@ public class RequestDetailFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String , String > paramas = new HashMap<>();
-                paramas.put("token",token);
-                paramas.put("id",String.valueOf(id));
+                Map<String, String> paramas = new HashMap<>();
+                paramas.put("token", token);
+                paramas.put("id", String.valueOf(id));
+                paramas.put("date", expectedDate);
                 return paramas;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String , String > headers = new HashMap<>();
-                headers.put("Accept","application/json");
-                headers.put("Authorization", "Bearer "+token);
-                headers.put("token",token);
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                headers.put("Authorization", "Bearer " + token);
+                headers.put("token", token);
                 return headers;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
 
     }
+
     @Override
-    public void onActivityCreated( Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //String text = getArguments().getString("message tag");
         // textView.setText(text);
+
+    }
+
+    public void showMessage() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("عذرا.....");
+        alert.setMessage("يجب الموافقة على الشرط ");
+        alert.show();
 
     }
 }

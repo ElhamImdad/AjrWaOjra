@@ -1,5 +1,8 @@
 package com.example.smoot.ajerwaojra.Adapter;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
     public class RecyclerAdapterHD extends  RecyclerView.Adapter<RecyclerAdapterHD.MyViewHolder> {
@@ -34,7 +38,6 @@ import java.util.ArrayList;
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int i) {
-            // holder.countryFlag.setImageResource(requestList.get(i).getCountryFlagImagePath());
             holder.requesterName.setText(requestList.get(i).getRequesterName());
             holder.countryName.setText(requestList.get(i).getCountry());
             holder.date.setText(requestList.get(i).getDate());
@@ -81,5 +84,39 @@ import java.util.ArrayList;
             public interface onCardClick {
                 void onCardClickLis(int position);
             }
+            public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+
+                }
+
+                @Override
+                protected Bitmap doInBackground(String... URL) {
+
+                    String imageURL = URL[0];
+
+                    Bitmap bitmap = null;
+                    try {
+                        // Download Image from URL
+                        InputStream input = new java.net.URL(imageURL).openStream();
+                        // Decode Bitmap
+                        bitmap = BitmapFactory.decodeStream(input);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return bitmap;
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    // Set the bitmap into ImageView
+                    // image.setImageBitmap(result);
+
+                }
+            }
         }
+        // DownloadImage AsyncTask
+
     }

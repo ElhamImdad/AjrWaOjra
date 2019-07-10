@@ -6,4 +6,6 @@ public class URLs {
     public static final String URL_LOGIN= ROOT_URL + "login";
     public static final String URL_GET_REQUSTES_HD= "http://ajrandojra.website/api/listRequests";
     public static final String URL_OFFER_SERVICE ="http://ajrandojra.website/api/acceptRequest";
+    public static final String URL_GET_COUNTRY ="http://ajrandojra.website/api/getCountries";
+    public static final String UPL_FINISH_REQUEST="http://ajrandojra.website/api/finishRequest";
 }
