@@ -91,11 +91,11 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             public void onClick(View v) {
 
 
-                SettingFragment f = new SettingFragment();
+                DoerAccountFragment f = new DoerAccountFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
+                ft.disallowAddToBackStack();
                 ft.replace(R.id.container,f);
-                ft.addToBackStack(null);
                 ft.commit();
             }
         });
