@@ -85,7 +85,7 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
       //  viewHolder.textName.setText(umraListInProgress.get(i).getUmraName());
         final OmraInfo item = umraList.get(i);
         viewHolder.textName.setText(item.getUmraName());
-        viewHolder.date.setText(item.getStatus());
+        viewHolder.date.setText(item.getDate());
         viewHolder.textName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +98,13 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
                 intent.putExtra("date", item.getDate());
                 intent.putExtra("time", item.getTime());
                 intent.putExtra("doaa", item.getDoaa());
+                intent.putExtra("photos",item.getPhotos());
+       //         Log.e("photos", String.valueOf(item.getPhotos().size()));
+                /*Log.e("photo size", String.valueOf(item.getPhotos().size()));
+                for (int i = 0; i< item.getPhotos().size(); i++){
+                    Log.e("photo url",item.getPhotos().get(i));
+                    intent.putExtra("photos",item.getPhotos().get(i));
+                }*/
                 context.startActivity(intent);
             }
         });

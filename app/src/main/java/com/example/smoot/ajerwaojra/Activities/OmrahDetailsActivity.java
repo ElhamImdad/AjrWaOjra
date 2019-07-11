@@ -27,7 +27,7 @@ public class OmrahDetailsActivity extends AppCompatActivity {
 
         if (bundle != null ){
             switch (omraStatus){
-                case "Done":
+                case "3":
                     Bundle bundle2 = new Bundle();
                     Log.e("omra name,,,",bundle.getString("omraName") );
                     bundle2.putString("omraName",bundle.getString("omraName"));
@@ -35,12 +35,13 @@ public class OmrahDetailsActivity extends AppCompatActivity {
                     bundle2.putString("date", bundle.getString("date"));
                     bundle2.putString("time", bundle.getString("time"));
                     bundle2.putString("doaa", bundle.getString("doaa"));
+                    bundle2.putStringArrayList("photos", bundle.getStringArrayList("photos"));
 
                     RequestDetailsFragment doneObj = new RequestDetailsFragment();
                     doneObj.setArguments(bundle2);
                     setFragment(doneObj);
                     break;
-                case "In Progress":
+                case "2":
                     Bundle bundle3 = new Bundle();
                     bundle3.putString("omraName",bundle.getString("omraName"));
                     bundle3.putString("doerName", bundle.getString("doerName"));
@@ -52,7 +53,7 @@ public class OmrahDetailsActivity extends AppCompatActivity {
                     inProgressObj.setArguments(bundle3);
                     setFragment(inProgressObj);
                     break;
-                case "Pending":
+                case "1":
                     Bundle bundle4 = new Bundle();
                     bundle4.putString("omraName",bundle.getString("omraName"));
                     bundle4.putString("doaa", bundle.getString("doaa"));

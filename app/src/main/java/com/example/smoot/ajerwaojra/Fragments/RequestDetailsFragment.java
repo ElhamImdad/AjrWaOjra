@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestDetailsFragment extends Fragment {
-    private ImageView returnBTN;
+    private ImageView returnBTN, image_1, image_2, image_3;
     private RequestQueue mQueue;
     private TextView omraName, doerName, omraDate, omraDuration, doaaDone;
     private TextView doaaTextViewProgress, doaaProgress, photoText,doaaTextViewDone, pageTitle;
@@ -50,6 +51,14 @@ public class RequestDetailsFragment extends Fragment {
         omraDuration = view.findViewById(R.id.textViewTimeDone);
         doaaDone = view.findViewById(R.id.doaaDone);
 
+        image_1 = view.findViewById(R.id.omraImage1);
+        image_2 = view.findViewById(R.id.omraImage2);
+        image_3 = view.findViewById(R.id.omraImage3);
+        image_2.setVisibility(View.INVISIBLE);
+        image_3.setVisibility(View.INVISIBLE);
+        String urlImage1, urlImage2, urlImage3;
+        ArrayList<String> urlsPHOTOS;
+
         if (getArguments() != null) {
             Log.e("data in bindle-->",getArguments().getString("doerName")+"-");
             omraName.setText(getArguments().getString("omraName"));
@@ -57,6 +66,24 @@ public class RequestDetailsFragment extends Fragment {
             omraDate.setText(getArguments().getString("date"));
             omraDuration.setText(getArguments().getString("time"));
             doaaDone.setText(getArguments().getString("doaa"));
+            urlsPHOTOS = getArguments().getStringArrayList("photos");
+            switch (urlsPHOTOS.size()){
+                case 3 :
+                    image_3.setVisibility(View.VISIBLE);
+                    Picasso.with(getContext())
+                            .load(urlsPHOTOS.get(2))
+                            .into(image_3);
+                case 2 :
+                    image_2.setVisibility(View.VISIBLE);
+                    Picasso.with(getContext())
+                            .load(urlsPHOTOS.get(1))
+                            .into(image_2);
+                case 1 :
+                    Picasso.with(getContext())
+                            .load(urlsPHOTOS.get(0))
+                            .into(image_1);
+
+            }
         }
 
        /* Bundle bundle = getArguments();

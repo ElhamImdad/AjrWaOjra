@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="333dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/cardView"
-        android:elevation="3dp"
-    android:background="@drawable/rectangle"
-        app:cardCornerRadius="6dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"
-    android:layout_marginLeft="9dp"
-    android:layout_marginRight="9dp"
-    tools:context=".Fragments.ListOfRequestsFragment"
-        >
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="333dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginRight="15dp"
+    android:elevation="3dp"
+    app:cardCornerRadius="6dp"
+    tools:context=".Fragments.ListOfRequestsFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@drawable/rectangle">
 
 
         <TextView
@@ -81,4 +78,4 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>

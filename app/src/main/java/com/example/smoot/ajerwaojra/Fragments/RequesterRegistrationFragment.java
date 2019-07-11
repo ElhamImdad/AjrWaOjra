@@ -39,11 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -106,10 +103,10 @@ public class RequesterRegistrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 logInFrag = new logInFragment();
-                UploadImagesFragment f = new UploadImagesFragment();
+              //  UploadImagesFragment f = new UploadImagesFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, f);
+                ft.replace(R.id.container, logInFrag);
                 ft.commit();
             }
         });
@@ -299,14 +296,14 @@ Log.e("id of country method ",id[0]);
     }
 
     private boolean isValidMobile() {
-        String regexStr = "^\\+[0-9]{10,13}$";
+        String regexStr = "^\\[0-9]{10,13}$";
 
         String number = textphone2.getText().toString();
-        if (!textphone2.getText().toString().contains("+")) {
+        /*if (!textphone2.getText().toString().contains("+")) {
             textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
-        }else if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
+        }else */if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
             textphone2.setError("ادخل رقم الجوال بشكل صحيح");
             textphone2.requestFocus();
             return false;

@@ -93,7 +93,7 @@ public class logInFragment extends Fragment {
                 @Override
                 public void onResponse(String response) {
                     try {
-                        Log.e("response Result == ", response);
+                     //   Log.e("response Result == ", response);
                       //  progressBar.setVisibility(View.GONE);
                         JSONObject obj = new JSONObject(response);
                         token = obj.getString("access_token");

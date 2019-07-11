@@ -1,7 +1,10 @@
 package com.example.smoot.ajerwaojra.Models;
 
+import java.util.ArrayList;
+
 public class OmraInfo {
     String status, umraName, doerOmraName, doaa,date,time;
+    ArrayList<String> photos;
     int id;
 
     public OmraInfo() {
@@ -10,6 +13,14 @@ public class OmraInfo {
     public OmraInfo(String umraName, String doaa) {
         this.umraName = umraName;
         this.doaa = doaa;
+    }
+
+    public ArrayList<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<String> photos) {
+        this.photos = photos;
     }
 
     public int getId() {
