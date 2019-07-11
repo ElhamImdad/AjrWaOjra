@@ -1,12 +1,19 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
@@ -28,6 +35,8 @@ import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -65,11 +75,13 @@ public class UploadImagesFragment extends Fragment {
     Bitmap imageBitmap2;
     Bitmap imageBitmap3;
 
-    String date ;
+    String date;
     String totalTime;
 
     int id;
-
+    Uri filePath1;
+    Uri filePath2;
+    Uri filePath3;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     File photoFile1 = null;
@@ -83,10 +95,9 @@ public class UploadImagesFragment extends Fragment {
 
         // request the permission
         if (ContextCompat.checkSelfPermission(getActivity()
-        ,Manifest.permission.CAMERA )== PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(getActivity(),"permission done",Toast.LENGTH_LONG).show();
-        }
-        else {
+                , Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getActivity(), "permission done", Toast.LENGTH_LONG).show();
+        } else {
             requestPermission();
         }
 
@@ -98,7 +109,7 @@ public class UploadImagesFragment extends Fragment {
         date = bundle.getString("date");
         totalTime = bundle.getString("totalTime");
         id = bundle.getInt("id");
-        Log.e("id"," : "+id);
+        Log.e("id", " : " + id);
 
         close = v.findViewById(R.id.button4);
 
@@ -145,7 +156,7 @@ public class UploadImagesFragment extends Fragment {
                 if (imageBitmap1 == null) {
                     takePhotoMessage();
                 } else {
-                uploadUserImage();
+                    uploadUserImage();
                 }
             }
         });
@@ -154,21 +165,21 @@ public class UploadImagesFragment extends Fragment {
     }
 
 
-    private File createImageFile() throws IOException {
+   /* private File createImageFile() throws IOException {
 // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,  *//* prefix *//*
+                ".jpg",         *//* suffix *//*
+                storageDir      *//* directory *//*
         );
 
 // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -176,8 +187,12 @@ public class UploadImagesFragment extends Fragment {
             Bundle extras = data.getExtras();
 
             if (b1.isEnabled()) {
-
-                imageBitmap1 = (Bitmap) extras.get("data");
+                filePath1 = data.getData();
+                try {
+                    imageBitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 b2.setEnabled(false);
                 b3.setEnabled(false);
 
@@ -205,16 +220,14 @@ public class UploadImagesFragment extends Fragment {
                 REQUEST_IMAGE_CAPTURE);
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePhotoIntent.resolveActivity(getContext().getPackageManager()) != null) {
-            startActivityForResult(takePhotoIntent,REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
     public File getStringImage(Bitmap bitmap) {
         String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "PNG_" + filename + "_";
+        String imageFileName = "PNG_" + filename + ".PNG";
         // name of file is done
-
-
         // create image file
         File f = new File(getContext().getCacheDir(), imageFileName);
 
@@ -225,8 +238,9 @@ public class UploadImagesFragment extends Fragment {
         }
         // test
         boolean t = f.exists();
-        if(t){Log.e("file is created ", "yes ");}
-        else Log.e("file is created ", "no ");
+        if (t) {
+            Log.e("file is created ", "yes ");
+        } else Log.e("file is created ", "no ");
         Log.i("BitMap", "" + bitmap);
         //
 
@@ -268,7 +282,7 @@ public class UploadImagesFragment extends Fragment {
                     JSONObject ob = new JSONObject(response);
 
                     String uu = ob.getString("message");
-                    Log.e("message response",uu);
+                    Log.e("message response", uu);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -278,21 +292,19 @@ public class UploadImagesFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               Log.e("error of volley ",error.toString());
+                Log.e("error of volley ", error.toString());
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
-                param.put("date" , date);
-                param.put("time",totalTime);
-                param.put("id",String.valueOf(id));
+                param.put("date", date);
+                param.put("time", totalTime);
+                param.put("id", String.valueOf(id));
 
                 File f1 = getStringImage(imageBitmap1);
 
-                Log.i("Mynewsam", "" + f1.getName());
-                Log.i("path", "" + f1.getAbsolutePath());
-                Log.i("length", "" + f1.length());
+
                 param.put("image", f1.toString());
 
                 if (imageBitmap2 != null) {
@@ -308,6 +320,7 @@ public class UploadImagesFragment extends Fragment {
 
                 return param;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -327,22 +340,49 @@ public class UploadImagesFragment extends Fragment {
         alert.show();
     }
 
-    private void requestPermission(){
-        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.CAMERA)){
+    private void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
             new AlertDialog.Builder(getContext())
                     .setTitle("صلاحيات الوصول")
                     .setMessage("التطبيق يحتاج الوصول للكامير لالتقاط صور العمرة")
                     .setPositiveButton("موافق", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(getActivity(),new String [] {Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_IMAGE_CAPTURE);
                         }
                     }).create().show();
-        }
-        else {
-            ActivityCompat.requestPermissions(getActivity(),new String [] {Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_IMAGE_CAPTURE);
 
         }
     }
 
+   /* private String getPath(Uri uri){
+        Cursor cursor = getContext().getContentResolver().query(uri,null,null,null,null);
+        cursor.moveToFirst();
+        String ducoment_id = cursor.getString(0);
+        ducoment_id=ducoment_id.substring(ducoment_id.lastIndexOf(":"+1));
+        cursor = getContext().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null,
+                MediaStore.Images.Media._ID+" = ?",
+                new String[] {ducoment_id},null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        return path;
+    }*/
+/*
+    private void upload()
+    {
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "PNG_" + filename + ".PNG";
+        String path = getPath(filePath1);
+        try{
+            String uploadID= UUID.randomUUID().toString();
+            new MultipartUploadRequest(getContext(),uploadID,URLs.UPL_FINISH_REQUEST)
+        }catch (Exception e){e.printStackTrace();}
+
+    }
+
+}
+*/
 }
