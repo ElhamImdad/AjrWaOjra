@@ -97,7 +97,9 @@ public class RequestsFragment extends Fragment{
 
         adapter = new RequestsAdapter(umraListPending, getContext());
         recyclerView.setAdapter(adapter);
+        Log.e("addapter", adapter.toString()+"++");
         visibleNorequestImage();
+        pendingBTN.setSelected(true);
         inProgressBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,8 +126,10 @@ public class RequestsFragment extends Fragment{
 
                 pendingBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
                 pendingBTN.setTextColor(getResources().getColor(R.color.white));
+                pendingBTN.setSelected(true);
             }
         });
+        pendingBTN.setSelected(true);
         doneBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +144,7 @@ public class RequestsFragment extends Fragment{
                 pendingBTN.setTextColor(getResources().getColor(R.color.lightGreen));
             }
         });
+
     /*    if (umraListInProgress.size() == 0 && umraListPending.size() == 0 && umraListDone.size() ==0) {
             Log.e("visible", "333");
             norequestImg.setVisibility(View.VISIBLE);
@@ -193,7 +198,6 @@ public class RequestsFragment extends Fragment{
       //  adapter.updateData(umraListPending );
         adapter = new RequestsAdapter(umraListPending, getContext());
         recyclerView.setAdapter(adapter);
-
     }
     private void clickDone(){
         adapter.updateData(umraListDone );
