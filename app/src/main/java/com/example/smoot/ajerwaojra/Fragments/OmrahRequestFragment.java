@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,9 +36,10 @@ import java.util.Map;
 
 public class OmrahRequestFragment extends Fragment {
     private EditText inputOmrahName, inputOmrahPrayer;
+    private TextView textPayPal, textMasterCard;
     private Button sendBtn;
-    private ImageView payPalBtn;
-    private ImageView masterCardBtn;
+    private LinearLayout payPalBtn;
+    private LinearLayout masterCardBtn;
     private ImageView returnBTN;
     private ProgressBar progressBar;
     private ArrayList<OmraInfo> umraList;
@@ -51,12 +54,35 @@ public class OmrahRequestFragment extends Fragment {
          View view =  inflater.inflate(R.layout.fragment_omra_request, container, false);
         inputOmrahName = view.findViewById(R.id.OmraName);
         inputOmrahPrayer = view.findViewById(R.id.prayer);
-       /* payPalBtn = view.findViewById(R.id.payPal);
-        masterCardBtn = view.findViewById(R.id.masterCard);*/
+        payPalBtn = view.findViewById(R.id.payPalB);
+        masterCardBtn = view.findViewById(R.id.masterCardB);
+        textMasterCard =  view.findViewById(R.id.textMasterCard);
+        textPayPal = view.findViewById(R.id.textPayPal);
+
         progressBar = view.findViewById(R.id.progressBar2);
         sendBtn = view.findViewById(R.id.sendRequestButton);
         umraList = new ArrayList<>();
+        payPalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                payPalBtn.setBackgroundResource(R.drawable.rectangle_greentab);
+                textPayPal.setTextColor(getResources().getColor(R.color.white));
 
+                masterCardBtn.setBackgroundResource(R.drawable.rectangle);
+                textMasterCard.setTextColor(getResources().getColor(R.color.darkGray));
+            }
+        });
+        masterCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                masterCardBtn.setBackgroundResource(R.drawable.rectangle_greentab);
+                textMasterCard.setTextColor(getResources().getColor(R.color.white));
+
+                payPalBtn.setBackgroundResource(R.drawable.rectangle);
+                textPayPal.setTextColor(getResources().getColor(R.color.darkGray));
+
+            }
+        });
         returnBTN = view.findViewById(R.id.returnBtnn3);
        returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,11 +101,7 @@ public class OmrahRequestFragment extends Fragment {
                 //call method json
                     addNewRequest();
 
-                Fragment f = new RequestsFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, f);
-                ft.commit();
+
             }
         });
         return view;
@@ -111,6 +133,11 @@ public class OmrahRequestFragment extends Fragment {
                             omraInfoObject.setDoaa(orderr.getString("doaa"));
                             umraList.add(omraInfoObject);
                             Log.e("list container", umraList.toString());
+                            Fragment f = new RequestsFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, f);
+                            ft.commit();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -143,15 +170,9 @@ public class OmrahRequestFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept", "application/json");
-                //     headers.put("Content-Type", "application/json");
-                //   headers.put("X-Requested-With","XMLHttpRequest");
-
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
                 Log.e("token for user", token);
                 headers.put("Authorization", "Bearer " + token);
-
-
-                Log.e("--------omrah request", "header");
                 return headers;
             }
         };
@@ -161,7 +182,6 @@ public class OmrahRequestFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-        Log.e("umra Rqquest", VolleySingleton.getInstance(getContext()).getRequestQueue().toString());
 
     }
     }//end method add new request

@@ -145,6 +145,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:checked = "true"
             android:fontFamily="@font/arabic_medium_0"
             android:text="قيد الانتظار"
             android:textColor="#0E9447" />
