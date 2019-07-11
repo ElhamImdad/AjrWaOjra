@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -34,6 +35,7 @@ import com.example.smoot.ajerwaojra.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -61,6 +63,7 @@ public class RequestDetailFragment extends Fragment {
     DatePickerDialog.OnDateSetListener object;
     String expectedDate;
     String stringDate;
+
     public RequestDetailFragment() {
         // Required empty public constructor
     }
@@ -89,9 +92,9 @@ public class RequestDetailFragment extends Fragment {
         doaa.setText(bundle.getString("doaa"));
 
         final Bundle bundle1 = new Bundle();
-        bundle1.putString("umraUner",bundle.getString("umraOwner"));
-        bundle1.putString("doaa",bundle.getString("doaa"));
-        bundle1.putInt("id",id);
+        bundle1.putString("umraUner", bundle.getString("umraOwner"));
+        bundle1.putString("doaa", bundle.getString("doaa"));
+        bundle1.putInt("id", id);
 
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,11 +102,12 @@ public class RequestDetailFragment extends Fragment {
 
                 if (expectedDate != null) {
                     if (checkBox.isChecked()) {
-                      //  offerService();
+                        // offerService();
                         timerFragment f = new timerFragment();
                         f.setArguments(bundle1);
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
+                        ft.disallowAddToBackStack();
                         ft.replace(R.id.container, f);
                         ft.commit();
                     } else {

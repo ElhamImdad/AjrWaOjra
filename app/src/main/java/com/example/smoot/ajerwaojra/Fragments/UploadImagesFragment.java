@@ -4,6 +4,7 @@ package com.example.smoot.ajerwaojra.Fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,6 +32,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,9 +72,25 @@ public class UploadImagesFragment extends Fragment {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    File photoFile1 = null;
+    File photoFile2 = null;
+    File photoFile3 = null;
+    String mCurrentPhotoPath;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // request the permission
+        if (ContextCompat.checkSelfPermission(getActivity()
+        ,Manifest.permission.CAMERA )== PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(getActivity(),"permission done",Toast.LENGTH_LONG).show();
+        }
+        else {
+            requestPermission();
+        }
+
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_upload_images, container, false);
 
@@ -125,19 +150,37 @@ public class UploadImagesFragment extends Fragment {
             }
         });
 
-
         return v;
     }
 
+
+    private File createImageFile() throws IOException {
+// Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+// Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Log.e("bundle ", extras.toString());
+
             if (b1.isEnabled()) {
+
                 imageBitmap1 = (Bitmap) extras.get("data");
-                Log.e("bit",imageBitmap1.toString());
                 b2.setEnabled(false);
                 b3.setEnabled(false);
+
                 image1.setVisibility(View.VISIBLE);
                 image1.setImageBitmap(imageBitmap1);
                 b2.setEnabled(true);
@@ -157,19 +200,56 @@ public class UploadImagesFragment extends Fragment {
     }
 
     private void takePhoto() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.CAMERA},
+                REQUEST_IMAGE_CAPTURE);
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePhotoIntent.resolveActivity(getContext().getPackageManager()) != null) {
-            startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(takePhotoIntent,REQUEST_IMAGE_CAPTURE);
         }
     }
 
-    public String getStringImage(Bitmap bitmap) {
+    public File getStringImage(Bitmap bitmap) {
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "PNG_" + filename + "_";
+        // name of file is done
+
+
+        // create image file
+        File f = new File(getContext().getCacheDir(), imageFileName);
+
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // test
+        boolean t = f.exists();
+        if(t){Log.e("file is created ", "yes ");}
+        else Log.e("file is created ", "no ");
         Log.i("BitMap", "" + bitmap);
+        //
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, baos);
         byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            fos.write(b);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return f;
+
     }
 
     public void uploadUserImage() {
@@ -204,24 +284,28 @@ public class UploadImagesFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
-          /*      param.put("date" , date);
+                param.put("date" , date);
                 param.put("time",totalTime);
                 param.put("id",String.valueOf(id));
-                Log.e("erdf","jhjhjhjhjh");
-                String image1 = getStringImage(imageBitmap1);
-                Log.i("Mynewsam", "" + image1);
-                param.put("image", image1);
+
+                File f1 = getStringImage(imageBitmap1);
+
+                Log.i("Mynewsam", "" + f1.getName());
+                Log.i("path", "" + f1.getAbsolutePath());
+                Log.i("length", "" + f1.length());
+                param.put("image", f1.toString());
+
                 if (imageBitmap2 != null) {
-                    String image2 = getStringImage(imageBitmap2);
+                    //
                     Log.i("Mynewsam", "" + image2);
-                    param.put("image", image2);
+                    //param.put("image", image2);
                     if (imageBitmap3 != null) {
-                        String image3 = getStringImage(imageBitmap3);
+                        //
                         Log.i("Mynewsam", "" + image3);
-                        param.put("image", image3);
+                        //param.put("image", image3);
                     }
                 }
-*/
+
                 return param;
             }
             @Override
@@ -242,4 +326,23 @@ public class UploadImagesFragment extends Fragment {
         alert.setMessage("يجب أن تقوم بالتقاط صورة واحدة على الاقل ");
         alert.show();
     }
+
+    private void requestPermission(){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.CAMERA)){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("صلاحيات الوصول")
+                    .setMessage("التطبيق يحتاج الوصول للكامير لالتقاط صور العمرة")
+                    .setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(getActivity(),new String [] {Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
+                        }
+                    }).create().show();
+        }
+        else {
+            ActivityCompat.requestPermissions(getActivity(),new String [] {Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
+
+        }
+    }
+
 }

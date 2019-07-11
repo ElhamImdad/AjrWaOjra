@@ -71,7 +71,8 @@ public class DoerRegistrationFragment extends Fragment {
     String token;
     Double longitude, latitude;
     final String role = "Doer";
-    String exactLocation ;
+    public  String exactLocation="" ;
+    final int LOCATION_REQUEST= 1;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     //  "(?=.*[A-Z])" +
@@ -85,8 +86,10 @@ public class DoerRegistrationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getLocation();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        //
         View view = inflater.inflate(R.layout.fragment_doer_registration, container, false);
         howKnowus = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
@@ -119,7 +122,6 @@ public class DoerRegistrationFragment extends Fragment {
             }
         });
 
-
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +130,7 @@ public class DoerRegistrationFragment extends Fragment {
                     Log.e("inner if ", "yes");
                     doerRegister();
                 }
+
             }
         });
 
@@ -269,7 +272,9 @@ public class DoerRegistrationFragment extends Fragment {
                         != PackageManager.PERMISSION_GRANTED) {
             Log.e("inside if  ", "----");
            // runTimePermission();
-            return;
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},LOCATION_REQUEST);
+            Log.e("inside if  ", "granted");
+            return ;
         }
         LocationServices.getSettingsClient(getContext());
         client.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
@@ -284,18 +289,20 @@ public class DoerRegistrationFragment extends Fragment {
                         List<Address> addresses = null;
                         addresses = geocoder.getFromLocation(latitude, longitude, 1);
                         String c;
-                        c = addresses.get(0).getLocality().concat(" ");
+                        c = addresses.get(0).getLocality();
 
                         exactLocation = c;
                         Log.e("onsuccess", "PP:"+exactLocation);
+                       if(exactLocation.equals("مكة")){Log.e("M","Makkah");}
                     } catch (IOException e) {
                         showMessage();
                     }
                 }
             }
         });
+
     }
-    private boolean runTimePermission(){
+ /*   private boolean runTimePermission(){
         if (Build.VERSION.SDK_INT >= 23
                 && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -320,5 +327,6 @@ public class DoerRegistrationFragment extends Fragment {
             else runTimePermission();
         }
     }
+*/
 
 }
