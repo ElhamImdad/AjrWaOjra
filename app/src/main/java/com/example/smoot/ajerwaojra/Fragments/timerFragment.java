@@ -83,7 +83,7 @@ public class timerFragment extends Fragment {
                 timeSwap += timeInMillies;
                 myHandler.removeCallbacks(updateTimerMethod);
 
-                String total = hours.getText()+"ساعة و"+minuts.getText()+"دقيقة";
+                String total = hours.getText()+":"+minuts.getText()+":";
                 Log.e("total ",total);
 
                 Bundle bundle = new Bundle();
@@ -95,6 +95,7 @@ public class timerFragment extends Fragment {
                 f.setArguments(bundle);
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
+                ft.disallowAddToBackStack();
                 ft.replace(R.id.container,f);
                 ft.commit();
             }
