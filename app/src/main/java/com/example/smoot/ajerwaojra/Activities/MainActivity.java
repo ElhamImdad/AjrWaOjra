@@ -33,13 +33,6 @@ public class MainActivity extends AppCompatActivity  {
             setFragment(new FatwaFragment());
         }
 
-        /*Intent intent = getIntent();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null ){
-            setFragmentDetails(new RequestDetailsFragment());
-        }*/
-
-
     }
 
    private void setHomeFragment( Fragment home) {
@@ -53,12 +46,12 @@ public class MainActivity extends AppCompatActivity  {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container,fatwa);
         ft.commit();}
-   private void setFragmentDetails(Fragment details){
+   /*private void setFragmentDetails(Fragment details){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.reqDetailPage,details);
         ft.commit();
-    }
+    }*/
 
 }
 

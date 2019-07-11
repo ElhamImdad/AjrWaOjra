@@ -39,11 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -106,10 +103,10 @@ public class RequesterRegistrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 logInFrag = new logInFragment();
-                UploadImagesFragment f = new UploadImagesFragment();
+              //  UploadImagesFragment f = new UploadImagesFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, f);
+                ft.replace(R.id.container, logInFrag);
                 ft.commit();
             }
         });
@@ -123,7 +120,7 @@ public class RequesterRegistrationFragment extends Fragment {
         final String password = textInputPassword.getText().toString().trim();
         final String Name = name.getText().toString().trim();
         final String country = getCountryListFromApi();
-        Log.e("country int >>", country);
+        Log.e("country int >>", country +"----");
         final String howKnowUs = howKnowus.getSelectedItem().toString().trim();
         final String role = "Requester";
 
@@ -133,9 +130,9 @@ public class RequesterRegistrationFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
-
+                        Log.v("Res", response.toString());
                         try {
-                            Log.v("Res", response);
+
                             JSONObject ob = new JSONObject(response);
                             token = ob.getString("access_token");
                             Log.v("access_token", token);
@@ -154,6 +151,7 @@ public class RequesterRegistrationFragment extends Fragment {
                             */
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("new error>>",e.toString());
                         }
 
                     }
@@ -173,7 +171,7 @@ public class RequesterRegistrationFragment extends Fragment {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("name", Name);
-                params.put("country_id", country);
+                params.put("country_id", String.valueOf(807));
                 params.put("knowUs", howKnowUs);
                 params.put("role", role);
                 params.put("payment", String.valueOf(0));
@@ -181,7 +179,6 @@ public class RequesterRegistrationFragment extends Fragment {
 
                 return params;
             }
-
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 5000,
@@ -243,6 +240,7 @@ public class RequesterRegistrationFragment extends Fragment {
                                     id[0] = goodModelArrayList.get(i).getId();
                                 }
                             }
+                            Log.e("iuuuuuuuuuuuuu",id[0]);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -261,8 +259,8 @@ public class RequesterRegistrationFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         requestQueue.add(stringRequest);
-
-    return id[0];
+Log.e("id of country method ",id[0]);
+    return id[0].toString();
     }
 
     private boolean validateEmail() {
@@ -298,14 +296,14 @@ public class RequesterRegistrationFragment extends Fragment {
     }
 
     private boolean isValidMobile() {
-        String regexStr = "^\\+[0-9]{10,13}$";
+        String regexStr = "^\\[0-9]{10,13}$";
 
         String number = textphone2.getText().toString();
-        if (!textphone2.getText().toString().contains("+")) {
+        /*if (!textphone2.getText().toString().contains("+")) {
             textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
-        }else if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
+        }else */if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
             textphone2.setError("ادخل رقم الجوال بشكل صحيح");
             textphone2.requestFocus();
             return false;

@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="333dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/cardView"
-        android:elevation="3dp"
-    android:background="@drawable/rectangle"
-        app:cardCornerRadius="6dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"
-    tools:context=".Fragments.ListOfRequestsFragment"
-        >
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="333dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginRight="15dp"
+    android:elevation="3dp"
+    app:cardCornerRadius="6dp"
+    tools:context=".Fragments.ListOfRequestsFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@drawable/rectangle">
 
 
         <TextView
@@ -47,7 +46,6 @@
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:visibility="visible"
-            android:defaultValue="@string/date_defoult_value"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -58,10 +56,10 @@
 
         <ImageView
             android:id="@+id/personIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             app:layout_constraintEnd_toStartOf="@+id/umraName"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,16 +68,14 @@
 
         <ImageView
             android:id="@+id/calendreIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/personIcon"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/calender_icon" />
 
     </android.support.constraint.ConstraintLayout>
 
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>

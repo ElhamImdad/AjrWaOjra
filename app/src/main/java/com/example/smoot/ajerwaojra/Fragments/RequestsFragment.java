@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -39,15 +40,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestsFragment extends Fragment implements RequestsAdapter.MyViewHolder.onCardClick2{
+public class RequestsFragment extends Fragment{
     Fragment newReqestFragment;
     CardView cardView;
     RecyclerView recyclerView ;
     RequestsAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<OmraInfo>  umraListInProgress ;
-    ArrayList<OmraInfo>  umraListDone ;
-    ArrayList<OmraInfo>  umraListPending;
+    private ArrayList<OmraInfo>  umraListInProgress ;
+    private ArrayList<OmraInfo>  umraListDone ;
+    private ArrayList<OmraInfo>  umraListPending;
+    private ArrayList<String> omraPhotoList;
     SwipeRefreshLayout swipeRefreshLayout;
     private TextView textViewUmraName;
     private RequestQueue mQueue;
@@ -69,11 +71,99 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
         pendingBTN = v.findViewById(R.id.waitingBtn);
         doneBTN = v.findViewById(R.id.donBtn);
         inProgressBTN = v.findViewById(R.id.inProgressBtn);
+        doneBTN.requestFocus();
+        inProgressBTN.requestFocus();
+        pendingBTN.requestFocus();
+      //  boolean b = doneBTN.isFocused();
+
+      //  inProgressBTN.setBackgroundResource(R.drawable.checkbox);
+      //  pendingBTN.setBackgroundResource(R.drawable.checkbox);
         umraListInProgress = new ArrayList<>();
         umraListDone = new ArrayList<>();
         umraListPending = new ArrayList<>();
 
         swipeRefreshLayout = v.findViewById(R.id.swapRefreshLayout);
+
+
+
+        recyclerView = v.findViewById(R.id.recyclerView11);
+        mQueue = Volley.newRequestQueue(getContext());
+        showRequest();
+
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        adapter = new RequestsAdapter(umraListPending, getContext());
+        recyclerView.setAdapter(adapter);
+        visibleNorequestImage();
+        inProgressBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickImProgress();
+                doneBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                doneBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                inProgressBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                inProgressBTN.setTextColor(getResources().getColor(R.color.white));
+
+                pendingBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                pendingBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+            }
+        });
+        pendingBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickPending();
+                doneBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                doneBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                inProgressBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                inProgressBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                pendingBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                pendingBTN.setTextColor(getResources().getColor(R.color.white));
+            }
+        });
+        doneBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickDone();
+                doneBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                doneBTN.setTextColor(getResources().getColor(R.color.white));
+
+                inProgressBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                inProgressBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                pendingBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                pendingBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+            }
+        });
+    /*    if (umraListInProgress.size() == 0 && umraListPending.size() == 0 && umraListDone.size() ==0) {
+            Log.e("visible", "333");
+            norequestImg.setVisibility(View.VISIBLE);
+         //   linearLayout.setVisibility(View.INVISIBLE);
+        }*/
+        addRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newReqestFragment = new OmrahRequestFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container, newReqestFragment);
+                ft.commit();
+            }
+        });
+        if (umraListInProgress.size() != 0 ) {
+            umraListInProgress.clear();
+        }
+        if (umraListPending.size() !=0){
+            umraListPending.clear();
+        }
+        if (umraListDone.size() !=0){
+            umraListDone.clear();
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -93,99 +183,20 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        addRequestBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newReqestFragment = new OmrahRequestFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, newReqestFragment);
-                ft.commit();
-            }
-        });
-
-        recyclerView = v.findViewById(R.id.recyclerView11);
-        mQueue = Volley.newRequestQueue(getContext());
-        showRequest();
-
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-
-
-        inProgressBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickImProgress();
-            }
-        });
-        pendingBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickPending();
-            }
-        });
-        doneBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickDone();
-            }
-        });
-        if (umraListInProgress.size() == 0 && umraListPending.size() == 0 && umraListDone.size() ==0) {
-            Log.e("visible", "333");
-            norequestImg.setVisibility(View.VISIBLE);
-         //   linearLayout.setVisibility(View.INVISIBLE);
-        }
-        if (umraListInProgress.size() != 0 ) {
-            umraListInProgress.clear();
-        }
-        if (umraListPending.size() !=0){
-            umraListPending.clear();
-        }
-        if (umraListDone.size() !=0){
-            umraListDone.clear();
-        }
 
         return v;
     }
-  /*  @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      //  OmraInfo omraInfo = (OmraInfo) recyclerView.getIt
-        //open alart dialog page information for doer
-        Fragment f = new RequestDetailsFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container, f);
-        ft.commit();
-
-    }*/
     private void clickImProgress(){
-        if (umraListInProgress.size() == 0 ) {
-            Log.e("visible", "???");
-            norequestImg.setVisibility(View.VISIBLE);
-        }
-        adapter = new RequestsAdapter(umraListInProgress, this);
-        recyclerView.setAdapter(adapter);
-
-
+        adapter.updateData(umraListInProgress );
     }
     private void clickPending(){
-        if (umraListPending.size() == 0 ) {
-            Log.e("visible", "???");
-            norequestImg.setVisibility(View.VISIBLE);
-        }
-        adapter = new RequestsAdapter(umraListPending, this);
+      //  adapter.updateData(umraListPending );
+        adapter = new RequestsAdapter(umraListPending, getContext());
         recyclerView.setAdapter(adapter);
 
     }
     private void clickDone(){
-        if (umraListDone.size() == 0) {
-            Log.e("visible", "???");
-            norequestImg.setVisibility(View.VISIBLE);
-        }
-        adapter = new RequestsAdapter(umraListDone, this);
-        recyclerView.setAdapter(adapter);
+        adapter.updateData(umraListDone );
 
     }
     private void showRequest(){
@@ -197,42 +208,52 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e("list order respons>>---",response.toString());
                         try {
-                            Log.e("list order respons>>---",response.toString());
+
                             JSONArray jsonObj = response.getJSONArray("orders");
 
                             OmraInfo omraInfoObject;
                            for (int i = 0; i < jsonObj.length(); i++){
-                               String status = jsonObj.getJSONObject(i).getString("status");
+
+                               String status = jsonObj.getJSONObject(i).getJSONObject("order").getString("status_id");
 
                                 omraInfoObject = new OmraInfo();
-                               omraInfoObject.setId(jsonObj.getJSONObject(i).getInt("id"));
-                               omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getString("doer_name"));
-                               omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getString("name"));
-                               omraInfoObject.setDoaa(jsonObj.getJSONObject(i).getString("doaa"));
+                               omraInfoObject.setId(jsonObj.getJSONObject(i).getJSONObject("order").getInt("id"));
+                               omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
+                               omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
+                               omraInfoObject.setDoaa(jsonObj.getJSONObject(i).getJSONObject("order").getString("doaa"));
                                omraInfoObject.setStatus(status);
-                               omraInfoObject.setDate(jsonObj.getJSONObject(i).getString("time"));
-                               omraInfoObject.setTime(jsonObj.getJSONObject(i).getString("date"));
+                               omraInfoObject.setDate(jsonObj.getJSONObject(i).getJSONObject("order").getString("date"));
+                               omraInfoObject.setTime(jsonObj.getJSONObject(i).getJSONObject("order").getString("time"));
 
-                               if (status.equalsIgnoreCase("in progress")){
+
+
+                               if (status.equals("2")){
                                    umraListInProgress.add(omraInfoObject);
-                                //   adapter.notifyDataSetChanged();
+                                   Log.e("my list is >---",status+"\n\n\n");
+                         //          adapter.notifyDataSetChanged();
 
-                               }else if (status.equalsIgnoreCase("pending")){
+                               }else if (status.equals("1")){
                                    umraListPending.add(omraInfoObject);
-                               //    adapter.notifyDataSetChanged();
-                               }else {
+//                                   adapter.notifyDataSetChanged();
+                               }else if (status.equals("3")){
+                                   omraPhotoList = new ArrayList<>();
+                                   JSONArray omraImages = jsonObj.getJSONObject(i).getJSONObject("order").getJSONArray("omra_images");
+                                   Log.e("array length---", String.valueOf(omraImages.length()));
+                                   String urlPhoto;
+                                   for (int j = 0; j< omraImages.length(); j++){
+                                       Log.e("array length---","----------------------------------------------");
+                                       omraPhotoList.add(omraImages.getJSONObject(j).getString("path"));
+                                   }
+                                   omraInfoObject.setPhotos(omraPhotoList);
                                    umraListDone.add(omraInfoObject);
-                                //   adapter.notifyDataSetChanged();
+                                //   omraPhotoList.clear();
+                        //           adapter.notifyDataSetChanged();
                                }
 
-                               Log.e("my list is >---",umraListInProgress.toString());
-
                             }
-                            if (umraListInProgress.size() != 0&& umraListPending.size() !=0 && umraListDone.size()!=0){
-                                Log.e("invisible","invisible");
-                                norequestImg.setVisibility(View.INVISIBLE);
-                            }
+                            visibleNorequestImage();
 
                         } catch (JSONException excep) {
                             excep.printStackTrace();
@@ -243,6 +264,7 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Toast.makeText(getContext(), "لايوجد اتصال بالانترنت", Toast.LENGTH_LONG).show();
                 Log.e("volleyErro in list req>",error.toString());
             }
         }){
@@ -262,49 +284,12 @@ public class RequestsFragment extends Fragment implements RequestsAdapter.MyView
 
         mQueue.add(request);
     }
-
-
-    @Override
-    public void onCardClickLis(int position) {
-        Log.e("position", String.valueOf(position));
-        if (umraListDone.size()!= 0 && umraListDone.get(position).getStatus().equalsIgnoreCase("done")){
-            OmraInfo umraDone =umraListDone.get(position);
-
-            Log.e("list omra done",umraDone.getStatus().toString());
-            Bundle bundle = new Bundle();
-            bundle.putInt("id",umraDone.getId());
-            RequestDetailsFragment f = new RequestDetailsFragment();
-            Log.e("Click card id", String.valueOf(umraDone.getId()));
-            FragmentManager fm = getActivity().getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            f.setArguments(bundle);
-            ft.replace(R.id.container,f);
-            ft.addToBackStack(null);
-            ft.commit();
-        }else if (umraListInProgress.size()!= 0 && umraListInProgress.get(position).getStatus().equalsIgnoreCase("in progress")){
-            OmraInfo umraProgress =umraListInProgress.get(position);
-            Bundle bundle2 = new Bundle();
-            bundle2.putInt("id2",umraProgress.getId());
-            InprogressRequestsFragment f2 = new InprogressRequestsFragment();
-            Log.e("Click card 22", "requester fragment 222");
-            FragmentManager fm2 = getActivity().getSupportFragmentManager();
-            FragmentTransaction ft2 = fm2.beginTransaction();
-            f2.setArguments(bundle2);
-            ft2.replace(R.id.container,f2);
-            ft2.addToBackStack(null);
-            ft2.commit();
-        }else if (umraListPending.size()!= 0 && umraListPending.get(position).getStatus().equalsIgnoreCase("pending")){
-            OmraInfo umraPending =umraListPending.get(position);
-            Bundle bundle3 = new Bundle();
-            bundle3.putInt("id3",umraPending.getId());
-            InprogressRequestsFragment f3 = new InprogressRequestsFragment();
-            Log.e("Click card 22", "requester fragment 222");
-            FragmentManager fm3 = getActivity().getSupportFragmentManager();
-            FragmentTransaction ft3 = fm3.beginTransaction();
-            f3.setArguments(bundle3);
-            ft3.replace(R.id.container,f3);
-            ft3.addToBackStack(null);
-            ft3.commit();
+    private void visibleNorequestImage(){
+        if (umraListInProgress.size() != 0 || umraListPending.size() !=0 || umraListDone.size()!=0){
+            norequestImg.setVisibility(View.INVISIBLE);
+        }
+        if (umraListInProgress.size() == 0 && umraListPending.size() ==0 && umraListDone.size()==0){
+            norequestImg.setVisibility(View.VISIBLE);
         }
     }
 }

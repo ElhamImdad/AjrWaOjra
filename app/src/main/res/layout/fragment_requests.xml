@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/reqDetailPage"
     tools:context=".Fragments.RequestsFragment">
 
 
@@ -25,8 +24,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="413dp"
-        android:layout_height="132dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
         android:background="@drawable/headerrectangle"
         android:radius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +40,7 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/button"
         android:text="طلب عمرة"
+        android:fontFamily="@font/arabic_medium_0"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,6 +59,7 @@
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
         android:text="الطلبات"
+        android:fontFamily="@font/arabic_medium_0"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +76,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="الرئيسية"
+        android:fontFamily="@font/arabic_medium_0"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/talabatText"
@@ -111,9 +113,10 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="300dp"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rectangle_green"
+
+        android:background="@drawable/rectangle_greentab"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,28 +124,28 @@
 
         <Button
             android:id="@+id/inProgressBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="@color/white"
+            android:fontFamily="@font/arabic_medium_0"
             android:text="قيد التنفيذ"
             android:textColor="#0E9447" />
 
         <Button
             android:id="@+id/donBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="@color/white"
+            android:fontFamily="@font/arabic_medium_0"
             android:text="المكتملة"
             android:textColor="#0E9447" />
 
         <Button
             android:id="@+id/waitingBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="@color/white"
+            android:fontFamily="@font/arabic_medium_0"
             android:text="قيد الانتظار"
             android:textColor="#0E9447" />
     </LinearLayout>

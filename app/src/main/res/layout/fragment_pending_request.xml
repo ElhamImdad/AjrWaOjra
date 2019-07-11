@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="413dp"
-        android:layout_height="132dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
         android:background="@drawable/headerrectangle"
         android:radius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/dinnext_arabic_regula_0"
+        android:fontFamily="@font/arabic_medium_0"
         android:text="عمرة قيد الانتظار"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/returnBtn"
+        android:id="@+id/returnBtnPending"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -52,9 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/arabic_light_0"
+        android:fontFamily="@font/arabic_medium_0"
         android:text="العمرة نيابةً عن"
-        android:textColor="#555555"
+        android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.126"
@@ -64,16 +64,16 @@
     <ImageView
         android:id="@+id/personIcon"
         android:layout_width="25dp"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/person_icon"
-        app:layout_constraintEnd_toStartOf="@+id/textViewOmraName"
+        app:layout_constraintEnd_toStartOf="@+id/OmraNamePending"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_Omra" />
 
     <TextView
-        android:id="@+id/textViewOmraName"
+        android:id="@+id/OmraNamePending"
         android:layout_width="315dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -81,6 +81,7 @@
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
         android:textColor="#000000"
+        android:textAlignment="textStart"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/personIcon"
@@ -93,10 +94,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/arabic_light_0"
+        android:fontFamily="@font/arabic_medium_0"
         android:gravity="center"
         android:text="الدعاء المخصص"
-        android:textColor="#555555"
+        android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.12"
@@ -111,16 +112,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextDoaa"
-        app:layout_constraintVertical_bias="0.16000003">
+        app:layout_constraintVertical_bias="0.100000024">
 
         <TextView
-            android:id="@+id/prayer"
+            android:id="@+id/doaaPending"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginBottom="6dp"
             android:background="@null"
             android:fontFamily="@font/arabic_light_0"
             android:paddingStart="3dp"
