@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    android:layout_width="333dp"
+    android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
     android:layout_marginTop="15dp"
@@ -21,14 +21,15 @@
 
         <TextView
             android:id="@+id/umraName"
-            android:layout_width="260dp"
+            android:layout_width="265dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="28dp"
-            android:padding="6dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="5dp"
+            android:fontFamily="@font/arabic_medium_0"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="13sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/personIcon"
@@ -37,18 +38,19 @@
 
         <TextView
             android:id="@+id/dateTextView"
-            android:layout_width="150dp"
+            android:layout_width="118dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="8dp"
-            android:padding="6dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:padding="4dp"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.014"
             app:layout_constraintStart_toEndOf="@+id/calendreIcon"
             app:layout_constraintTop_toBottomOf="@+id/umraName"
             app:layout_constraintVertical_bias="0.0"
@@ -56,10 +58,10 @@
 
         <ImageView
             android:id="@+id/personIcon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="22dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/umraName"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,13 +70,59 @@
 
         <ImageView
             android:id="@+id/calendreIcon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/personIcon"
             app:srcCompat="@drawable/calender_icon" />
+
+        <ImageView
+            android:id="@+id/timeIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/timeicon"
+            app:layout_constraintEnd_toStartOf="@+id/textViewTimeDone"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/dateTextView"
+            app:layout_constraintTop_toBottomOf="@+id/umraName" />
+
+        <TextView
+            android:id="@+id/viewTime"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:padding="4dp"
+            android:paddingStart="4dp"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.933"
+            app:layout_constraintStart_toEndOf="@+id/timeIcon"
+            app:layout_constraintTop_toBottomOf="@+id/umraName"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="omra time" />
+
+        <ImageView
+            android:id="@+id/verticleLineCard"
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:background="@color/gray"
+            android:src="@drawable/line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/timeIcon"
+            app:layout_constraintStart_toEndOf="@+id/dateTextView"
+            app:layout_constraintTop_toBottomOf="@+id/umraName" />
 
     </android.support.constraint.ConstraintLayout>
 

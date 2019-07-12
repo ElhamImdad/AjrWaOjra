@@ -25,9 +25,9 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="60dp"
         android:background="@drawable/headerrectangle"
-        android:radius="15dp"
+        android:radius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,33 +37,31 @@
         android:id="@+id/requestUmrabutton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:background="@drawable/button"
-        android:text="طلب عمرة"
         android:fontFamily="@font/arabic_medium_0"
+        android:text="طلب عمرة"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
 
     <TextView
         android:id="@+id/talabatText"
         android:layout_width="222dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/ordertext"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:text="الطلبات"
         android:fontFamily="@font/arabic_medium_0"
+        android:paddingTop="3dp"
+        android:paddingBottom="4dp"
+        android:text="الطلبات"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
@@ -71,24 +69,21 @@
         android:id="@+id/mainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="الرئيسية"
         android:fontFamily="@font/arabic_medium_0"
+        android:text="الرئيسية"
         android:textColor="@android:color/background_light"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/talabatText"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swapRefreshLayout"
-        android:layout_width="333dp"
-        android:layout_height="380dp"
+        android:layout_width="320dp"
+        android:layout_height="360dp"
         app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +93,6 @@
             android:id="@+id/recyclerView11"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="24dp"
             android:paddingStart="0dp"
             android:paddingTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,9 +107,8 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/rectangle_greentab"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +121,9 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:fontFamily="@font/arabic_medium_0"
+            android:gravity="center"
             android:text="قيد التنفيذ"
+            android:textSize="13sp"
             android:textColor="#0E9447" />
 
         <Button
@@ -137,7 +132,9 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:fontFamily="@font/arabic_medium_0"
+            android:gravity="center"
             android:text="المكتملة"
+            android:textSize="13sp"
             android:textColor="#0E9447" />
 
         <Button
@@ -145,11 +142,25 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:checked = "true"
+            android:checked="true"
             android:fontFamily="@font/arabic_medium_0"
+            android:gravity="center"
             android:text="قيد الانتظار"
-            android:textColor="#0E9447" />
+            android:textColor="#0E9447"
+            android:textSize="13sp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/setting1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/setting"
+        app:layout_constraintBottom_toTopOf="@+id/talabatText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
 
 
 </android.support.constraint.ConstraintLayout>

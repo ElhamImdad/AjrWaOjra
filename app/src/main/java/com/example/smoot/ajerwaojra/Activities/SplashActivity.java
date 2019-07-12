@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(4000);
+                    sleep(3000);
                     /*progressBar.getProgressDrawable().setColorFilter(
                             Color.GREEN, android.graphics.PorterDuff.Mode.SRC_IN);*/
                     Intent intent  = new Intent(getApplicationContext(), MainActivity.class);

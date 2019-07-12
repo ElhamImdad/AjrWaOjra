@@ -11,18 +11,25 @@
     <ImageView
         android:id="@+id/headerLogin"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="@drawable/header"
+        android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/Ajer_Ojra"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="@+id/headerLogin"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayout3"
-        android:layout_width="360dp"
-        android:layout_height="360dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="320dp"
+        android:layout_height="340dp"
         android:background="@drawable/rectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +42,8 @@
             <ScrollView
                 android:id="@+id/scrollView2"
                 android:layout_width="318dp"
-                android:layout_height="236dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="240dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2">
@@ -67,7 +72,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:gravity="center"
                 android:text="فتوى العمرة"
@@ -81,8 +86,6 @@
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="122dp"
-                android:layout_marginEnd="122dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:shadowColor="@color/DarkGreen"
                 android:text="تم الاطلاع على الفتوى"
@@ -90,6 +93,7 @@
                 android:textColorHighlight="@color/DarkGreen"
                 android:textColorHint="@color/DarkGreen"
                 android:textColorLink="@color/DarkGreen"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.486"
                 app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +107,7 @@
         android:id="@+id/choseTypeOfReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/arabic_medium_0"
         android:text="اختر نوع الحساب"
         android:textAlignment="center"
@@ -125,6 +129,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/doer"
         app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
+        app:layout_constraintVertical_bias="0.3"
         app:srcCompat="@drawable/requester" />
 
 
@@ -139,7 +144,7 @@
         app:layout_constraintEnd_toStartOf="@+id/requester"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
+        app:layout_constraintVertical_bias="0.41000003"
         app:srcCompat="@drawable/doer" />
-
 
 </android.support.constraint.ConstraintLayout>
