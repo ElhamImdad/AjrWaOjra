@@ -35,8 +35,8 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder  {
-        TextView textName, date;
-        ImageView personIcon, calIcon;
+        TextView textName, date, time;
+        ImageView personIcon, calIcon, verticleLine, timeIcon;
         CardView cardView;
         //onCardClick2 onCardClick;
 
@@ -48,6 +48,12 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
             date = itemView.findViewById(R.id.dateTextView);
             personIcon = itemView.findViewById(R.id.personIcon);
             calIcon = itemView.findViewById(R.id.calendreIcon);
+            timeIcon = itemView.findViewById(R.id.timeIcon);
+            timeIcon.setVisibility(View.INVISIBLE);
+            verticleLine = itemView.findViewById(R.id.verticleLineCard);
+            verticleLine.setVisibility(View.INVISIBLE);
+            time = itemView.findViewById(R.id.viewTime);
+            time.setVisibility(View.INVISIBLE);
            // this.onCardClick=onCardClick;
            // itemView.setOnClickListener(this);
             /*textName.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +92,16 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
         final OmraInfo item = umraList.get(i);
         viewHolder.textName.setText(item.getUmraName());
         viewHolder.date.setText(item.getDate());
+        if (item.getStatus().equals("1")){
+            viewHolder.timeIcon.setVisibility(View.INVISIBLE);
+            viewHolder.verticleLine.setVisibility(View.INVISIBLE);
+            viewHolder.time.setVisibility(View.INVISIBLE);
+        }else {
+            viewHolder.timeIcon.setVisibility(View.VISIBLE);
+            viewHolder.verticleLine.setVisibility(View.VISIBLE);
+            viewHolder.time.setVisibility(View.VISIBLE);
+            viewHolder.time.setText(item.getTime());
+        }
         viewHolder.textName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

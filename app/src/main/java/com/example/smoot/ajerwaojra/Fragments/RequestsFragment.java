@@ -65,15 +65,16 @@ public class RequestsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_requests, container, false);
+
         linearLayout = v.findViewById(R.id.linearLayout);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
         norequestImg = (ImageView) v.findViewById(R.id.noRequestImg);
         pendingBTN = v.findViewById(R.id.waitingBtn);
         doneBTN = v.findViewById(R.id.donBtn);
         inProgressBTN = v.findViewById(R.id.inProgressBtn);
-        doneBTN.requestFocus();
-        inProgressBTN.requestFocus();
-        pendingBTN.requestFocus();
+     ///   doneBTN.requestFocus();
+      //  inProgressBTN.requestFocus();
+      //  pendingBTN.requestFocus();
       //  boolean b = doneBTN.isFocused();
 
       //  inProgressBTN.setBackgroundResource(R.drawable.checkbox);
@@ -126,7 +127,6 @@ public class RequestsFragment extends Fragment{
 
                 pendingBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
                 pendingBTN.setTextColor(getResources().getColor(R.color.white));
-                pendingBTN.setSelected(true);
             }
         });
         pendingBTN.setSelected(true);
