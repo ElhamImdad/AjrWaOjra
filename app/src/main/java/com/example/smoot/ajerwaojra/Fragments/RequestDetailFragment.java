@@ -63,6 +63,7 @@ public class RequestDetailFragment extends Fragment {
     DatePickerDialog.OnDateSetListener object;
     String expectedDate;
     String stringDate;
+    Button goSetting ;
 
     public RequestDetailFragment() {
         // Required empty public constructor
@@ -90,7 +91,17 @@ public class RequestDetailFragment extends Fragment {
         date.setText(bundle.getString("date"));
         umraOwner.setText(bundle.getString("umraOwner"));
         doaa.setText(bundle.getString("doaa"));
-
+        goSetting = v.findViewById(R.id.goSetting);
+        goSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DoerAccountFragment f = new DoerAccountFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container,f);
+                ft.commit();
+            }
+        });
         final Bundle bundle1 = new Bundle();
         bundle1.putString("umraUner", bundle.getString("umraOwner"));
         bundle1.putString("doaa", bundle.getString("doaa"));
@@ -102,7 +113,7 @@ public class RequestDetailFragment extends Fragment {
 
                 if (expectedDate != null) {
                     if (checkBox.isChecked()) {
-                        // offerService();
+                         offerService();
                         timerFragment f = new timerFragment();
                         f.setArguments(bundle1);
                         FragmentManager fm = getFragmentManager();
@@ -135,7 +146,7 @@ public class RequestDetailFragment extends Fragment {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
                         getActivity(),
-                        android.R.style.Theme_Material_Dialog_NoActionBar,
+                        android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar,
                         object, year, month, day);
                 // dialog.getWindow().setBackgroundDrawableResource(R.color.DarkGreen);
                 dialog.show();
