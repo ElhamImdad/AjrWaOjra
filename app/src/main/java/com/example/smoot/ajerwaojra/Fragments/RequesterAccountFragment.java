@@ -1,8 +1,8 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,31 +26,34 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DoerAccountFragment extends Fragment {
-    private TextView ouWebsit, myName, myEmail, myPhone, winFromApp, noOmraDoneDoer;
-
-    public DoerAccountFragment() {
+public class RequesterAccountFragment extends Fragment {
+    private TextView ouWebsit, myName, myEmail, myPhone, noOfOmraDone, noOfOmraInProgress, noOfOmraPending, totalPayment;
+    public RequesterAccountFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_doer_account, container, false);
-        myName = view.findViewById(R.id.nameAccDoer);
-        myEmail = view.findViewById(R.id.emailAccDoer);
-        myPhone = view.findViewById(R.id.phoneAccDoer);
-        winFromApp = view.findViewById(R.id.winFromApp);
-        noOmraDoneDoer = view.findViewById(R.id.noOmraDoneDoer);
+        View view = inflater.inflate(R.layout.fragment_requester_account, container, false);
+        ouWebsit = view.findViewById(R.id.ourAccount);
+        ouWebsit.setText(Html.fromHtml("<u>theqatech.com</u>"));
+
+        myName = view.findViewById(R.id.accountName);
+        myEmail = view.findViewById(R.id.emailAccount);
+        myPhone = view.findViewById(R.id.phoneAccount);
+        noOfOmraDone = view.findViewById(R.id.noDoneOmra);
+        noOfOmraInProgress = view.findViewById(R.id.noInprogressOmra);
+        noOfOmraPending = view.findViewById(R.id.noPendingOmra);
+        totalPayment = view.findViewById(R.id.totalPayment);
         getAccount();
+
         return view;
     }
     private void getAccount(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_LIST_USER,
                 new Response.Listener<String>() {
-
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -59,8 +62,10 @@ public class DoerAccountFragment extends Fragment {
                             myName.setText(USER.getString("name"));
                             myEmail.setText(USER.getString("email"));
                             myPhone.setText(USER.getString("phone"));
-                            winFromApp.setText(USER.getString("payment") + "دولار");
-                            noOmraDoneDoer.setText(ob.getString("Done Orders"));
+                            totalPayment.setText(USER.getString("payment") + "دولار");
+                            noOfOmraDone.setText(ob.getString("Done Orders"));
+                            noOfOmraInProgress.setText(ob.getString("In Progress Orders"));
+                            noOfOmraPending.setText(ob.getString("Pending Orders"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("account error>>",e.toString());
@@ -70,7 +75,7 @@ public class DoerAccountFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //  Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("account response", error.toString());
                     }
 
@@ -79,7 +84,7 @@ public class DoerAccountFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept","application/json");
-                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
                 headers.put("Authorization", "Bearer "+token);
                 return headers;
             }

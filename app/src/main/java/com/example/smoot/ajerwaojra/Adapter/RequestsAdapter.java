@@ -115,6 +115,7 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
                 intent.putExtra("time", item.getTime());
                 intent.putExtra("doaa", item.getDoaa());
                 intent.putExtra("photos",item.getPhotos());
+                Log.e("date", item.getDate());
        //         Log.e("photos", String.valueOf(item.getPhotos().size()));
                 /*Log.e("photo size", String.valueOf(item.getPhotos().size()));
                 for (int i = 0; i< item.getPhotos().size(); i++){

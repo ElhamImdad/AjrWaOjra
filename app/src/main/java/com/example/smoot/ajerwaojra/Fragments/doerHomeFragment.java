@@ -1,8 +1,6 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.android.volley.Request;
@@ -22,10 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.Adapter.RecyclerAdapterHD;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
-import com.example.smoot.ajerwaojra.Models.Countries;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 
@@ -89,8 +84,6 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 DoerAccountFragment f = new DoerAccountFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -122,7 +115,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         // get the data from the object
                         // set the attributes of the umra object
                        // umraRequest.setCountry(object.getString("country"));
-                        umraRequest.setCountry_id(object.getInt("country_id"));
+                        umraRequest.setCountry_id(object.getString("country_id"));
                         umraRequest.setCountryFlagImagePath(object.getString("image"));
                         umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
@@ -157,8 +150,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         requestQueue.add(request);
 
     }
-
-
+    
     @Override
     public void onCardClickLis(int position) {
         UmraRequest umra =umraRequests.get(position);
@@ -170,7 +162,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         bundle.putString("country",umra.getCountry());
         bundle.putString("doaa",umra.getDoaa());
         bundle.putString("umraOwner",umra.getUmraOwner());
-        bundle.putInt("country_id",umra.getCountry_id());
+        bundle.putString("country_id",umra.getCountry_id());
         RequestDetailFragment f = new RequestDetailFragment();
         f.setArguments(bundle);
         Log.d("Click", "Yes Clicked");
