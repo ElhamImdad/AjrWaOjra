@@ -30,6 +30,7 @@
         android:background="@drawable/rectangle"
         android:gravity="center"
         android:text="00"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView18"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -39,9 +40,10 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/rectangle"
         android:gravity="center"
         android:text="00"
-        android:background="@drawable/rectangle"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -56,6 +58,7 @@
         android:background="@drawable/rectangle"
         android:gravity="center"
         android:text="00"
+        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/textView18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />

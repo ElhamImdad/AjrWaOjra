@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,8 @@ public class UploadImagesFragment extends Fragment {
     File photoFile2 = null;
     File photoFile3 = null;
     String mCurrentPhotoPath;
+
+    String encodedImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -185,15 +188,15 @@ public class UploadImagesFragment extends Fragment {
             Bundle extras = data.getExtras();
 
             if (b1.isEnabled()) {
-                filePath1 = data.getData();
-                try {
-                    imageBitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath1);
+                //filePath1 = data.getData();
+               /* try {
+                   // imageBitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath1);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
                 b2.setEnabled(false);
                 b3.setEnabled(false);
-
+                imageBitmap1=  (Bitmap) extras.get("data");
                 image1.setVisibility(View.VISIBLE);
                 image1.setImageBitmap(imageBitmap1);
                 b2.setEnabled(true);
@@ -220,6 +223,20 @@ public class UploadImagesFragment extends Fragment {
         if (takePhotoIntent.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+
+    public String ConvertBitmapToBase64Format(Bitmap bitmap)
+
+    {
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imageString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+        return imageString;
+
     }
 
     public File getStringImage(Bitmap bitmap) {
@@ -300,11 +317,11 @@ public class UploadImagesFragment extends Fragment {
                 param.put("time", totalTime);
                 param.put("id", String.valueOf(id));
 
-                File f1 = getStringImage(imageBitmap1);
+               // File f1 = getStringImage(imageBitmap1);
 
-
-                param.put("image", f1.toString());
-
+                encodedImage = ConvertBitmapToBase64Format(imageBitmap1);
+                param.put("image", encodedImage);
+                Log.i("Mynewsam",  encodedImage);
                 if (imageBitmap2 != null) {
                     //
                     Log.i("Mynewsam", "" + image2);

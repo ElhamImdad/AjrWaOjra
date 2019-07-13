@@ -113,7 +113,7 @@ public class RequestDetailFragment extends Fragment {
 
                 if (expectedDate != null) {
                     if (checkBox.isChecked()) {
-                         offerService();
+                        // offerService();
                         timerFragment f = new timerFragment();
                         f.setArguments(bundle1);
                         FragmentManager fm = getFragmentManager();

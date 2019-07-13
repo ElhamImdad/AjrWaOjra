@@ -135,7 +135,7 @@ public class DoerRegistrationFragment extends Fragment {
             public void onClick(View v) {
                 getLocation();
 
-                if ( validateEmail() && validatePassword()) {
+                if (isValidMobile() && validateEmail() && validatePassword()) {
                     if (exactLocation.equals("السعودية")){
                     Log.e("Are you in Saudi", "yes");
                     doerRegister();
@@ -149,7 +149,6 @@ public class DoerRegistrationFragment extends Fragment {
                     ft.commit();
                     }
                 }
-
             }
         });
 
@@ -264,23 +263,7 @@ public class DoerRegistrationFragment extends Fragment {
         }
     }
 
-    public void showMessage() {
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle("عذرا.....");
-        alert.setMessage("يجب أن يكون موقعك الحالي مكة لإكمال تسجيل الاشتراك ");
-        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                FatwaFragment fragment = new FatwaFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, fragment);
-                ft.commit();
-            }
-        });
-        alert.show();
-    }
 
     protected void getLocation() {
         getPermission();
