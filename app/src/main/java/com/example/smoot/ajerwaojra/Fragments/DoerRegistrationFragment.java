@@ -1,6 +1,7 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,8 +9,10 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -53,8 +56,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.content.Context.LOCATION_SERVICE;
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+
 public class DoerRegistrationFragment extends Fragment {
-    private FusedLocationProviderClient client;
     private Spinner howKnowus;
     private EditText textName;
     private EditText textInputEmail;
@@ -69,10 +76,12 @@ public class DoerRegistrationFragment extends Fragment {
     String password;
     String howKnowUs;
     String token;
-    Double longitude, latitude;
     final String role = "Doer";
+    LocationManager locationManager;
+    double longitude, latitude;
+    String exactLocation = "";
+    final int REQUEST_CODE = 1;
 
-    final int LOCATION_REQUEST= 1;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                     //  "(?=.*[A-Z])" +
@@ -83,13 +92,11 @@ public class DoerRegistrationFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getLocation();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //   getPermission();
 
-        //
         View view = inflater.inflate(R.layout.fragment_doer_registration, container, false);
         howKnowus = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
@@ -108,12 +115,13 @@ public class DoerRegistrationFragment extends Fragment {
         confirm = view.findViewById(R.id.doerRegisterButton);
 
 
+        //    getLocation();
         // logIn
         TextView toLogIn = view.findViewById(R.id.logIn);
         toLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //timerFragment f = new timerFragment();
+
                 logInFrag = new logInFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -121,14 +129,25 @@ public class DoerRegistrationFragment extends Fragment {
                 ft.commit();
             }
         });
-
+        getLocation();
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getLocation();
 
-                if (isValidMobile() && validateEmail() && validatePassword()) {
-                    Log.e("inner if ", "yes");
+                if ( validateEmail() && validatePassword()) {
+                    if (exactLocation.equals("السعودية")){
+                    Log.e("Are you in Saudi", "yes");
                     doerRegister();
+                }
+                else{
+                    Log.e("not from saudi","hhh");
+                    RegistrationFailFragment f = new RegistrationFailFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.container,f);
+                    ft.commit();
+                    }
                 }
 
             }
@@ -136,7 +155,6 @@ public class DoerRegistrationFragment extends Fragment {
 
         return view;
     }
-
 
     private void doerRegister() {
         phoneNomber = textphone.getText().toString().trim();
@@ -184,7 +202,7 @@ public class DoerRegistrationFragment extends Fragment {
                 params.put("email", email);
                 params.put("phone", phoneNomber);
                 params.put("role", role);
-                params.put("country_id","807");
+                params.put("country_id", "807");
                 params.put("knowUs", howKnowUs);
                 params.put("password", password);
                 params.put("payment", String.valueOf(0));
@@ -194,7 +212,6 @@ public class DoerRegistrationFragment extends Fragment {
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
 
     private boolean validateEmail() {
         String emailInput = textInputEmail.getText().toString().trim();
@@ -264,73 +281,68 @@ public class DoerRegistrationFragment extends Fragment {
         });
         alert.show();
     }
-    public void getLocation() {
 
-        client = LocationServices.getFusedLocationProviderClient(getContext());
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            Log.e("inside if  ", "----");
-           // runTimePermission();
+    protected void getLocation() {
+        getPermission();
+        locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Log.e("provider ", "enabled");
+            if (checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(getContext(),
+                    ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.e("There is no permission", "!!!");
 
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},LOCATION_REQUEST);
-            Log.e("inside if  ", "granted");
-
-
-            return ;
-        }
-        LocationServices.getSettingsClient(getContext());
-        client.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null ){
-                    Log.e("Location ","not null ");
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                    try {
-                        Geocoder geocoder = new Geocoder(getContext());
-                        List<Address> addresses = null;
-                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        String c;
-                        c = addresses.get(0).getLocality();
-
-
-                        Log.e("onsuccess", "PP:"+c);
-                       if(c.equals("مكة")){Log.e("M","Makkah");}
-                    } catch (IOException e) {
-                        showMessage();
-                    }
-                }
+                return;
             }
-        });
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
+                Log.e("TAG", "There is a location");
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                Geocoder geocoder = new Geocoder(getContext());
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                exactLocation = addresses.get(0).getCountryName().trim();
 
-    }
- /*   private boolean runTimePermission(){
-        if (Build.VERSION.SDK_INT >= 23
-                && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
+                Log.e("t----", exactLocation);
+            } else {
+                Log.e("location", "null");
+            }
 
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION} ,100);
-            return  true;
+        } else {
+
+            Log.e("provider ", "is not enabled");
+
+            // اتركييييه
+            Log.e("i am in if", "hi ");
+            Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         }
-        return  false;
+    }
+
+    public void getPermission() {
+        if (checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(getContext(),
+                ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] PERMISSIONS = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION};
+            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST_CODE);
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100 ){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
-            {
-                getLocation();
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length == 2 && (grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
+                Log.e("Permission is ", "granted");
             }
-            else runTimePermission();
         }
     }
-*/
-
 }

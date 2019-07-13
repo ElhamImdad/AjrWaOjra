@@ -94,7 +94,7 @@ public class FatwaFragment extends Fragment {
         alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if ( !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+               /* if ( !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                     // if the GPS is not enabled
                     Log.e("i am in if", "hi ");
                     Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -106,7 +106,8 @@ public class FatwaFragment extends Fragment {
                 {
                     // the GPS is enabled so go to Doer Registration fragment
                     goDoerRegistration();
-                }
+                }*/
+                goDoerRegistration();
 
             }
         });
