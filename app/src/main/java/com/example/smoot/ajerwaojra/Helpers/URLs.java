@@ -8,4 +8,5 @@ public class URLs {
     public static final String URL_OFFER_SERVICE ="http://ajrandojra.website/api/acceptRequest";
     public static final String URL_GET_COUNTRY ="http://ajrandojra.website/api/getCountries";
     public static final String UPL_FINISH_REQUEST="http://ajrandojra.website/api/finishRequest";
+    public static final String UPL_LIST_USER="http://ajrandojra.website/api/auth/listUser";
 }

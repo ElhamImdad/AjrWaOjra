@@ -57,7 +57,7 @@ public class RequestDetailsFragment extends Fragment {
         image_2.setVisibility(View.INVISIBLE);
         image_3.setVisibility(View.INVISIBLE);
         String urlImage1, urlImage2, urlImage3;
-        ArrayList<String> urlsPHOTOS;
+        final ArrayList<String> urlsPHOTOS;
 
         if (getArguments() != null) {
             Log.e("data in bindle-->",getArguments().getString("doerName")+"-");
@@ -67,60 +67,82 @@ public class RequestDetailsFragment extends Fragment {
             omraDuration.setText(getArguments().getString("time"));
             doaaDone.setText(getArguments().getString("doaa"));
             urlsPHOTOS = getArguments().getStringArrayList("photos");
+
             switch (urlsPHOTOS.size()){
                 case 3 :
                     image_3.setVisibility(View.VISIBLE);
                     Picasso.with(getContext())
                             .load(urlsPHOTOS.get(2))
                             .into(image_3);
+                    image_3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle3 = new Bundle();
+
+                            bundle3.putString("omraName",getArguments().getString("omraName"));
+                            bundle3.putString("doerName",getArguments().getString("doerName"));
+                            bundle3.putString("date",getArguments().getString("date"));
+                            bundle3.putString("time",getArguments().getString("time"));
+                            bundle3.putString("doaa",getArguments().getString("doaa"));
+                            bundle3.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
+
+                            bundle3.putString("image",urlsPHOTOS.get(2));
+                            ZoomImageOmraFragment image3Obj = new ZoomImageOmraFragment();
+                            image3Obj.setArguments(bundle3);
+                            setFragment(image3Obj);
+
+                        }
+                    });
                 case 2 :
                     image_2.setVisibility(View.VISIBLE);
                     Picasso.with(getContext())
                             .load(urlsPHOTOS.get(1))
                             .into(image_2);
+                    image_2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle2 = new Bundle();
+
+                            bundle2.putString("omraName",getArguments().getString("omraName"));
+                            bundle2.putString("doerName",getArguments().getString("doerName"));
+                            bundle2.putString("date",getArguments().getString("date"));
+                            bundle2.putString("time",getArguments().getString("time"));
+                            bundle2.putString("doaa",getArguments().getString("doaa"));
+                            bundle2.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
+
+                            bundle2.putString("image",urlsPHOTOS.get(1));
+                            ZoomImageOmraFragment image2Obj = new ZoomImageOmraFragment();
+                            image2Obj.setArguments(bundle2);
+                            setFragment(image2Obj);
+
+                        }
+                    });
                 case 1 :
                     Picasso.with(getContext())
                             .load(urlsPHOTOS.get(0))
                             .into(image_1);
+                    image_1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle1 = new Bundle();
+
+                            bundle1.putString("omraName",getArguments().getString("omraName"));
+                            bundle1.putString("doerName",getArguments().getString("doerName"));
+                            bundle1.putString("date",getArguments().getString("date"));
+                            bundle1.putString("time",getArguments().getString("time"));
+                            bundle1.putString("doaa",getArguments().getString("doaa"));
+                            bundle1.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
+
+                            bundle1.putString("image",urlsPHOTOS.get(0));
+                            ZoomImageOmraFragment image1Obj = new ZoomImageOmraFragment();
+                            image1Obj.setArguments(bundle1);
+                            setFragment(image1Obj);
+
+                        }
+                    });
 
             }
         }
-
-       /* Bundle bundle = getArguments();
-        id = bundle.getInt("id");
-        status = bundle.getString("status");
-        status2 = bundle.getString("status2");
-        status3 = bundle.getString("status3");
-        Log.e("status of omra","----"+status);
-        Log.e("status of omra 2","----"+status2);
-        if (status.equalsIgnoreCase("Done")){
-            omraName.setText(bundle.getString("omraName"));
-            doerName.setText(bundle.getString("doerOmraName"));
-            omraDate.setText(bundle.getString("date"));
-            omraDuration.setText(bundle.getString("time"));
-            doaaDone.setText(bundle.getString("doaa"));
-            doaaTextViewProgress.setVisibility(View.INVISIBLE);
-            doaaProgress.setVisibility(View.INVISIBLE);
-            scrollViewProg.setVisibility(View.INVISIBLE);
-        }else if (status2.equalsIgnoreCase("In Progress")){
-            Log.e("الصبر","ياارب");
-            pageTitle.setText("عمرة قيد التنفيذ");
-            omraName.setText(bundle.getString("omraName2"));
-            doerName.setText(bundle.getString("doerOmraNam2e"));
-            omraDate.setText(bundle.getString("date2"));
-            omraDuration.setText(bundle.getString("time2"));
-            photoText.setVisibility(View.INVISIBLE);
-            doaaTextViewDone.setVisibility(View.INVISIBLE);
-            scrollViewDone.setVisibility(View.INVISIBLE);
-            doaaDone.setVisibility(View.INVISIBLE);
-
-        }else if (status3.equalsIgnoreCase("Pending")){
-            pageTitle.setText("عمرة قيد الانتظار");
-            Log.e("رحمتك","ياارب");
-
-        }*/
-
-
         returnBTN = view.findViewById(R.id.returnBtnDone);
         returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +157,12 @@ public class RequestDetailsFragment extends Fragment {
      //   mQueue = Volley.newRequestQueue(getContext());
 
         return view;
+    }
+    public void setFragment(Fragment f){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.details,f);
+        ft.commit();
     }
 
     private void showRequest(){

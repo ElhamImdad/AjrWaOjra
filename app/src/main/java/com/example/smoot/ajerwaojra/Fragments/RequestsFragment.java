@@ -1,6 +1,8 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -36,6 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.chrono.HijrahDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +58,7 @@ public class RequestsFragment extends Fragment{
     SwipeRefreshLayout swipeRefreshLayout;
     private TextView textViewUmraName;
     private RequestQueue mQueue;
-    private ImageView  norequestImg;
+    private ImageView  norequestImg, settingIcon;
     private Button addRequestBtn, pendingBTN, doneBTN, inProgressBTN;
     private LinearLayout linearLayout;
 
@@ -61,6 +66,7 @@ public class RequestsFragment extends Fragment{
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,20 +78,12 @@ public class RequestsFragment extends Fragment{
         pendingBTN = v.findViewById(R.id.waitingBtn);
         doneBTN = v.findViewById(R.id.donBtn);
         inProgressBTN = v.findViewById(R.id.inProgressBtn);
-     ///   doneBTN.requestFocus();
-      //  inProgressBTN.requestFocus();
-      //  pendingBTN.requestFocus();
-      //  boolean b = doneBTN.isFocused();
 
-      //  inProgressBTN.setBackgroundResource(R.drawable.checkbox);
-      //  pendingBTN.setBackgroundResource(R.drawable.checkbox);
         umraListInProgress = new ArrayList<>();
         umraListDone = new ArrayList<>();
         umraListPending = new ArrayList<>();
 
         swipeRefreshLayout = v.findViewById(R.id.swapRefreshLayout);
-
-
 
         recyclerView = v.findViewById(R.id.recyclerView11);
         mQueue = Volley.newRequestQueue(getContext());
@@ -96,11 +94,11 @@ public class RequestsFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
-        adapter = new RequestsAdapter(umraListPending, getContext());
+       /* adapter = new RequestsAdapter(umraListPending, getContext());
         recyclerView.setAdapter(adapter);
-        Log.e("addapter", adapter.toString()+"++");
+        Log.e("addapter", adapter.toString()+"++");*/
         visibleNorequestImage();
-        pendingBTN.setSelected(true);
+       // pendingBTN.setSelected(true);
         inProgressBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +127,7 @@ public class RequestsFragment extends Fragment{
                 pendingBTN.setTextColor(getResources().getColor(R.color.white));
             }
         });
-        pendingBTN.setSelected(true);
+        pendingBTN.performClick();
         doneBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,11 +143,6 @@ public class RequestsFragment extends Fragment{
             }
         });
 
-    /*    if (umraListInProgress.size() == 0 && umraListPending.size() == 0 && umraListDone.size() ==0) {
-            Log.e("visible", "333");
-            norequestImg.setVisibility(View.VISIBLE);
-         //   linearLayout.setVisibility(View.INVISIBLE);
-        }*/
         addRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,21 +181,35 @@ public class RequestsFragment extends Fragment{
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+        settingIcon = v.findViewById(R.id.setting1);
+        settingIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container, requesterAccount);
+                ft.commit();
+            }
+        });
 
         return v;
     }
     private void clickImProgress(){
         adapter.updateData(umraListInProgress );
+        adapter.notifyDataSetChanged();
     }
     private void clickPending(){
-      //  adapter.updateData(umraListPending );
         adapter = new RequestsAdapter(umraListPending, getContext());
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     private void clickDone(){
         adapter.updateData(umraListDone );
+        adapter.notifyDataSetChanged();
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showRequest(){
         mQueue.start();
 
@@ -210,6 +217,7 @@ public class RequestsFragment extends Fragment{
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("list order respons>>---",response.toString());
@@ -228,19 +236,23 @@ public class RequestsFragment extends Fragment{
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
                                omraInfoObject.setDoaa(jsonObj.getJSONObject(i).getJSONObject("order").getString("doaa"));
                                omraInfoObject.setStatus(status);
-                               omraInfoObject.setDate(jsonObj.getJSONObject(i).getJSONObject("order").getString("date"));
                                omraInfoObject.setTime(jsonObj.getJSONObject(i).getJSONObject("order").getString("time"));
-
-
+                                String dateFromApi = jsonObj.getJSONObject(i).getJSONObject("order").getString("date");
+                               String gregorianString = "";
+                               if (dateFromApi != null){
+                                   Log.e("----", dateFromApi);
+                                  // gregorianString = convertDte(dateFromApi);
+                               }
+                               omraInfoObject.setDate(gregorianString);
 
                                if (status.equals("2")){
                                    umraListInProgress.add(omraInfoObject);
                                    Log.e("my list is >---",status+"\n\n\n");
-                         //          adapter.notifyDataSetChanged();
+                                   adapter.notifyDataSetChanged();
 
                                }else if (status.equals("1")){
                                    umraListPending.add(omraInfoObject);
-//                                   adapter.notifyDataSetChanged();
+                                  adapter.notifyDataSetChanged();
                                }else if (status.equals("3")){
                                    omraPhotoList = new ArrayList<>();
                                    JSONArray omraImages = jsonObj.getJSONObject(i).getJSONObject("order").getJSONArray("omra_images");
@@ -253,7 +265,7 @@ public class RequestsFragment extends Fragment{
                                    omraInfoObject.setPhotos(omraPhotoList);
                                    umraListDone.add(omraInfoObject);
                                 //   omraPhotoList.clear();
-                        //           adapter.notifyDataSetChanged();
+                                  adapter.notifyDataSetChanged();
                                }
 
                             }
@@ -277,6 +289,7 @@ public class RequestsFragment extends Fragment{
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept","application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+                Log.e("token for this user",token+"-");
                 headers.put("Authorization", "Bearer "+token);
                 return headers;
             }
@@ -291,9 +304,51 @@ public class RequestsFragment extends Fragment{
     private void visibleNorequestImage(){
         if (umraListInProgress.size() != 0 || umraListPending.size() !=0 || umraListDone.size()!=0){
             norequestImg.setVisibility(View.INVISIBLE);
+            linearLayout.setVisibility(View.VISIBLE);
         }
         if (umraListInProgress.size() == 0 && umraListPending.size() ==0 && umraListDone.size()==0){
             norequestImg.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.INVISIBLE);
         }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String convertDte(String mydate)
+    {
+        String newdATE;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu/MM/dd");
+        LocalDate gregorianDate = LocalDate.parse(mydate, dateFormatter);
+        HijrahDate islamicDate = HijrahDate.from(gregorianDate);
+        newdATE = islamicDate.format(DateTimeFormatter.ofPattern("dd/MM/uuuu"));
+        String [] datearr = newdATE.split("/");
+        Log.e("lungth of array", String.valueOf(datearr.length));
+        Log.e("lungth of --", datearr[1]);
+        switch (datearr[1]){
+            case "01":
+                newdATE = datearr[0] + " محرم " +datearr[2] + " هـ " ; break;
+            case "02":
+                newdATE = datearr[0] + " صفر " +datearr[2] + " هـ " ; break;
+            case "03":
+                newdATE = datearr[0] + " ربيع الاول " +datearr[2] + " هـ " ; break;
+            case "04":
+                newdATE = datearr[0] + " ربيع الآخر " +datearr[2] + " هـ " ; break;
+            case "05":
+                newdATE = datearr[0] + " جماد الاول " +datearr[2] + " هـ " ; break;
+            case "06":
+                newdATE = datearr[0] + " جماد الآخر " +datearr[2] + " هـ " ; break;
+            case "07":
+                newdATE = datearr[0] + " رجب " +datearr[2] + " هـ " ; break;
+            case "08":
+                newdATE = datearr[0] + " شعبان " +datearr[2] + " هـ " ; break;
+            case "09":
+                newdATE = datearr[0] + " رمضان " +datearr[2] + " هـ " ; break;
+            case "10":
+                newdATE = datearr[0] + " شوال " +datearr[2] + " هـ " ; break;
+            case "11":
+                newdATE = datearr[0] + " ذو القعدة " +datearr[2] + " هـ " ; break;
+            case "12":
+                newdATE = datearr[0] + " ذو الحجة " +datearr[2] + " هـ " ; break;
+        }
+        Log.e("mydate is :",newdATE);
+        return newdATE;
     }
 }

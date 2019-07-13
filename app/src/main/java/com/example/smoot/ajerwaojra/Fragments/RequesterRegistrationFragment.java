@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +56,7 @@ public class RequesterRegistrationFragment extends Fragment {
     private Button confirmBtn;
     private ProgressBar progressBar;
     private Spinner countrySpin;
+    final String[] id = {""};
     Fragment logInFrag;
     String token;
     private static final Pattern PASSWORD_PATTERN =
@@ -83,7 +85,8 @@ public class RequesterRegistrationFragment extends Fragment {
 
         progressBar = v.findViewById(R.id.progressBar);
         confirmBtn = v.findViewById(R.id.confirm);
-        getCountryListFromApi();
+        id[0]=getCountryListFromApi();
+
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +122,7 @@ public class RequesterRegistrationFragment extends Fragment {
         final String email = textInputEmail.getText().toString().trim();
         final String password = textInputPassword.getText().toString().trim();
         final String Name = name.getText().toString().trim();
-        final String country = getCountryListFromApi();
+        final String country = id[0];
         Log.e("country int >>", country +"----");
         final String howKnowUs = howKnowus.getSelectedItem().toString().trim();
         final String role = "Requester";
@@ -130,7 +133,7 @@ public class RequesterRegistrationFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
-                        Log.v("Res", response.toString());
+                  //      Log.v("Res", response.toString());
                         try {
 
                             JSONObject ob = new JSONObject(response);
@@ -201,8 +204,6 @@ public class RequesterRegistrationFragment extends Fragment {
 //
 //    }
     private String getCountryListFromApi() {
-        final String[] id = {""};
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_COUNTRY,
                 new Response.Listener<String>() {
                     @Override
@@ -230,16 +231,35 @@ public class RequesterRegistrationFragment extends Fragment {
                                 names.add(goodModelArrayList.get(i).getName().toString());
                             }
 
-                            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), simple_spinner_item, names);
+                            final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), simple_spinner_item, names);
                             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                             countrySpin.setAdapter(spinnerArrayAdapter);
-                            String country = countrySpin.getSelectedItem().toString();
+                            final String[] selectedItemText = new String[1];
+                            countrySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                     selectedItemText[0] = (String) parent.getItemAtPosition(position);
+                                    spinnerArrayAdapter.notifyDataSetChanged();
+                                    // Notify the selected item text
+                                    Toast.makeText
+                                            (getContext(), "Selected : " + selectedItemText[0], Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+                            selectedItemText[0] = countrySpin.getSelectedItem().toString();
 
                             for (int i = 0; i < goodModelArrayList.size(); i++){
-                                if (country.equals(goodModelArrayList.get(i).getName().toString())){
+                                if (selectedItemText[0].equals(goodModelArrayList.get(i).getName().toString())){
+                                    countrySpin.setSelection(i);
                                     id[0] = goodModelArrayList.get(i).getId();
                                 }
                             }
+
                             Log.e("iuuuuuuuuuuuuu",id[0]);
 
                         } catch (JSONException e) {
@@ -251,7 +271,7 @@ public class RequesterRegistrationFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //displaying the error in toast if occurrs
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "لايوجد اتصال بالانترنت", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -259,7 +279,7 @@ public class RequesterRegistrationFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
         requestQueue.add(stringRequest);
-Log.e("id of country method ",id[0]);
+Log.e("id of country method ",id[0]+"??");
     return id[0].toString();
     }
 
@@ -296,14 +316,14 @@ Log.e("id of country method ",id[0]);
     }
 
     private boolean isValidMobile() {
-        String regexStr = "^\\[0-9]{10,13}$";
+        String regexStr = "^\\+[0-9]{10,13}$";
 
         String number = textphone2.getText().toString();
-        /*if (!textphone2.getText().toString().contains("+")) {
+        if (!textphone2.getText().toString().contains("+")) {
             textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
-        }else */if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
+        }else if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
             textphone2.setError("ادخل رقم الجوال بشكل صحيح");
             textphone2.requestFocus();
             return false;

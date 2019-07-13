@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.smoot.ajerwaojra.R;
 
 public class PendingRequestFragment extends Fragment {
-    private ImageView returnBTN;
+    private ImageView returnBTN, settingIcon;
     private TextView omraName,  doaaP;
     public PendingRequestFragment() {
     }
@@ -38,6 +38,17 @@ public class PendingRequestFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.details, f);
+                ft.commit();
+            }
+        });
+        settingIcon = view.findViewById(R.id.setting2);
+        settingIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.details, requesterAccount);
                 ft.commit();
             }
         });
