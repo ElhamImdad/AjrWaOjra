@@ -111,9 +111,9 @@ public class RequestDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (expectedDate != null) {
+
                     if (checkBox.isChecked()) {
-                         offerService();
+                        // offerService();
                         timerFragment f = new timerFragment();
                         f.setArguments(bundle1);
                         FragmentManager fm = getFragmentManager();
@@ -125,17 +125,12 @@ public class RequestDetailFragment extends Fragment {
                         showMessage();
                     }
 
-                } else {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                    alert.setTitle("عذرا.....");
-                    alert.setMessage("يجب اختيار الوقت المتوقع لأداء العمرة ");
-                    alert.show();
-                }
+
             }
         });
         checkBox = v.findViewById(R.id.checkBox2);
-        umraDate = v.findViewById(R.id.editText);
-        umraDate.setOnClickListener(new View.OnClickListener() {
+
+  /*      umraDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Locale[] locale = Locale.getAvailableLocales();
@@ -152,7 +147,7 @@ public class RequestDetailFragment extends Fragment {
                 dialog.show();
 
             }
-        });
+        });*/
         object = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

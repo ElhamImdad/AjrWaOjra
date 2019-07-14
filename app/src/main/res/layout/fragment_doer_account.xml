@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="60dp"
         android:background="@drawable/headerrectangle"
         android:radius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="235dp"
         android:text="حسابي"
         android:textColor="@color/white"
@@ -46,15 +46,13 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="370dp"
-                android:layout_height="275dp"
-                android:layout_marginBottom="24dp"
+                android:layout_height="310dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/rectangle"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.206" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView21"
@@ -163,6 +161,7 @@
                 android:id="@+id/textView29"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="العمرة المكتملة "
                 android:textColor="@color/darkGray"
@@ -175,6 +174,7 @@
                 android:id="@+id/textView30"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="الربح من التطبيق "
                 android:textColor="@color/darkGray"
@@ -213,7 +213,7 @@
                 android:id="@+id/view2"
                 android:layout_width="370dp"
                 android:layout_height="165dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/rectangle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.48"
