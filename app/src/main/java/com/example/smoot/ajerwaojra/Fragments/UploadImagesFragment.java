@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -191,9 +192,11 @@ public class UploadImagesFragment extends Fragment {
                 }*/
                 b2.setEnabled(false);
                 b3.setEnabled(false);
-                imageBitmap1=  (Bitmap) extras.get("data");
+                Uri uri1 = data.getData();
+               //imageBitmap1=  (Bitmap) extras.get("data");
                 image1.setVisibility(View.VISIBLE);
-                image1.setImageBitmap(imageBitmap1);
+                //image1.setImageBitmap(imageBitmap1);
+                image1.setImageURI(uri1);
                 b2.setEnabled(true);
                 b1.setEnabled(false);
             } else if (b2.isEnabled()) {
@@ -221,15 +224,14 @@ public class UploadImagesFragment extends Fragment {
     }
 
 
-    public String ConvertBitmapToBase64Format(Bitmap bitmap)
-
-    {
+    public String ConvertBitmapToBase64Format(Bitmap bitmap) {
+        bitmap=((BitmapDrawable) image1.getDrawable()).getBitmap();
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
-        byte[] byteFormat = stream.toByteArray();
+
         // get the base 64 string
-        String imageString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+        String imageString = Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
         return imageString;
 
     }
@@ -395,4 +397,5 @@ public class UploadImagesFragment extends Fragment {
 
 }
 */
+
 }

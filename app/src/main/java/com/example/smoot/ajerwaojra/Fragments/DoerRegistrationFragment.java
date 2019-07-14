@@ -123,9 +123,10 @@ public class DoerRegistrationFragment extends Fragment {
             public void onClick(View v) {
 
                 logInFrag = new logInFragment();
+                SettingFragment f = new SettingFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, logInFrag);
+                ft.replace(R.id.container, f);
                 ft.commit();
             }
         });
