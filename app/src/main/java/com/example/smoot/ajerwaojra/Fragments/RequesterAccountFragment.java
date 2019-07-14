@@ -2,11 +2,14 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -28,6 +31,7 @@ import java.util.Map;
 
 public class RequesterAccountFragment extends Fragment {
     private TextView ouWebsit, myName, myEmail, myPhone, noOfOmraDone, noOfOmraInProgress, noOfOmraPending, totalPayment;
+    private Button modifyBtn;
     public RequesterAccountFragment() {
         // Required empty public constructor
     }
@@ -49,6 +53,17 @@ public class RequesterAccountFragment extends Fragment {
         totalPayment = view.findViewById(R.id.totalPayment);
         getAccount();
 
+        modifyBtn = view.findViewById(R.id.modifyAccountRequester);
+        modifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateSettingRequesterFragment updateAccount = new UpdateSettingRequesterFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container, updateAccount);
+                ft.commit();
+            }
+        });
         return view;
     }
     private void getAccount(){

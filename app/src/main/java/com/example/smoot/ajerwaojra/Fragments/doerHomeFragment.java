@@ -63,7 +63,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             Log.e("size",String.valueOf(umraRequests.size()));
             umraRequests.clear();}
 
-        adapterHD= new RecyclerAdapterHD(umraRequests,this);
+        adapterHD= new RecyclerAdapterHD(getContext(),umraRequests,this);
         recyclerView.setAdapter(adapterHD);
         Log.e("Adapter ",adapterHD.toString());
        // recyclerView.setItemViewCacheSize(umraRequests.size());
@@ -116,9 +116,11 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         // set the attributes of the umra object
                        // umraRequest.setCountry(object.getString("country"));
                         umraRequest.setCountry_id(object.getString("country_id"));
+                        Log.e("flaaaagg string path", object.getString("image"));
                         umraRequest.setCountryFlagImagePath(object.getString("image"));
                         umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
+                        Log.e("reeeeeeeee", object.getString("requester_name"));
                         umraRequest.setDoaa(object.getString("doaa"));
                         umraRequest.setUmraOwner(object.getString("name"));
                         umraRequest.setId(object.getInt("id"));
@@ -163,6 +165,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         bundle.putString("doaa",umra.getDoaa());
         bundle.putString("umraOwner",umra.getUmraOwner());
         bundle.putString("country_id",umra.getCountry_id());
+        bundle.putString("imagePath",umra.getCountryFlagImagePath());
         RequestDetailFragment f = new RequestDetailFragment();
         f.setArguments(bundle);
         Log.d("Click", "Yes Clicked");
@@ -173,8 +176,4 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         ft.commit();
 
     }
-
-
-
-
 }
