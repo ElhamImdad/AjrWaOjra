@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
+import com.example.smoot.ajerwaojra.Fragments.OnholdRequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.doerHomeFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity  {
         }else{
             setFragment(new FatwaFragment());
         }
-
     }
 
    private void setHomeFragment( Fragment home) {
@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity  {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container,fatwa);
         ft.commit();}
-   /*private void setFragmentDetails(Fragment details){
+
+   private void setFragmentDialog(Fragment dialog){
         FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.reqDetailPage,details);
-        ft.commit();
-    }*/
+       OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
+
+        //when the button clicked
+       onhold.show(fm, "services_tag");
+    }
 
 }
 
