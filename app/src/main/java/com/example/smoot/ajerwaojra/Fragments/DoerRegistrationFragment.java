@@ -237,8 +237,7 @@ public class DoerRegistrationFragment extends Fragment {
     }
 
     private boolean isValidMobile() {
-        String regexStr = "^\\" +
-                "=[0-9]{10,13}$";
+        String regexStr = "^\\+[0-9]{10,13}$";
 
         String number = textphone.getText().toString();
 

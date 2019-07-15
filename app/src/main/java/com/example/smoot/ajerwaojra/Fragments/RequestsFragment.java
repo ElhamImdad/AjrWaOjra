@@ -1,7 +1,12 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +35,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.smoot.ajerwaojra.Adapter.RequestsAdapter;
+import com.example.smoot.ajerwaojra.Helpers.RService;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
@@ -45,7 +51,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestsFragment extends Fragment{
+public class RequestsFragment extends Fragment implements ServiceConnection{
+    RService rService;
+    ServiceConnection mConnection;
     Fragment newReqestFragment;
     CardView cardView;
     RecyclerView recyclerView ;
@@ -62,6 +70,10 @@ public class RequestsFragment extends Fragment{
     private Button addRequestBtn, pendingBTN, doneBTN, inProgressBTN;
     private LinearLayout linearLayout;
 
+    public void startService(View view){
+     //bindService(new Intent(getContext(),RService.class),mConnection, Context.BIND_AUTO_CREATE);
+    }
+
     public RequestsFragment() {
         // Required empty public constructor
     }
@@ -71,6 +83,13 @@ public class RequestsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_requests, container, false);
+
+
+        /*Intent i = new Intent(getContext(), RService.class);
+        getContext().startService(i);
+*/
+
+
 
         linearLayout = v.findViewById(R.id.linearLayout);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
@@ -230,7 +249,7 @@ public class RequestsFragment extends Fragment{
 
                                String status = jsonObj.getJSONObject(i).getJSONObject("order").getString("status_id");
 
-                                omraInfoObject = new OmraInfo();
+                               omraInfoObject = new OmraInfo();
                                omraInfoObject.setId(jsonObj.getJSONObject(i).getJSONObject("order").getInt("id"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
@@ -351,5 +370,16 @@ public class RequestsFragment extends Fragment{
         }
         Log.e("mydate is :",newdATE);
         return newdATE;
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        RService.LocalBinder binder = (RService.LocalBinder)service;
+
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+
     }
 }

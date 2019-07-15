@@ -106,10 +106,8 @@ public class RequestDetailFragment extends Fragment {
         offerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                     if (checkBox.isChecked()) {
-                        // offerService();
+                        offerService();
                         timerFragment f = new timerFragment();
                         f.setArguments(bundle1);
                         FragmentManager fm = getFragmentManager();

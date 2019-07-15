@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -74,17 +73,12 @@ public class UploadImagesFragment extends Fragment {
     String totalTime;
 
     int id;
-    Uri filePath1;
-    Uri filePath2;
-    Uri filePath3;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    File photoFile1 = null;
-    File photoFile2 = null;
-    File photoFile3 = null;
-    String mCurrentPhotoPath;
-
-    String encodedImage;
+    String encodedImage1;
+    String encodedImage2;
+    String encodedImage3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -162,41 +156,17 @@ public class UploadImagesFragment extends Fragment {
     }
 
 
-   /* private File createImageFile() throws IOException {
-// Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  *//* prefix *//*
-                ".jpg",         *//* suffix *//*
-                storageDir      *//* directory *//*
-        );
-
-// Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }*/
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
 
             if (b1.isEnabled()) {
-                //filePath1 = data.getData();
-               /* try {
-                   // imageBitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
                 b2.setEnabled(false);
                 b3.setEnabled(false);
-                Uri uri1 = data.getData();
-               //imageBitmap1=  (Bitmap) extras.get("data");
+                imageBitmap1 = (Bitmap) extras.get("data");
                 image1.setVisibility(View.VISIBLE);
-                //image1.setImageBitmap(imageBitmap1);
-                image1.setImageURI(uri1);
+                image1.setImageBitmap(imageBitmap1);
                 b2.setEnabled(true);
                 b1.setEnabled(false);
             } else if (b2.isEnabled()) {
@@ -225,67 +195,21 @@ public class UploadImagesFragment extends Fragment {
 
 
     public String ConvertBitmapToBase64Format(Bitmap bitmap) {
-        bitmap=((BitmapDrawable) image1.getDrawable()).getBitmap();
-
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
-
+        byte[] byteFormat = stream.toByteArray();
         // get the base 64 string
-        String imageString = Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
+        String imageString = Base64.encodeToString(byteFormat, Base64.DEFAULT);
         return imageString;
 
     }
 
-    public File getStringImage(Bitmap bitmap) {
-        String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "PNG_" + filename + ".PNG";
-        // name of file is done
-        // create image file
-        File f = new File(getContext().getCacheDir(), imageFileName);
-
-        try {
-            f.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // test
-        boolean t = f.exists();
-        if (t) {
-            Log.e("file is created ", "yes ");
-        } else Log.e("file is created ", "no ");
-        Log.i("BitMap", "" + bitmap);
-        //
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, baos);
-        byte[] b = baos.toByteArray();
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(f);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            fos.write(b);
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return f;
-
-    }
 
     public void uploadUserImage() {
         Log.e("Raghad click button", " yes");
         Doer r = SharedPrefManager.getInstance(getContext()).getDoer();
-
         final String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
         Log.e("Token Shared", token);
-
-
         StringRequest request = new StringRequest(Request.Method.POST, URLs.UPL_FINISH_REQUEST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -314,19 +238,17 @@ public class UploadImagesFragment extends Fragment {
                 param.put("time", totalTime);
                 param.put("id", String.valueOf(id));
 
-               // File f1 = getStringImage(imageBitmap1);
-
-                encodedImage = ConvertBitmapToBase64Format(imageBitmap1);
-                param.put("image", encodedImage);
-                Log.i("Mynewsam",  encodedImage);
+                encodedImage1 = ConvertBitmapToBase64Format(imageBitmap1);
+                param.put("image", encodedImage1);
+                Log.i("Mynewsam", encodedImage1);
                 if (imageBitmap2 != null) {
-                    //
-                    Log.i("Mynewsam", "" + image2);
-                    //param.put("image", image2);
+                    encodedImage2 = ConvertBitmapToBase64Format(imageBitmap2);
+                    Log.i("Mynewsam", "" + encodedImage2);
+                    param.put("image", encodedImage2);
                     if (imageBitmap3 != null) {
-                        //
-                        Log.i("Mynewsam", "" + image3);
-                        //param.put("image", image3);
+                        encodedImage3 = ConvertBitmapToBase64Format(imageBitmap3);
+                        Log.i("Mynewsam", "" + encodedImage3);
+                        param.put("image", encodedImage3);
                     }
                 }
 
@@ -368,34 +290,4 @@ public class UploadImagesFragment extends Fragment {
 
         }
     }
-
-   /* private String getPath(Uri uri){
-        Cursor cursor = getContext().getContentResolver().query(uri,null,null,null,null);
-        cursor.moveToFirst();
-        String ducoment_id = cursor.getString(0);
-        ducoment_id=ducoment_id.substring(ducoment_id.lastIndexOf(":"+1));
-        cursor = getContext().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null,
-                MediaStore.Images.Media._ID+" = ?",
-                new String[] {ducoment_id},null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        return path;
-    }*/
-/*
-    private void upload()
-    {
-        String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "PNG_" + filename + ".PNG";
-        String path = getPath(filePath1);
-        try{
-            String uploadID= UUID.randomUUID().toString();
-            new MultipartUploadRequest(getContext(),uploadID,URLs.UPL_FINISH_REQUEST)
-        }catch (Exception e){e.printStackTrace();}
-
-    }
-
-}
-*/
-
 }
