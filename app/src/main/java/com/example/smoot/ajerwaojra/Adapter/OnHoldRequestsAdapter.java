@@ -41,7 +41,8 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
     }
 
     public class MyHolder extends RecyclerView.ViewHolder  {
-        TextView doerName ;
+        TextView doerName, numCompletedOrder, date, omraName;
+        String review;
 
         public MyHolder(View itemView) {
             super(itemView);

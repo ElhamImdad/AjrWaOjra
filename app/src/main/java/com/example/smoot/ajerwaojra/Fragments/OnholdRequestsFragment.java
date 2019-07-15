@@ -64,6 +64,7 @@ public class OnholdRequestsFragment extends DialogFragment {
                                     serviceInfo = new ServiceInfo();
                                     JSONObject onHoldReq = jsonArray.getJSONObject(i).getJSONObject("On hold Request");
                                     serviceInfo.setDoerName(onHoldReq.getString("doer_name"));
+                                    serviceInfo.setDate(onHoldReq.getString("date"));
                                     serviceInfo.setOmraName(onHoldReq.getString("name"));
                                     serviceInfo.setNoCompletedOrder(jsonArray.getJSONObject(i).getInt("completed Orders"));
                                     serviceInfo.setOrder_id(jsonArray.getJSONObject(i).getString("order_id"));

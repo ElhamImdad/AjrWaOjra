@@ -117,7 +117,6 @@
                 app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView21"
-                android:text="اسمي"
                 tools:text="name" />
 
             <TextView
@@ -133,7 +132,6 @@
                 app:layout_constraintHorizontal_bias="0.27"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView22"
-                android:text="ايميلي"
                 tools:text="email" />
 
             <TextView
@@ -149,7 +147,6 @@
                 app:layout_constraintHorizontal_bias="0.27"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView25"
-                android:text="رقم جوالي"
                 tools:text="mobile" />
 
             <Button
@@ -216,7 +213,6 @@
                 app:layout_constraintHorizontal_bias="0.27"
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/textView29"
-                android:text="3"
                 tools:text="3" />
 
             <TextView
@@ -230,7 +226,6 @@
                 app:layout_constraintHorizontal_bias="0.75"
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/textView30"
-                android:text="6"
                 tools:text="6" />
 
             <TextView
@@ -272,7 +267,6 @@
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/waitText"
                 app:layout_constraintVertical_bias="0.0"
-                android:text="3"
                 tools:text="3" />
 
             <TextView
@@ -288,7 +282,6 @@
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/totalPayText"
                 app:layout_constraintVertical_bias="0.0"
-                android:text="6 دولار"
                 tools:text="6 دولار" />
 
             <View
