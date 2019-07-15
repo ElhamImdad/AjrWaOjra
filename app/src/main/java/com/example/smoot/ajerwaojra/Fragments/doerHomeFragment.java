@@ -1,9 +1,11 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +52,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         // Inflate the layout for this fragment
         Log.d("doerhomefragment", "inside on create");
         View v=  inflater.inflate(R.layout.fragment_doer_home, container, false);
+        final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         goSetting = v.findViewById(R.id.goSetting);
         recyclerView = v.findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(getContext(),1);
@@ -84,12 +88,13 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DoerAccountFragment f = new DoerAccountFragment();
+               /* DoerAccountFragment f = new DoerAccountFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.disallowAddToBackStack();
                 ft.replace(R.id.container,f);
-                ft.commit();
+                ft.commit();*/
+               drawerLayout.openDrawer(navigationView);
             }
         });
         return v;

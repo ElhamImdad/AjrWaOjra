@@ -59,10 +59,6 @@ public class RequestDetailFragment extends Fragment {
     Button offerService;
     int id;
     CheckBox checkBox;
-    TextView umraDate;
-    DatePickerDialog.OnDateSetListener object;
-    String expectedDate;
-    String stringDate;
     Button goSetting ;
 
     public RequestDetailFragment() {
@@ -112,13 +108,15 @@ public class RequestDetailFragment extends Fragment {
             public void onClick(View v) {
                     if (checkBox.isChecked()) {
                         offerService();
-                        timerFragment f = new timerFragment();
+                        isOfferedMessage();
+                        //الكود اللي رح ياخذ بيانات الدور لصفحة التايمر
+                       /* timerFragment f = new timerFragment();
                         f.setArguments(bundle1);
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.disallowAddToBackStack();
                         ft.replace(R.id.container, f);
-                        ft.commit();
+                        ft.commit();*/
                     } else {
                         showMessage();
                     }
@@ -146,14 +144,7 @@ public class RequestDetailFragment extends Fragment {
 
             }
         });*/
-        object = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // = month+1 ;
-                expectedDate = year + "/" + month + "/" + dayOfMonth;
-                umraDate.setText(expectedDate);
-            }
-        };
+
         return v;
     }
 
@@ -188,7 +179,6 @@ public class RequestDetailFragment extends Fragment {
                 Map<String, String> paramas = new HashMap<>();
                 paramas.put("token", token);
                 paramas.put("id", String.valueOf(id));
-                paramas.put("date", expectedDate);
                 return paramas;
             }
 
@@ -214,11 +204,25 @@ public class RequestDetailFragment extends Fragment {
     }
 
     public void showMessage() {
-
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("عذرا.....");
         alert.setMessage("يجب الموافقة على الشرط ");
         alert.show();
-
+    }
+    public void isOfferedMessage() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("تم عرض الخدمة على  "+requester.getText());
+        alert.setMessage("سيتم إعلامك في حال موافقة  "+requester.getText()+"  لتبدأ بالعمرة ");
+        alert.setPositiveButton("حسنا, فهمت ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+             doerHomeFragment f = new doerHomeFragment();
+             FragmentManager fm = getFragmentManager();
+             FragmentTransaction ft = fm.beginTransaction();
+             ft.replace(R.id.container,f);
+             ft.commit();
+            }
+        });
+        alert.show();
     }
 }

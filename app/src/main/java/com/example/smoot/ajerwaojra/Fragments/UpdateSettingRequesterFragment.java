@@ -1,9 +1,11 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,17 +54,19 @@ public class UpdateSettingRequesterFragment extends Fragment {
                 getAccount();
             }
         });
-
+        final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
 
         settingIcon = view.findViewById(R.id.settingIconAcc2);
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
+               /* RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container, requesterAccount);
-                ft.commit();
+                ft.commit();*/
+               drawerLayout.openDrawer(navigationView);
             }
         });
         return view;

@@ -1,9 +1,11 @@
 package com.example.smoot.ajerwaojra.Activities;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -14,12 +16,14 @@ import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.R;
 
 public class MainActivity extends AppCompatActivity  {
-
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        drawerLayout= findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
             Log.e("Tag ", "outer if ");
             if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")){
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity  {
         }else{
             setFragment(new FatwaFragment());
         }
-
+        drawerLayout.openDrawer(navigationView);
     }
 
    private void setHomeFragment( Fragment home) {

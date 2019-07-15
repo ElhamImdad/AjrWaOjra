@@ -8,9 +8,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
@@ -88,7 +90,8 @@ public class RequestsFragment extends Fragment implements ServiceConnection{
         /*Intent i = new Intent(getContext(), RService.class);
         getContext().startService(i);
 */
-
+        final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
 
 
         linearLayout = v.findViewById(R.id.linearLayout);
@@ -204,11 +207,12 @@ public class RequestsFragment extends Fragment implements ServiceConnection{
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
+              /*  RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container, requesterAccount);
-                ft.commit();
+                ft.commit();*/
+              drawerLayout.openDrawer(navigationView);
             }
         });
 
