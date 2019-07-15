@@ -2,8 +2,10 @@ package com.example.smoot.ajerwaojra.Helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentManager;
 
 import com.example.smoot.ajerwaojra.Activities.MainActivity;
+import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.Models.Requester;
 
@@ -86,6 +88,6 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        ctx.startActivity(new Intent(ctx, MainActivity.class));
+       // ctx.startActivity(new Intent(ctx, MainActivity.class));
     }
 }

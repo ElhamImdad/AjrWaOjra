@@ -2,6 +2,7 @@ package com.example.smoot.ajerwaojra.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -101,6 +102,10 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
             viewHolder.verticleLine.setVisibility(View.VISIBLE);
             viewHolder.time.setVisibility(View.VISIBLE);
             viewHolder.time.setText(item.getTime());
+            String isStartOmra = item.getIsStartOmra();
+            if (isStartOmra.equalsIgnoreCase("started")){
+                viewHolder.time.setTextColor(Color.parseColor("#0E9447"));
+            }
         }
         viewHolder.textName.setOnClickListener(new View.OnClickListener() {
             @Override

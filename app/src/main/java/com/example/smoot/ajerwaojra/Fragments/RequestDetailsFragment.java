@@ -1,9 +1,11 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestDetailsFragment extends Fragment {
-    private ImageView returnBTN, image_1, image_2, image_3;
+    private ImageView returnBTN, image_1, image_2, image_3 ,setting;
     private RequestQueue mQueue;
     private TextView omraName, doerName, omraDate, omraDuration, doaaDone;
     private TextView doaaTextViewProgress, doaaProgress, photoText,doaaTextViewDone, pageTitle;
@@ -44,13 +46,13 @@ public class RequestDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_details, container, false);
-
+        final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         omraName = view.findViewById(R.id.textViewOmraNameDone);
         doerName = view.findViewById(R.id.textDoeNameDone);
         omraDate = view.findViewById(R.id.textViewDateDone);
         omraDuration = view.findViewById(R.id.textViewTimeDone);
         doaaDone = view.findViewById(R.id.doaaDone);
-
+        setting = view.findViewById(R.id.settingDone);
         image_1 = view.findViewById(R.id.omraImage1);
         image_2 = view.findViewById(R.id.omraImage2);
         image_3 = view.findViewById(R.id.omraImage3);
@@ -58,7 +60,7 @@ public class RequestDetailsFragment extends Fragment {
         image_3.setVisibility(View.INVISIBLE);
         String urlImage1, urlImage2, urlImage3;
         final ArrayList<String> urlsPHOTOS;
-
+        final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         if (getArguments() != null) {
             Log.e("data in bindle-->",getArguments().getString("doerName")+"-");
             omraName.setText(getArguments().getString("omraName"));
@@ -155,6 +157,13 @@ public class RequestDetailsFragment extends Fragment {
             }
         });
      //   mQueue = Volley.newRequestQueue(getContext());
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              drawerLayout.openDrawer(navigationView);
+            }
+        });
 
         return view;
     }

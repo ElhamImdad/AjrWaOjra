@@ -3,10 +3,7 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,19 +27,13 @@ import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 import static com.example.smoot.ajerwaojra.Helpers.URLs.URL_OFFER_SERVICE;
 
@@ -87,6 +77,13 @@ public class RequestDetailFragment extends Fragment {
         date.setText(bundle.getString("date"));
         umraOwner.setText(bundle.getString("umraOwner"));
         doaa.setText(bundle.getString("doaa"));
+        String flagPath = bundle.getString("imagePath");
+        if (flagPath != null) {
+            Picasso.with(getContext())
+                    .load(flagPath)
+                    .into(flag);
+        }
+
         goSetting = v.findViewById(R.id.goSetting);
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
