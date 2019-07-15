@@ -10,4 +10,5 @@ public class URLs {
     public static final String UPL_FINISH_REQUEST="http://ajrandojra.website/api/finishRequest";
     public static final String UPL_LIST_USER="http://ajrandojra.website/api/auth/listUser";
     public static final String UPL_UPDATE_USER="http://ajrandojra.website/api/auth/updateUser";
+    public static final String UPL_START_OMRA_USER="http://ajrandojra.website/api/startOmra";
 }

@@ -237,7 +237,8 @@ public class DoerRegistrationFragment extends Fragment {
     }
 
     private boolean isValidMobile() {
-        String regexStr = "^\\[0-9]{10,13}$";
+        String regexStr = "^\\" +
+                "=[0-9]{10,13}$";
 
         String number = textphone.getText().toString();
 
@@ -245,11 +246,11 @@ public class DoerRegistrationFragment extends Fragment {
             textphone.setError("ادخل رقم الجوال بشكل صحيح");
             textphone.requestFocus();
             return false;
-        } /*else if (!textphone.getText().toString().contains("+")) {
+        } else if (!textphone.getText().toString().contains("+")) {
             textphone.setError("يجب أن يحتوي على + ");
             textphone.requestFocus();
             return false;
-        }*/ else {
+        }else {
             textphone.setError(null);
             return true;
         }

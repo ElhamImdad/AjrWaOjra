@@ -77,6 +77,7 @@ public class UpdateSettingRequesterFragment extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            Log.e("update response --", response +"-");
                             try {
                                 JSONObject ob = new JSONObject(response);
                                 JSONObject USER = ob.getJSONObject("user");

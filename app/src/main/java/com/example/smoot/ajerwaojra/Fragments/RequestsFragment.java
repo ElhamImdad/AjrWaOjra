@@ -234,6 +234,7 @@ public class RequestsFragment extends Fragment{
                                omraInfoObject.setId(jsonObj.getJSONObject(i).getJSONObject("order").getInt("id"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
+                               omraInfoObject.setIsStartOmra(jsonObj.getJSONObject(i).getJSONObject("order").getString("start"));
                                omraInfoObject.setDoaa(jsonObj.getJSONObject(i).getJSONObject("order").getString("doaa"));
                                omraInfoObject.setStatus(status);
                                omraInfoObject.setTime(jsonObj.getJSONObject(i).getJSONObject("order").getString("time"));
@@ -250,7 +251,7 @@ public class RequestsFragment extends Fragment{
                                    Log.e("my list is >---",status+"\n\n\n");
                                    adapter.notifyDataSetChanged();
 
-                               }else if (status.equals("1")){
+                               }else if ((status.equals("1")) || (status.equals("4"))){
                                    umraListPending.add(omraInfoObject);
                                   adapter.notifyDataSetChanged();
                                }else if (status.equals("3")){

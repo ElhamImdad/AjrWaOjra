@@ -1,6 +1,8 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.chrono.HijrahDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyViewHolder.onCardClick {
@@ -99,6 +104,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     public void getAllRequeste(){
         Log.d("doerhomefragment", "inside get all requests");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URLs.URL_GET_REQUSTES_HD, null, new Response.Listener<JSONObject>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -125,6 +131,13 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         umraRequest.setDoaa(object.getString("doaa"));
                         umraRequest.setUmraOwner(object.getString("name"));
                         umraRequest.setId(object.getInt("id"));
+
+                        String dateFromApi = object.getString("date");
+                        String gregorianString = "";
+                        if (dateFromApi != null){
+                            gregorianString = convertDte(dateFromApi);
+                        }
+                        umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
                         umraRequests.add(umraRequest);
                         adapterHD.notifyDataSetChanged();
@@ -176,5 +189,46 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         ft.addToBackStack(null);
         ft.commit();
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String convertDte(String mydate)
+    {
+        String newdATE;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu/MM/dd");
+        LocalDate gregorianDate = LocalDate.parse(mydate, dateFormatter);
+        HijrahDate islamicDate = HijrahDate.from(gregorianDate);
+        newdATE = islamicDate.format(DateTimeFormatter.ofPattern("dd/MM/uuuu"));
+        String [] datearr = newdATE.split("/");
+        Log.e("lungth of array", String.valueOf(datearr.length));
+        Log.e("lungth of --", datearr[1]);
+        switch (datearr[1]){
+            case "01":
+                newdATE = datearr[0] + " محرم " +datearr[2] + " هـ " ; break;
+            case "02":
+                newdATE = datearr[0] + " صفر " +datearr[2] + " هـ " ; break;
+            case "03":
+                newdATE = datearr[0] + " ربيع الاول " +datearr[2] + " هـ " ; break;
+            case "04":
+                newdATE = datearr[0] + " ربيع الآخر " +datearr[2] + " هـ " ; break;
+            case "05":
+                newdATE = datearr[0] + " جماد الاول " +datearr[2] + " هـ " ; break;
+            case "06":
+                newdATE = datearr[0] + " جماد الآخر " +datearr[2] + " هـ " ; break;
+            case "07":
+                newdATE = datearr[0] + " رجب " +datearr[2] + " هـ " ; break;
+            case "08":
+                newdATE = datearr[0] + " شعبان " +datearr[2] + " هـ " ; break;
+            case "09":
+                newdATE = datearr[0] + " رمضان " +datearr[2] + " هـ " ; break;
+            case "10":
+                newdATE = datearr[0] + " شوال " +datearr[2] + " هـ " ; break;
+            case "11":
+                newdATE = datearr[0] + " ذو القعدة " +datearr[2] + " هـ " ; break;
+            case "12":
+                newdATE = datearr[0] + " ذو الحجة " +datearr[2] + " هـ " ; break;
+        }
+        Log.e("mydate is :",newdATE);
+        return newdATE;
     }
 }

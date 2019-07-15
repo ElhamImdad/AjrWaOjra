@@ -25,12 +25,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.URLs;
+import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -100,7 +114,8 @@ public class timerFragment extends Fragment {
                 startTime = SystemClock.uptimeMillis();
                 myHandler.postDelayed(updateTimerMethod, 0);
                 startButton.setVisibility(View.INVISIBLE);
-                stopUmraaButton.setVisibility(View.VISIBLE);}
+                stopUmraaButton.setVisibility(View.VISIBLE);
+                    postStartOmra(id);}
                 else {
                     showMessage();
                 }
@@ -243,6 +258,44 @@ return  v;
         alert.setTitle("عذرا.....");
         alert.setMessage("يجب أن يكون موقعك الحالي مكة لبدء العمرة ");
         alert.show();
+    }
+    private void postStartOmra(final int id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_START_OMRA_USER,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject ob = new JSONObject(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("account error>>",e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //  Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("account response", error.toString());
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept","application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                headers.put("Authorization", "Bearer "+token);
+                headers.put("id", String.valueOf(id));
+                return headers;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }
 
