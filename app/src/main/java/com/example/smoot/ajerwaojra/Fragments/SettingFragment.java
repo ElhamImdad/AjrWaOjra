@@ -2,10 +2,12 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smoot.ajerwaojra.R;
@@ -13,6 +15,7 @@ import com.example.smoot.ajerwaojra.R;
 
 public class SettingFragment extends Fragment {
 RatingBar ratingBar;
+TextView t;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,6 +28,7 @@ RatingBar ratingBar;
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 Toast.makeText(getContext(),"stars"+rating,Toast.LENGTH_LONG).show();
+                Log.e("rating ",ratingBar.getRating()+"=");
             }
         });
         return v;
