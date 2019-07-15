@@ -93,7 +93,7 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
         final OmraInfo item = umraList.get(i);
         viewHolder.textName.setText(item.getUmraName());
         viewHolder.date.setText(item.getDate());
-        if (item.getStatus().equals("1")){
+        if (item.getStatus().equals("1")|| item.getStatus().equals("4")){
             viewHolder.timeIcon.setVisibility(View.INVISIBLE);
             viewHolder.verticleLine.setVisibility(View.INVISIBLE);
             viewHolder.time.setVisibility(View.INVISIBLE);
