@@ -260,7 +260,7 @@ public class RequestsFragment extends Fragment implements ServiceConnection{
                                String gregorianString = "";
                                if (dateFromApi != null){
                                    Log.e("----", dateFromApi);
-                                  // gregorianString = convertDte(dateFromApi);
+                                   gregorianString = convertDte(dateFromApi);
                                }
                                omraInfoObject.setDate(gregorianString);
 

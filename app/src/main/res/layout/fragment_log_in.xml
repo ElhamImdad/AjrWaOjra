@@ -48,7 +48,6 @@
                 android:text="مرحبا بعودتك سجل دخولك للمتابعه"
                 android:textColor="#555555"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

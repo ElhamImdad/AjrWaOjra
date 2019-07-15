@@ -1,4 +1,5 @@
 package com.example.smoot.ajerwaojra.Adapter;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,9 +24,10 @@ import java.util.ArrayList;
         ArrayList<UmraRequest> requestList ;
         MyViewHolder.onCardClick onCardClick;
 
-        public RecyclerAdapterHD( ArrayList<UmraRequest> requestList,MyViewHolder.onCardClick onCardClick) {
+        public RecyclerAdapterHD(Context context, ArrayList<UmraRequest> requestList,MyViewHolder.onCardClick onCardClick) {
             this.requestList = requestList;
             this.onCardClick = onCardClick;
+            this.context=context;
         }
 
 
@@ -41,6 +44,12 @@ import java.util.ArrayList;
             holder.requesterName.setText(requestList.get(i).getRequesterName());
             holder.countryName.setText(requestList.get(i).getCountry());
             holder.date.setText(requestList.get(i).getDate());
+            String path = requestList.get(i).getCountryFlagImagePath();
+           if (path != null) {
+                Picasso.with(context)
+                        .load(path)
+                        .into(holder.countryFlagg);
+            }
         }
 
         @Override
@@ -61,13 +70,13 @@ import java.util.ArrayList;
             TextView requesterName;
             TextView countryName;
             TextView date ;
-            ImageView countryFlag;
+            ImageView countryFlagg;
             onCardClick onCardClick;
 
 
             public MyViewHolder(View itemView , onCardClick onCardClick) {
                 super(itemView);
-                countryFlag= itemView.findViewById(R.id.countryFlag);
+                countryFlagg= itemView.findViewById(R.id.flagImage);
                 date = itemView.findViewById(R.id.date);
                 countryName = itemView.findViewById(R.id.country);
                 requesterName = itemView.findViewById(R.id.requesterName);
