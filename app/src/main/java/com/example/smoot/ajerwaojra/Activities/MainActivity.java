@@ -106,6 +106,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
                 break;
+            case R.id.orders:
+                if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+                    Log.e("Tag ", "outer if ");
+                    if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
+                       // setHomeFragment(new doerHomeFragment());
+                      //  drawerLayout.closeDrawers();
+                    }
+                    else {
+                        FragmentManager fm = getSupportFragmentManager();
+                        OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
+
+                        //when the button clicked
+                        onhold.show(fm, "services_tag");
+                      //  setHomeFragment(new RequestsFragment());
+                        drawerLayout.closeDrawers();
+                    }
+                }
+                break;
 
         }
         return true;

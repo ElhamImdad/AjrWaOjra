@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OnholdRequestsFragment extends DialogFragment {
-    ArrayList<ServiceInfo> myServicesList;
+    private ArrayList<ServiceInfo> myServicesList;
     RecyclerView recycler;
     OnHoldRequestsAdapter adapter;
     public OnholdRequestsFragment() {
@@ -42,6 +42,7 @@ public class OnholdRequestsFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_onhold_requests, container, false);
+        myServicesList = new ArrayList<>();
         recycler = (RecyclerView) rootview.findViewById(R.id.mRecyclerOnHold);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -58,8 +59,11 @@ public class OnholdRequestsFragment extends DialogFragment {
                         public void onResponse(String response) {
                             Log.e("respons of servisec", response.toString());
                             try {
-                                JSONArray jsonArray = new JSONArray(response);
+                                JSONObject obj = new JSONObject((response));
+
+                                JSONArray jsonArray = obj.getJSONArray("doer offer");
                                 ServiceInfo serviceInfo;
+                                Log.e("ssssss}}}", String.valueOf(jsonArray.length()));
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     serviceInfo = new ServiceInfo();
                                     JSONObject onHoldReq = jsonArray.getJSONObject(i).getJSONObject("On hold Request");
@@ -67,9 +71,12 @@ public class OnholdRequestsFragment extends DialogFragment {
                                     serviceInfo.setDate(onHoldReq.getString("date"));
                                     serviceInfo.setOmraName(onHoldReq.getString("name"));
                                     serviceInfo.setNoCompletedOrder(jsonArray.getJSONObject(i).getInt("completed Orders"));
-                                    serviceInfo.setOrder_id(jsonArray.getJSONObject(i).getString("order_id"));
+                                  //  serviceInfo.setOrder_id(jsonArray.getJSONObject(i).getString("id"));
                                     JSONArray orderInfo = jsonArray.getJSONObject(i).getJSONArray("doer");
-                                    serviceInfo.setRating(orderInfo.getJSONObject(i).getString("review"));
+                                    for (int j= 0 ; j<orderInfo.length(); j++){
+                                        serviceInfo.setRating(orderInfo.getJSONObject(j).getString("review"));
+                                        Log.e("raaating}}}", orderInfo.getJSONObject(j).getString("review"));
+                                    }
                                     myServicesList.add(serviceInfo);
                                 }
                             } catch (JSONException e) {
