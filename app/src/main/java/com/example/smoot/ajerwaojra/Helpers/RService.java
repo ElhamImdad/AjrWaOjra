@@ -1,5 +1,6 @@
 package com.example.smoot.ajerwaojra.Helpers;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -27,10 +28,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RService extends Service {
+public class RService extends IntentService {
+public static boolean serviceIsRun = false;
+
+    public RService(String name) {
+        super(name);
+    }
+
+    @Override
+    protected void onHandleIntent( Intent intent) {
+
+        while (serviceIsRun){
+
+            String url = "http://ajrandojra.website/api/offerNotification";
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.e("list order respons>>---",response.toString());
+                    try {
+                        JSONArray jsonObj = response.getJSONArray("orders");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+        }
+
+    }
 
     // to allow client to connect with the service
-    RequestQueue    mQueue;
+/*    RequestQueue    mQueue;
     final IBinder mBinder = new LocalBinder();
     private ArrayList<OmraInfo>  umraListPending;
     @Override
@@ -104,5 +136,5 @@ public class RService extends Service {
             }
         };
         mQueue.add(request);
-    }
+    }*/
 }

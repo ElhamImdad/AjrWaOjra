@@ -53,7 +53,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestsFragment extends Fragment implements ServiceConnection{
+public class RequestsFragment extends Fragment {
     RService rService;
     ServiceConnection mConnection;
     Fragment newReqestFragment;
@@ -223,9 +223,14 @@ public class RequestsFragment extends Fragment implements ServiceConnection{
         adapter.notifyDataSetChanged();
     }
     private void clickPending(){
-        adapter = new RequestsAdapter(umraListPending, getContext());
+        ArrayList<OmraInfo>  umra= new ArrayList<>();
+        int f = umraListPending.size()-1;
+        for (int i=0 ; i<umraListPending.size();i++){
+            umra.add(i,umraListPending.get(f-i));
+        }
+        adapter = new RequestsAdapter(umra, getContext());
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+     adapter.notifyDataSetChanged();
     }
     private void clickDone(){
         adapter.updateData(umraListDone );
@@ -376,14 +381,5 @@ public class RequestsFragment extends Fragment implements ServiceConnection{
         return newdATE;
     }
 
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-        RService.LocalBinder binder = (RService.LocalBinder)service;
 
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-
-    }
 }

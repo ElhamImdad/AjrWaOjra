@@ -1,15 +1,18 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +35,7 @@ import java.util.Map;
 public class RequesterAccountFragment extends Fragment {
     private TextView ouWebsit, myName, myEmail, myPhone, noOfOmraDone, noOfOmraInProgress, noOfOmraPending, totalPayment;
     private Button modifyBtn;
+    ImageView setting ;
     public RequesterAccountFragment() {
         // Required empty public constructor
     }
@@ -40,10 +44,12 @@ public class RequesterAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        final NavigationView navigationView= getActivity().findViewById(R.id.nav_view);
         View view = inflater.inflate(R.layout.fragment_requester_account, container, false);
         ouWebsit = view.findViewById(R.id.ourAccount);
         ouWebsit.setText(Html.fromHtml("<u>theqatech.com</u>"));
-
+        setting = view.findViewById(R.id.settingIcon);
         myName = view.findViewById(R.id.accountName);
         myEmail = view.findViewById(R.id.emailAccount);
         myPhone = view.findViewById(R.id.phoneAccount);
@@ -62,6 +68,12 @@ public class RequesterAccountFragment extends Fragment {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container, updateAccount);
                 ft.commit();
+            }
+        });
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             drawerLayout.openDrawer(navigationView);
             }
         });
         return view;

@@ -11,7 +11,7 @@ import com.example.smoot.ajerwaojra.Models.Requester;
 
 public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "volleyregisterlogin";
-    private static final String KEY_USERNAME = "keyusername";
+    public static  String KEY_USERNAME = "keyusername";
     private static final String KEY_EMAIL = "keyemail";
     public static final String TOKEN = "keytoken";
     private static final String KEY_Phone = "keyPhone";
@@ -36,7 +36,7 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN, user.getToken());
         editor.putString(KEY_EMAIL, user.getEmail());
-        editor.putString(KEY_USERNAME, user.getPassword());
+        editor.putString(KEY_USERNAME, user.getName());
         editor.putString(KEY_Phone,user.getPhonNumber());
         editor.putString(KEY_ROLE,user.getRole());
         editor.putString(CountryID,user.getCountry());
