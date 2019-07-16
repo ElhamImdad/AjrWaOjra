@@ -1,8 +1,6 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
@@ -68,9 +66,9 @@ public class RequestsFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     private TextView textViewUmraName;
     private RequestQueue mQueue;
-    private ImageView  norequestImg, settingIcon;
+    private ImageView   settingIcon;
     private Button addRequestBtn, pendingBTN, doneBTN, inProgressBTN;
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout, norequestImg;
 
     public void startService(View view){
      //bindService(new Intent(getContext(),RService.class),mConnection, Context.BIND_AUTO_CREATE);
@@ -96,7 +94,7 @@ public class RequestsFragment extends Fragment {
 
         linearLayout = v.findViewById(R.id.linearLayout);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
-        norequestImg = (ImageView) v.findViewById(R.id.noRequestImg);
+        norequestImg = (LinearLayout) v.findViewById(R.id.noRequestImg);
         pendingBTN = v.findViewById(R.id.waitingBtn);
         doneBTN = v.findViewById(R.id.donBtn);
         inProgressBTN = v.findViewById(R.id.inProgressBtn);

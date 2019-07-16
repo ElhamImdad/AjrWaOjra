@@ -8,16 +8,40 @@
     tools:context=".Fragments.RequestsFragment">
 
 
-    <ImageView
+
+    <LinearLayout
         android:id="@+id/noRequestImg"
-        android:layout_width="191dp"
-        android:layout_height="192dp"
-        android:background="@drawable/noreqimg"
-        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         app:layout_constraintBottom_toTopOf="@+id/requestUmrabutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/talabatText" />
+        app:layout_constraintTop_toBottomOf="@+id/talabatText">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:srcCompat="@drawable/noreqimg"
+            android:background="@drawable/circle_button"
+            android:visibility="visible"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/kaaba"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:text="ليس لديك طلبات سابقة"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 
     <ImageView

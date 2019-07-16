@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.smoot.ajerwaojra.Fragments.DoerAccountFragment;
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequesterAccountFragment;
+import com.example.smoot.ajerwaojra.Fragments.OnholdRequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.doerHomeFragment;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             setFragment(new FatwaFragment());
         }
-
 
     }
 
@@ -137,5 +137,13 @@ public void confirmLogout(){
     });
     alert.show();
 }
+   private void setFragmentDialog(Fragment dialog){
+        FragmentManager fm = getSupportFragmentManager();
+       OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
+
+        //when the button clicked
+       onhold.show(fm, "services_tag");
+    }
+
 }
 

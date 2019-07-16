@@ -107,7 +107,7 @@
         android:id="@+id/choseTypeOfReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/arabic_medium_0"
         android:text="اختر نوع الحساب"
         android:textAlignment="center"
@@ -129,7 +129,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/doer"
         app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintVertical_bias="0.32999998"
         app:srcCompat="@drawable/requester" />
 
 
@@ -144,7 +144,7 @@
         app:layout_constraintEnd_toStartOf="@+id/requester"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
-        app:layout_constraintVertical_bias="0.41000003"
+        app:layout_constraintVertical_bias="0.32999998"
         app:srcCompat="@drawable/doer" />
 
 </android.support.constraint.ConstraintLayout>
