@@ -1,6 +1,7 @@
 package com.example.smoot.ajerwaojra.Activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ import com.example.smoot.ajerwaojra.Fragments.OnholdRequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequesterAccountFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.doerHomeFragment;
+import com.example.smoot.ajerwaojra.Helpers.RService;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.R;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     TextView userName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             setFragment(new FatwaFragment());
         }
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Requester")){
+        if (RService.serviceIsRun==false){
+            Log.e("inside if false","yes");
+            RService.serviceIsRun=true;
+            Log.e("make it true","yes");
+            Intent intent = new Intent(this,RService.class);
+            Log.e("before start service ","yes");
+            startService(intent);
+
+        }}}
 
     }
 
