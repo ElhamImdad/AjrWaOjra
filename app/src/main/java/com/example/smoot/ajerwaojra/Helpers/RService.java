@@ -23,9 +23,11 @@ import java.util.Map;
 public class RService extends IntentService {
 public static boolean serviceIsRun = false;
     private ArrayList<ServiceInfo> myServicesList;
+    private ArrayList<String> doers = new ArrayList<>();
     public  String doerName;
     String doerID ="";
-    String id ;
+    int id =0;
+
     public RService() {
         super("Rservice");
     }
@@ -33,18 +35,32 @@ public static boolean serviceIsRun = false;
     @Override
     protected void onHandleIntent( Intent intent) {
         myServicesList = new ArrayList<>();
+       /* try {
+            Thread.sleep(30000);
+            Log.e("inside sleep","yes");
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }*/
+
+doers.clear();
+        Log.e("doers",doers.toString());
+        int p =0;
         while (serviceIsRun){
-            Log.e("inside while of service","yes");doerID="";
+            Log.e("inside while of service","yes");
+
 
             viewServicesDate();
-          /*  if(doerID!=""){
-            if (doerID != id){*/
-                Log.e("doerId","not equal id");
+
+            if(doerName!=null && id>p){
+            Log.e("doerId",doerID);
+            Log.e("doers",doers.toString());
+            id=0;
             Intent i = new Intent("NewOffer");
             i.putExtra("Message","Hi I am Raghad I call you from Service");
             i.putExtra("Doer Name",doerName);
             sendBroadcast(new Intent(this, myBroadCast.class).setAction("NewOffer").putExtra("Doer Name",doerName));
-        //}}
+        }
             try {
                 Thread.sleep(30000);
                 Log.e("inside sleep","yes");
@@ -73,6 +89,11 @@ public static boolean serviceIsRun = false;
                                 serviceInfo.setDoerName(onHoldReq.getString("doer_name"));
                                 doerName=onHoldReq.getString("doer_name");
                                 doerID=onHoldReq.getString("doer_id");
+                                if (!doers.contains(doerID)){
+                                    doers.add(doerID);
+                                id++;
+                                Log.e("id  ++ ",id+" PPPP");
+                                }
                                 serviceInfo.setDate(onHoldReq.getString("date"));
                                 serviceInfo.setOmraName(onHoldReq.getString("name"));
                                 serviceInfo.setNoCompletedOrder(jsonArray.getJSONObject(i).getInt("completed Orders"));
