@@ -127,12 +127,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         // set the attributes of the umra object
                        // umraRequest.setCountry(object.getString("country"));
                         umraRequest.setCountry_id(object.getString("country_id"));
-                        Log.e("flaaaagg string path", object.getJSONObject("country").getString("image"));
                         umraRequest.setCountryFlagImagePath(object.getJSONObject("country").getString("image"));
                         umraRequest.setCountry(object.getJSONObject("country").getString("name"));
                         umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
-                        Log.e("reeeeeeeee", object.getString("requester_name"));
                         umraRequest.setDoaa(object.getString("doaa"));
                         umraRequest.setUmraOwner(object.getString("name"));
                         umraRequest.setId(object.getInt("id"));

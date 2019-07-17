@@ -1,13 +1,19 @@
 package com.example.smoot.ajerwaojra.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.smoot.ajerwaojra.Activities.OmrahDetailsActivity;
+import com.example.smoot.ajerwaojra.Fragments.OnholdRequestsFragment;
 import com.example.smoot.ajerwaojra.Models.ServiceInfo;
 import com.example.smoot.ajerwaojra.R;
 
@@ -31,8 +37,50 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
-        final ServiceInfo items = listServices.get(i);
+         ServiceInfo items = listServices.get(i);
+         String review = items.getRating();
         myHolder.doerName.setText(items.getDoerName());
+        Log.e("cooooo", String.valueOf(items.getNoCompletedOrder()));
+        myHolder.numCompletedOrder.setText(" عدد الطلبات " +items.getNoCompletedOrder());
+        myHolder.date.setText(items.getDate());
+        myHolder.omraName.setText(" سيقوم بالعمرة عن "+items.getOmraName());
+        final  int orderId = items.getOrder_id();
+     //   final Bundle bundle = new Bundle();
+        myHolder.positiveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("yeeeees", "yes");
+                OnholdRequestsFragment on = new OnholdRequestsFragment();
+                on.acceptOrder(orderId);
+               /* bundle.putString("option", "positive");
+                bundle.putInt("OrderId", orderId);
+                OnholdRequestsFragment OH = new OnholdRequestsFragment();
+                OH.setArguments(bundle);*/
+
+                Intent intent = new Intent(context, OmrahDetailsActivity.class);
+                intent.putExtra("option", "positive");
+                intent.putExtra("OrderIdP", orderId);
+
+                context.startActivity(intent);
+            }
+        });
+        myHolder.negativeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnholdRequestsFragment on2 = new OnholdRequestsFragment();
+                on2.rejectOrder(orderId);
+                /*bundle.putString("option", "negative");
+                bundle.putInt("OrderId", orderId);
+                OnholdRequestsFragment OH = new OnholdRequestsFragment();
+                OH.setArguments(bundle);*/
+
+                Intent intent = new Intent(context, OmrahDetailsActivity.class);
+                intent.putExtra("option", "negative");
+                intent.putExtra("OrderIdN", orderId);
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -42,12 +90,19 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
 
     public class MyHolder extends RecyclerView.ViewHolder  {
         TextView doerName, numCompletedOrder, date, omraName;
-        String review;
+        RatingBar ratingBar;
+        Button positiveBtn, negativeBtn;
 
         public MyHolder(View itemView) {
             super(itemView);
             doerName = itemView.findViewById(R.id.viewDoerName);
+            numCompletedOrder = itemView.findViewById(R.id.nomberOfOmra);
+            date = itemView.findViewById(R.id.approximateDate);
+            omraName = itemView.findViewById(R.id.textViewDoerName);
+            ratingBar = itemView.findViewById(R.id.ratingBarPic);
 
+            positiveBtn = itemView.findViewById(R.id.acceptBtn);
+            negativeBtn = itemView.findViewById(R.id.notAcceptBtn);
 
         }
 
