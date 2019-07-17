@@ -56,6 +56,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                         bundle2.putString("time", bundle.getString("time"));
                         bundle2.putString("doaa", bundle.getString("doaa"));
                         bundle2.putStringArrayList("photos", bundle.getStringArrayList("photos"));
+                        bundle2.putString("review", bundle.getString("review"));
 
                         RequestDetailsFragment doneObj = new RequestDetailsFragment();
                         doneObj.setArguments(bundle2);
@@ -68,6 +69,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                         bundle3.putString("date", bundle.getString("date"));
                         bundle3.putString("time", bundle.getString("time"));
                         bundle3.putString("doaa", bundle.getString("doaa"));
+                        bundle3.putString("review", bundle.getString("review"));
 
                         InprogressRequestsFragment inProgressObj = new InprogressRequestsFragment();
                         inProgressObj.setArguments(bundle3);

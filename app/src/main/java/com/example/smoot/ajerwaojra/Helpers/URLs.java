@@ -14,4 +14,6 @@ public class URLs {
     public static final String UPL_OFFER_NOTIFICATION_USER="http://ajrandojra.website/api/offerNotification";
     public static final String UPL_ACCEPT_OFFER_USER="http://ajrandojra.website/api/acceptOffer";
     public static final String UPL_REJECT_OFFER_USER="http://ajrandojra.website/api/rejectOffer";
+    public static final String UPL_DOER_INHOLD_ORDER_USER="http://ajrandojra.website/api/doerHoldList";
+    public static final String UPL_DOER_INBROGRESS_ORDER_USER="http://ajrandojra.website/api/doerInprogressList";
 }

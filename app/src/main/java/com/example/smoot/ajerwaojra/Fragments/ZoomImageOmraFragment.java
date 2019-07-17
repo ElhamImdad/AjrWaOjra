@@ -77,7 +77,7 @@ public class ZoomImageOmraFragment extends Fragment {
                 }else {
                     AlertDialog dialog = new SpotsDialog(getContext());
                     dialog.show();
-                    dialog.setMessage("Downloading...");
+                    dialog.setMessage("جاري التحميل ...");
 
                     String fileName = UUID.randomUUID().toString()+".png";
                     Picasso.with(getContext())
@@ -103,6 +103,7 @@ public class ZoomImageOmraFragment extends Fragment {
                     bundle.putString("date", getArguments().getString("date"));
                     bundle.putString("time", getArguments().getString("time"));
                     bundle.putString("doaa", getArguments().getString("doaa"));
+                    bundle.putString("review", getArguments().getString("review"));
                     bundle.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
 
                     RequestDetailsFragment f = new RequestDetailsFragment();
