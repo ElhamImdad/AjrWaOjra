@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -22,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
-import com.example.smoot.ajerwaojra.Models.OmraInfo;
 import com.example.smoot.ajerwaojra.R;
 import com.squareup.picasso.Picasso;
 
@@ -36,12 +34,8 @@ import java.util.Map;
 public class RequestDetailsFragment extends Fragment {
     private ImageView returnBTN, image_1, image_2, image_3 ,setting;
     private RequestQueue mQueue;
-    private TextView omraName, doerName, omraDate, omraDuration, doaaDone;
-    private TextView doaaTextViewProgress, doaaProgress, photoText,doaaTextViewDone, pageTitle;
-    private ScrollView scrollViewProg,scrollViewDone;
-    private int id;
-    private String status, status2, status3;
-    ArrayList <OmraInfo> doneList ;
+    private TextView omraName, doerName, omraDate, omraDuration, doaaDone, review;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,6 +46,7 @@ public class RequestDetailsFragment extends Fragment {
         omraDate = view.findViewById(R.id.textViewDateDone);
         omraDuration = view.findViewById(R.id.textViewTimeDone);
         doaaDone = view.findViewById(R.id.doaaDone);
+        review = view.findViewById(R.id.noStar);
         setting = view.findViewById(R.id.settingDone);
         image_1 = view.findViewById(R.id.omraImage1);
         image_2 = view.findViewById(R.id.omraImage2);
@@ -68,6 +63,7 @@ public class RequestDetailsFragment extends Fragment {
             omraDate.setText(getArguments().getString("date"));
             omraDuration.setText(getArguments().getString("time"));
             doaaDone.setText(getArguments().getString("doaa"));
+            review.setText(getArguments().getString("review"));
             urlsPHOTOS = getArguments().getStringArrayList("photos");
 
             switch (urlsPHOTOS.size()){
@@ -86,6 +82,7 @@ public class RequestDetailsFragment extends Fragment {
                             bundle3.putString("date",getArguments().getString("date"));
                             bundle3.putString("time",getArguments().getString("time"));
                             bundle3.putString("doaa",getArguments().getString("doaa"));
+                            bundle3.putString("review",getArguments().getString("review"));
                             bundle3.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
 
                             bundle3.putString("image",urlsPHOTOS.get(2));
@@ -110,6 +107,7 @@ public class RequestDetailsFragment extends Fragment {
                             bundle2.putString("date",getArguments().getString("date"));
                             bundle2.putString("time",getArguments().getString("time"));
                             bundle2.putString("doaa",getArguments().getString("doaa"));
+                            bundle2.putString("review",getArguments().getString("review"));
                             bundle2.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
 
                             bundle2.putString("image",urlsPHOTOS.get(1));
@@ -133,6 +131,7 @@ public class RequestDetailsFragment extends Fragment {
                             bundle1.putString("date",getArguments().getString("date"));
                             bundle1.putString("time",getArguments().getString("time"));
                             bundle1.putString("doaa",getArguments().getString("doaa"));
+                            bundle1.putString("review",getArguments().getString("review"));
                             bundle1.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
 
                             bundle1.putString("image",urlsPHOTOS.get(0));

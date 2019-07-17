@@ -1,10 +1,8 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
-import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -63,6 +61,7 @@ public class RequestsFragment extends Fragment {
     private ArrayList<OmraInfo>  umraListDone ;
     private ArrayList<OmraInfo>  umraListPending;
     private ArrayList<String> omraPhotoList;
+    private ArrayList<OmraInfo>  umra;
     SwipeRefreshLayout swipeRefreshLayout;
     private TextView textViewUmraName;
     private RequestQueue mQueue;
@@ -102,6 +101,7 @@ public class RequestsFragment extends Fragment {
         umraListInProgress = new ArrayList<>();
         umraListDone = new ArrayList<>();
         umraListPending = new ArrayList<>();
+        umra= new ArrayList<>();
 
         swipeRefreshLayout = v.findViewById(R.id.swapRefreshLayout);
 
@@ -221,11 +221,6 @@ public class RequestsFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
     private void clickPending(){
-        ArrayList<OmraInfo>  umra= new ArrayList<>();
-        int f = umraListPending.size()-1;
-        for (int i=0 ; i<umraListPending.size();i++){
-            umra.add(i,umraListPending.get(f-i));
-        }
         adapter = new RequestsAdapter(umra, getContext());
         recyclerView.setAdapter(adapter);
      adapter.notifyDataSetChanged();
@@ -258,6 +253,7 @@ public class RequestsFragment extends Fragment {
 
                                omraInfoObject = new OmraInfo();
                                omraInfoObject.setId(jsonObj.getJSONObject(i).getJSONObject("order").getInt("id"));
+                               omraInfoObject.setReview(jsonObj.getJSONObject(i).getString("doer review"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
                                omraInfoObject.setIsStartOmra(jsonObj.getJSONObject(i).getJSONObject("order").getString("start"));
@@ -274,7 +270,7 @@ public class RequestsFragment extends Fragment {
 
                                if (status.equals("2")){
                                    umraListInProgress.add(omraInfoObject);
-                                   Log.e("my list is >---",status+"\n\n\n");
+                                  // Log.e("my list is >---",status+"\n\n\n");
                                    adapter.notifyDataSetChanged();
 
                                }else if ((status.equals("1")) || (status.equals("4"))){
@@ -283,10 +279,10 @@ public class RequestsFragment extends Fragment {
                                }else if (status.equals("3")){
                                    omraPhotoList = new ArrayList<>();
                                    JSONArray omraImages = jsonObj.getJSONObject(i).getJSONObject("order").getJSONArray("omra_images");
-                                   Log.e("array length---", String.valueOf(omraImages.length()));
+                                //   Log.e("array length---", String.valueOf(omraImages.length()));
                                    String urlPhoto;
                                    for (int j = 0; j< omraImages.length(); j++){
-                                       Log.e("array length---","----------------------------------------------");
+                                 //      Log.e("array length---","----------------------------------------------");
                                        omraPhotoList.add(omraImages.getJSONObject(j).getString("path"));
                                    }
                                    omraInfoObject.setPhotos(omraPhotoList);
@@ -295,6 +291,10 @@ public class RequestsFragment extends Fragment {
                                   adapter.notifyDataSetChanged();
                                }
 
+                            }
+                            int f = umraListPending.size()-1;
+                            for (int i=0 ; i<umraListPending.size();i++){
+                                umra.add(i,umraListPending.get(f-i));
                             }
                             visibleNorequestImage();
 
@@ -316,7 +316,7 @@ public class RequestsFragment extends Fragment {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept","application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                Log.e("token for this user",token+"-");
+              //  Log.e("token for this user",token+"-");
                 headers.put("Authorization", "Bearer "+token);
                 return headers;
             }

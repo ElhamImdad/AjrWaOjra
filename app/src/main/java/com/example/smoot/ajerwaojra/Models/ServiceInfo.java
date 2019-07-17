@@ -1,14 +1,14 @@
 package com.example.smoot.ajerwaojra.Models;
 
 public class ServiceInfo  {
-    private String doerName, rating, omraName, date, order_id;
-    private int noCompletedOrder;
+    private String doerName, rating, omraName, date;
+    private int noCompletedOrder, order_id ;
 
-    public String getOrder_id() {
+    public int getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(String order_id) {
+    public void setOrder_id(int order_id) {
         this.order_id = order_id;
     }
 

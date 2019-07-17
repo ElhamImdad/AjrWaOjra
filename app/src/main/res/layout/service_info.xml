@@ -1,169 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mCard"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Models.ServiceInfo">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
-    <TextView
-        android:id="@+id/textViewDoerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="سيقوم بالعمرة"
-        android:textColor="@color/darkGray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/doerImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle_button"
-        android:src="@drawable/manprayingbig"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDoerName" />
+    card_view:cardElevation="10dp"
 
-    <TextView
-        android:id="@+id/nomberOfOmra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="150dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="0"
-        android:textColor="@color/darkGray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textNoOrder"
-        app:layout_constraintTop_toBottomOf="@+id/viewDoerName" />
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/viewDoerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="doer name"
-        android:textColor="@color/darkGray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doerImage" />
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/service_tag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/strong_rectangle"
+        tools:context=".Models.ServiceInfo">
 
-    <TextView
-        android:id="@+id/textNoOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="عدد الطلبات"
-        android:textColor="@color/darkGray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/nomberOfOmra"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewDoerName" />
+        <TextView
+            android:id="@+id/textViewDoerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:text="سيقوم بالعمرة"
+            android:textColor="@color/darkGray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="التقييمات"
-        android:textColor="@color/darkGray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/ratingBarPic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNoOrder" />
+        <ImageView
+            android:id="@+id/doerImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle_button"
+            android:src="@drawable/avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDoerName" />
 
-    <RatingBar
-        android:id="@+id/ratingBarPic"
-        style="?android:attr/ratingBarStyleIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="85dp"
-        android:numStars="5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNoOrder" />
+        <TextView
+            android:id="@+id/nomberOfOmra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:paddingStart="3dp"
+            android:paddingLeft="3dp"
+            android:paddingEnd="3dp"
+            android:paddingRight="3dp"
+            android:textColor="@color/darkGray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewDoerName" />
 
-    <ImageView
-        android:id="@+id/calendreIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBarPic"
-        app:srcCompat="@drawable/calender_icon" />
+        <TextView
+            android:id="@+id/viewDoerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:text="doer name"
+            android:textColor="@color/darkGray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/doerImage" />
 
-    <TextView
-        android:id="@+id/textDate"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="تاريخ بدء العمرة"
-        android:gravity="right"
-        android:textColor="@color/darkGray"
-        android:textSize="11sp"
-        app:layout_constraintStart_toEndOf="@+id/calendreIcon"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBarPic" />
+        <TextView
+            android:id="@+id/textRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="85dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="271dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:text="التقييمات"
+            android:textColor="@color/darkGray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomberOfOmra" />
 
-    <TextView
-        android:id="@+id/approximateDate"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="00/00/0000"
-        android:gravity="right"
-        android:textColor="@color/darkGray"
-        android:textSize="13sp"
-        app:layout_constraintStart_toEndOf="@+id/calendreIcon"
-        app:layout_constraintTop_toBottomOf="@+id/textDate" />
+        <RatingBar
+            android:id="@+id/ratingBarPic"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="144dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="85dp"
+            android:numStars="5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomberOfOmra" />
 
-    <Button
-        android:id="@+id/acceptBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="موافق"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/notAcceptBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/approximateDate" />
+        <ImageView
+            android:id="@+id/calendreIcon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="279dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBarPic"
+            app:srcCompat="@drawable/calender_icon" />
 
-    <Button
-        android:id="@+id/notAcceptBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/arabic_medium_0"
-        android:text="غير موافق"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/acceptBtn"
-        app:layout_constraintTop_toBottomOf="@+id/approximateDate" />
+        <TextView
+            android:id="@+id/textDate"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:gravity="right"
+            android:paddingRight="3dp"
+            android:text="تاريخ بدء العمرة"
+            android:textColor="@color/darkGray"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBarPic" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/approximateDate"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/arabic_medium_0"
+            android:gravity="right"
+            android:paddingTop="4dp"
+            android:text="00/00/0000"
+            android:textColor="@color/darkGray"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDate" />
+
+        <Button
+            android:id="@+id/acceptBtn"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/arabic_medium_0"
+            android:text="موافق"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/notAcceptBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/approximateDate" />
+
+        <Button
+            android:id="@+id/notAcceptBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/arabic_medium_0"
+            android:text="غير موافق"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/acceptBtn"
+            app:layout_constraintTop_toBottomOf="@+id/approximateDate" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         drawerLayout= findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -128,11 +129,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                       //  drawerLayout.closeDrawers();
                     }
                     else {
-                        FragmentManager fm = getSupportFragmentManager();
-                        OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
+                        setFragmentDialog();
+                      //  FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                     //   OnholdRequestsFragment dialog = OnholdRequestsFragment.newInstance();
+                     //   dialog.show(ft, "Tag");
+
+                     //   FragmentManager fm = getSupportFragmentManager();
+                    //  Fragment frag = fm.findFragmentByTag("service_tag");
+                     //   OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
 
                         //when the button clicked
-                        onhold.show(fm, "services_tag");
+                    //    onhold.show(fm, "services_tag");
+
                       //  setHomeFragment(new RequestsFragment());
                         drawerLayout.closeDrawers();
                     }
@@ -169,12 +177,12 @@ public void confirmLogout(){
     });
     alert.show();
 }
-   private void setFragmentDialog(Fragment dialog){
+   private void setFragmentDialog(){
         FragmentManager fm = getSupportFragmentManager();
-       OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
-
+        OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
+       onhold.show(fm, "service_info");
         //when the button clicked
-       onhold.show(fm, "services_tag");
+
     }
 
 }

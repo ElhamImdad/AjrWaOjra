@@ -3,7 +3,7 @@ package com.example.smoot.ajerwaojra.Models;
 import java.util.ArrayList;
 
 public class OmraInfo {
-    String status, umraName, doerOmraName, doaa,date,time, isStartOmra;
+    String status, umraName, doerOmraName, doaa,date,time, isStartOmra, review;
     ArrayList<String> photos;
     int id;
 
@@ -13,6 +13,14 @@ public class OmraInfo {
     public OmraInfo(String umraName, String doaa) {
         this.umraName = umraName;
         this.doaa = doaa;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public String getIsStartOmra() {

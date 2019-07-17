@@ -2,13 +2,14 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,14 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.smoot.ajerwaojra.Adapter.RecyclerAdapterHD;
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
+import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.UmraRequest;
 import com.example.smoot.ajerwaojra.R;
 
@@ -36,10 +42,13 @@ import java.time.LocalDate;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyViewHolder.onCardClick {
 
     ArrayList<UmraRequest> umraRequests = new ArrayList<UmraRequest>();
+    ArrayList<String> inHoldList ;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapterHD  adapterHD ;
@@ -59,6 +68,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         View v=  inflater.inflate(R.layout.fragment_doer_home, container, false);
         final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        inHoldList = new ArrayList<>();
         goSetting = v.findViewById(R.id.goSetting);
         recyclerView = v.findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(getContext(),1);
@@ -74,6 +84,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
         adapterHD= new RecyclerAdapterHD(getContext(),umraRequests,this);
         recyclerView.setAdapter(adapterHD);
+        adapterHD.notifyDataSetChanged();
         Log.e("Adapter ",adapterHD.toString());
        // recyclerView.setItemViewCacheSize(umraRequests.size());
 
@@ -113,7 +124,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("doerhomefragment", "get responce");
+
                     JSONArray jsonArray = response.getJSONArray("orders");
                     int size = jsonArray.length();
 
@@ -127,12 +138,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         // set the attributes of the umra object
                        // umraRequest.setCountry(object.getString("country"));
                         umraRequest.setCountry_id(object.getString("country_id"));
-                        Log.e("flaaaagg string path", object.getJSONObject("country").getString("image"));
                         umraRequest.setCountryFlagImagePath(object.getJSONObject("country").getString("image"));
                         umraRequest.setCountry(object.getJSONObject("country").getString("name"));
                         umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
-                        Log.e("reeeeeeeee", object.getString("requester_name"));
                         umraRequest.setDoaa(object.getString("doaa"));
                         umraRequest.setUmraOwner(object.getString("name"));
                         umraRequest.setId(object.getInt("id"));
@@ -145,10 +154,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
                         umraRequests.add(umraRequest);
-                        adapterHD.notifyDataSetChanged();
+
 
                     }
-
+                    adapterHD.notifyDataSetChanged();
                     Log.e("requests No ", ""+umraRequests.size());
                     // getContext() may makes error
 
@@ -174,25 +183,35 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
     
     @Override
     public void onCardClickLis(int position) {
-        UmraRequest umra =umraRequests.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("id",umra.getId());
-        Log.e("id"," "+umra.getId());
-        bundle.putString("requester",umra.getRequesterName());
-        bundle.putString("date",umra.getDate());
-        bundle.putString("country",umra.getCountry());
-        bundle.putString("doaa",umra.getDoaa());
-        bundle.putString("umraOwner",umra.getUmraOwner());
-        bundle.putString("country_id",umra.getCountry_id());
-        bundle.putString("imagePath",umra.getCountryFlagImagePath());
-        RequestDetailFragment f = new RequestDetailFragment();
-        f.setArguments(bundle);
-        Log.d("Click", "Yes Clicked");
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container,f);
-        ft.addToBackStack(null);
-        ft.commit();
+        inholdOrders();
+        Log.e("holdSize--", String.valueOf(inHoldList.size())+"??");
+        if (inHoldList.size() ==0) {
+            UmraRequest umra = umraRequests.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", umra.getId());
+            Log.e("id", " " + umra.getId());
+            bundle.putString("requester", umra.getRequesterName());
+            bundle.putString("date", umra.getDate());
+            bundle.putString("country", umra.getCountry());
+            bundle.putString("doaa", umra.getDoaa());
+            bundle.putString("umraOwner", umra.getUmraOwner());
+            bundle.putString("country_id", umra.getCountry_id());
+            bundle.putString("imagePath", umra.getCountryFlagImagePath());
+            RequestDetailFragment f = new RequestDetailFragment();
+            f.setArguments(bundle);
+            Log.d("Click", "Yes Clicked");
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, f);
+            ft.addToBackStack(null);
+            ft.commit();
+        }else {
+            AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+            alert.setTitle("عذرا......");
+            alert.setMessage("لديك طلب قيد الموافقة");
+            alert.show();
+          //  inHoldList.clear();
+        }
 
     }
 
@@ -235,5 +254,48 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         }
         Log.e("mydate is :",newdATE);
         return newdATE;
+    }
+    public void inholdOrders() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_DOER_INHOLD_ORDER_USER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                          Log.e("hooooold", response.toString());
+                        try {
+                            JSONObject obj = new JSONObject((response));
+                            JSONArray doerArr = obj.getJSONArray("Doer onHold Request");
+                            for (int i=0 ; i< doerArr.length(); i++){
+                                String nameD = doerArr.getJSONObject(i).getString("doer_name");
+                                Log.e("hoooold name>>", nameD);
+                                inHoldList.add(nameD);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                              Log.e("catch hoold }},", e.toString());
+                        }
+                    }//end onResponse
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                          Log.e("erroooor hooold", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                //   Log.e("token for user", token);
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }
