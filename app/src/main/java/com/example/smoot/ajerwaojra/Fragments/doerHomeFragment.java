@@ -74,6 +74,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
         adapterHD= new RecyclerAdapterHD(getContext(),umraRequests,this);
         recyclerView.setAdapter(adapterHD);
+        adapterHD.notifyDataSetChanged();
         Log.e("Adapter ",adapterHD.toString());
        // recyclerView.setItemViewCacheSize(umraRequests.size());
 
@@ -113,7 +114,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("doerhomefragment", "get responce");
+
                     JSONArray jsonArray = response.getJSONArray("orders");
                     int size = jsonArray.length();
 
@@ -143,10 +144,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
                         umraRequests.add(umraRequest);
-                        adapterHD.notifyDataSetChanged();
+
 
                     }
-
+                    adapterHD.notifyDataSetChanged();
                     Log.e("requests No ", ""+umraRequests.size());
                     // getContext() may makes error
 
