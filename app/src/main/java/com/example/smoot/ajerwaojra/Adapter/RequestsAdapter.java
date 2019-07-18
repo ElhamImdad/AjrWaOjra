@@ -103,9 +103,13 @@ public class RequestsAdapter  extends RecyclerView.Adapter<RequestsAdapter.MyVie
             viewHolder.time.setVisibility(View.VISIBLE);
             viewHolder.time.setText(item.getTime());
             String isStartOmra = item.getIsStartOmra();
+            Log.e("startesOmra adapter",item.getIsStartOmra()+"---");
             if (isStartOmra.equalsIgnoreCase("started")){
                 viewHolder.time.setTextColor(Color.parseColor("#0E9447"));
             }
+        }
+        if (item.getStatus().equals("2")){
+            viewHolder.time.setText("00:00:00");
         }
         viewHolder.textName.setOnClickListener(new View.OnClickListener() {
             @Override

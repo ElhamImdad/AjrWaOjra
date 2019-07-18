@@ -257,6 +257,7 @@ public class RequestsFragment extends Fragment {
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
                                omraInfoObject.setIsStartOmra(jsonObj.getJSONObject(i).getJSONObject("order").getString("start"));
+                               Log.e("startesOmra responce",jsonObj.getJSONObject(i).getJSONObject("order").getString("start")+"---");
                                omraInfoObject.setDoaa(jsonObj.getJSONObject(i).getJSONObject("order").getString("doaa"));
                                omraInfoObject.setStatus(status);
                                omraInfoObject.setTime(jsonObj.getJSONObject(i).getJSONObject("order").getString("time"));
