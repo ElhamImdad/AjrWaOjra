@@ -2,11 +2,17 @@ package com.example.smoot.ajerwaojra.Fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -28,6 +34,10 @@ import java.util.Map;
 
 public class DoerAccountFragment extends Fragment {
     private TextView ouWebsit, myName, myEmail, myPhone, winFromApp, noOmraDoneDoer;
+    private Button edit;
+    private ImageView setting;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
     public DoerAccountFragment() {
         // Required empty public constructor
@@ -44,6 +54,26 @@ public class DoerAccountFragment extends Fragment {
         myPhone = view.findViewById(R.id.phoneAccDoer);
         winFromApp = view.findViewById(R.id.winFromApp);
         noOmraDoneDoer = view.findViewById(R.id.noOmraDoneDoer);
+        edit = view.findViewById(R.id.editDoerAccount);
+        setting = view.findViewById(R.id.settingImage);
+        drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        navigationView = getActivity().findViewById(R.id.nav_view);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             drawerLayout.openDrawer(navigationView);
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateDoerAccountFragment f = new UpdateDoerAccountFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container,f);
+                ft.commit();
+            }
+        });
         getAccount();
         return view;
     }
