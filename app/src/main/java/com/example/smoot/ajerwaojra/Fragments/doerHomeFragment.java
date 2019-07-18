@@ -104,15 +104,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* DoerAccountFragment f = new DoerAccountFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.disallowAddToBackStack();
-                ft.replace(R.id.container,f);
-                ft.commit();*/
                drawerLayout.openDrawer(navigationView);
             }
         });
+
         return v;
 
     }

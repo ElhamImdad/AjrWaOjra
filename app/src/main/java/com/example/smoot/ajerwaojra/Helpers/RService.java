@@ -21,51 +21,47 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RService extends IntentService {
-public static boolean serviceIsRun = false;
+    public static boolean serviceIsRun = false;
     private ArrayList<ServiceInfo> myServicesList;
     private ArrayList<String> doers = new ArrayList<>();
-    public  String doerName;
-    String doerID ="";
-    int id =0;
+    public String doerName;
+    String doerID = "";
+    int id = 0;
 
     public RService() {
         super("Rservice");
     }
 
     @Override
-    protected void onHandleIntent( Intent intent) {
+    protected void onHandleIntent(Intent intent) {
         myServicesList = new ArrayList<>();
-       /* try {
-            Thread.sleep(30000);
+        try {
+            Thread.sleep(10000);
             Log.e("inside sleep","yes");
         }
         catch (Exception e ){
             e.printStackTrace();
-        }*/
-
-doers.clear();
-        Log.e("doers",doers.toString());
-        int p =0;
-        while (serviceIsRun){
-            Log.e("inside while of service","yes");
-
-
-            viewServicesDate();
-
-            if(doerName!=null && id>p){
-            Log.e("doerId",doerID);
-            Log.e("doers",doers.toString());
-            id=0;
-            Intent i = new Intent("NewOffer");
-            i.putExtra("Message","Hi I am Raghad I call you from Service");
-            i.putExtra("Doer Name",doerName);
-            sendBroadcast(new Intent(this, myBroadCast.class).setAction("NewOffer").putExtra("Doer Name",doerName));
         }
+
+        doers.clear();
+        Log.e("doers", doers.toString());
+        int p = 0;
+        while (serviceIsRun) {
+            Log.e("inside while of service", "yes");
+            viewServicesDate();
+            if (doerName != null && id > p) {
+                Log.e("doerId", doerID);
+                Log.e("doers", doers.toString());
+                id = 0;
+                Intent i = new Intent("NewOffer");
+                i.putExtra("Message", "Hi I am Raghad I call you from Service");
+                i.putExtra("Doer Name", doerName);
+                sendBroadcast(new Intent(this, myBroadCast.class).setAction("NewOffer").putExtra("Doer Name", doerName));
+            }
             try {
                 Thread.sleep(30000);
-                Log.e("inside sleep","yes");
-            }
-            catch (Exception e ){
+                Log.e("inside sleep", "yes");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -83,25 +79,25 @@ doers.clear();
                             JSONArray jsonArray = obj.getJSONArray("doer offer");
                             ServiceInfo serviceInfo;
                             Log.e("ssssss}}}", String.valueOf(jsonArray.length()));
-                            for (int i = 0; i < jsonArray.length(); i++){
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 serviceInfo = new ServiceInfo();
                                 JSONObject onHoldReq = jsonArray.getJSONObject(i).getJSONObject("On hold Request");
                                 serviceInfo.setDoerName(onHoldReq.getString("doer_name"));
-                                doerName=onHoldReq.getString("doer_name");
-                                doerID=onHoldReq.getString("doer_id");
-                                if (!doers.contains(doerID)){
+                                doerName = onHoldReq.getString("doer_name");
+                                doerID = onHoldReq.getString("doer_id");
+                                if (!doers.contains(doerID)) {
                                     doers.add(doerID);
-                                id++;
-                                Log.e("id  ++ ",id+" PPPP");
+                                    id++;
+                                    Log.e("id  ++ ", id + " PPPP");
                                 }
                                 serviceInfo.setDate(onHoldReq.getString("date"));
                                 serviceInfo.setOmraName(onHoldReq.getString("name"));
                                 serviceInfo.setNoCompletedOrder(jsonArray.getJSONObject(i).getInt("completed Orders"));
                                 //  serviceInfo.setOrder_id(jsonArray.getJSONObject(i).getString("id"));
                                 int ih = jsonArray.getJSONObject(i).getInt("completed Orders");
-                                Log.e("completed ",ih+" --");
+                                Log.e("completed ", ih + " --");
                                 JSONArray orderInfo = jsonArray.getJSONObject(i).getJSONArray("doer");
-                                for (int j= 0 ; j<orderInfo.length(); j++){
+                                for (int j = 0; j < orderInfo.length(); j++) {
                                     serviceInfo.setRating(orderInfo.getJSONObject(j).getString("review"));
                                     Log.e("raaating}}}", orderInfo.getJSONObject(j).getString("review"));
                                 }

@@ -1,11 +1,12 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
-import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -38,13 +38,11 @@ import java.util.Map;
 public class logInFragment extends Fragment {
     EditText logInEmail;
     EditText inputPassword;
-    EditText phoneNumber ;
     Button loginButton;
     private ProgressBar progressBar;
     String role ;
     String token;
-
-    AlertDialog builder;
+    String password , email ;
 
     public logInFragment() {
         // Required empty public constructor
@@ -73,18 +71,25 @@ public class logInFragment extends Fragment {
         logInEmail = v.findViewById(R.id.logInEmail);
 
         progressBar = v.findViewById(R.id.progressBar3);
+        email = logInEmail.getText().toString();
+        password = inputPassword.getText().toString();
+
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("hellow ","hellow");
 
-                login();
 
+                    login();
             }
         });
 
         return v;
+
     }
+
+
+
     public  void login (){
         final String email = logInEmail.getText().toString().trim();
         final String password = inputPassword.getText().toString().trim();
@@ -110,6 +115,7 @@ public class logInFragment extends Fragment {
                             FragmentTransaction ft = fm.beginTransaction();
                             ft.replace(R.id.container, fragment);
                             ft.commit();
+
                         }
                         else {
                             Doer doer = new Doer(token);
@@ -127,7 +133,16 @@ public class logInFragment extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "بيانات الدخول خاطئة", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle("عذرا......");
+                    alert.setMessage("تأكد من إدخال البيانات بشكل صحيح");
+                    alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    alert.show();
                     Log.e("error in login", error.toString());
                 }
             }) {

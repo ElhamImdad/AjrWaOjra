@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.smoot.ajerwaojra.Fragments.DoerAccountFragment;
@@ -35,59 +36,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        drawerLayout= findViewById(R.id.drawer_layout);
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
         userName = findViewById(R.id.userName);
-        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             Log.e("Tag ", "outer if ");
-            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")){
-               // userName.setText(SharedPrefManager.getInstance(this).getDoer().getDoerName());
-                Log.e("inner "," ineer if ");
+            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
+                // userName.setText(SharedPrefManager.getInstance(this).getDoer().getDoerName());
+                Log.e("inner ", " ineer if ");
                 setHomeFragment(new doerHomeFragment());
-            }else{
+            } else {
                 Log.e("Tag", "inner else ");
-               // userName.setText(SharedPrefManager.getInstance(this).getRequester().getName());
-                setHomeFragment(new RequestsFragment());}
+                // userName.setText(SharedPrefManager.getInstance(this).getRequester().getName());
+                setHomeFragment(new RequestsFragment());
+            }
 
-        }else{
+        } else {
 
             setFragment(new FatwaFragment());
         }
-        if(SharedPrefManager.getInstance(this).isLoggedIn()){
-            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Requester")){
-        if (RService.serviceIsRun==false){
-            Log.e("inside if false","yes");
-            RService.serviceIsRun=true;
-            Log.e("make it true","yes");
-            Intent intent = new Intent(this,RService.class);
-            Log.e("before start service ","yes");
-            startService(intent);
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Requester")) {
+                if (RService.serviceIsRun == false) {
+                    Log.e("inside if false", "yes");
+                    RService.serviceIsRun = true;
+                    Log.e("make it true", "yes");
+                    Intent intent = new Intent(this, RService.class);
+                    Log.e("before start service ", "yes");
+                    startService(intent);
 
-        }}}
+                }
+            }
+        }
 
     }
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-        super.onBackPressed();}
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void setHomeFragment(Fragment home) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container,home);
+        ft.replace(R.id.container, home);
         ft.commit();
     }
-    private void setFragment( Fragment fatwa) {
+
+    private void setFragment(Fragment fatwa) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container,fatwa);
-        ft.commit();}
+        ft.replace(R.id.container, fatwa);
+        ft.commit();
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -101,8 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
                         setHomeFragment(new DoerAccountFragment());
                         drawerLayout.closeDrawers();
-                    }
-                    else {
+                    } else {
                         setHomeFragment(new RequesterAccountFragment());
                         drawerLayout.closeDrawers();
                     }
@@ -114,8 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
                         setHomeFragment(new doerHomeFragment());
                         drawerLayout.closeDrawers();
-                    }
-                    else {
+                    } else {
                         setHomeFragment(new RequestsFragment());
                         drawerLayout.closeDrawers();
                     }
@@ -125,62 +131,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                     Log.e("Tag ", "outer if ");
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
-                       // setHomeFragment(new doerHomeFragment());
-                      //  drawerLayout.closeDrawers();
-                    }
-                    else {
-                        setFragmentDialog();
-                      //  FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                     //   OnholdRequestsFragment dialog = OnholdRequestsFragment.newInstance();
-                     //   dialog.show(ft, "Tag");
+                        // setHomeFragment(new doerHomeFragment());
+                        //  drawerLayout.closeDrawers();
+                    } else {
 
-                     //   FragmentManager fm = getSupportFragmentManager();
-                    //  Fragment frag = fm.findFragmentByTag("service_tag");
-                     //   OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
+
+                        setFragmentDialog();
+                        //  FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        //   OnholdRequestsFragment dialog = OnholdRequestsFragment.newInstance();
+                        //   dialog.show(ft, "Tag");
+
+                        //   FragmentManager fm = getSupportFragmentManager();
+                        //  Fragment frag = fm.findFragmentByTag("service_tag");
+                        //   OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
 
                         //when the button clicked
-                    //    onhold.show(fm, "services_tag");
+                        //    onhold.show(fm, "services_tag");
 
-                      //  setHomeFragment(new RequestsFragment());
+                        //  setHomeFragment(new RequestsFragment());
                         drawerLayout.closeDrawers();
                     }
                 }
+
                 break;
 
         }
         return true;
     }
-   /*private void setFragmentDetails(Fragment details){
+
+    /*private void setFragmentDetails(Fragment details){
+         FragmentManager fm = getSupportFragmentManager();
+         FragmentTransaction ft = fm.beginTransaction();
+         ft.replace(R.id.reqDetailPage,details);
+         ft.commit();
+     }*/
+    public void confirmLogout() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("تأكيد");
+        alert.setMessage("هل ترغب بتسجيل الخروج؟");
+        alert.setPositiveButton("نعم", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (RService.serviceIsRun == true) {
+                    RService.serviceIsRun = false;
+                }
+                if (drawerLayout.isDrawerOpen(navigationView)){drawerLayout.closeDrawers();}
+                SharedPrefManager.getInstance(getApplicationContext()).logout();
+                Log.e("logOut ", "uuhbhhbh");
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new FatwaFragment()).commit();
+                drawerLayout.closeDrawers();
+            }
+        });
+        alert.setNegativeButton("لا", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (drawerLayout.isDrawerOpen(navigationView)){drawerLayout.closeDrawers();}
+                drawerLayout.closeDrawers();
+            }
+        });
+        alert.show();
+    }
+
+    private void setFragmentDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.reqDetailPage,details);
-        ft.commit();
-    }*/
-public void confirmLogout(){
-    AlertDialog.Builder alert = new AlertDialog.Builder(this);
-    alert.setTitle("تأكيد");
-    alert.setMessage("هل ترغب بتسجيل الخروج؟");
-    alert.setPositiveButton("نعم", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            SharedPrefManager.getInstance(getApplicationContext()).logout();
-            Log.e("logOut ","uuhbhhbh");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,new FatwaFragment()).commit();
-            drawerLayout.closeDrawers();
-        }
-    });
-    alert.setNegativeButton("لا", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-        drawerLayout.closeDrawers();
-        }
-    });
-    alert.show();
-}
-   private void setFragmentDialog(){
-        FragmentManager fm = getSupportFragmentManager();
-        OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
-       onhold.show(fm, "service_info");
+        OnholdRequestsFragment onhold = new OnholdRequestsFragment();
+        onhold.show(fm, "service_info");
         //when the button clicked
 
     }

@@ -41,6 +41,10 @@ public class OnholdRequestsFragment extends DialogFragment {
     OnHoldRequestsAdapter adapter;
     int orderIdP, orderIdN;
 
+    public ArrayList<ServiceInfo> getMyServicesList() {
+        return myServicesList;
+    }
+
     public OnholdRequestsFragment() {
         // Required empty public constructor
     }

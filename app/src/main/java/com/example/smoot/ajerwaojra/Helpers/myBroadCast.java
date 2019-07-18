@@ -3,6 +3,7 @@ package com.example.smoot.ajerwaojra.Helpers;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +16,15 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.R;
 
 public class myBroadCast extends BroadcastReceiver {
+Context context;
+
+    public Context getContext() {
+        return context= this.getContext();
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -37,6 +44,8 @@ public class myBroadCast extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void makeNotification(Context context ,Bundle bundle){
         NotificationManager notif=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent resultIntent = new Intent(getContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),1,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         final Bitmap picture = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo);
         NotificationChannel notificationChannel = new NotificationChannel("channalID","Name",NotificationManager.IMPORTANCE_HIGH);
         notif.createNotificationChannel(notificationChannel);
@@ -45,7 +54,8 @@ public class myBroadCast extends BroadcastReceiver {
                 .setContentTitle(" سيقوم بالعمرة "+bundle.getString("Doer Name"))
                 .setNumber(11)
                 .setAutoCancel(true)
-                .setLargeIcon(picture);
+                .setLargeIcon(picture)
+                .setContentIntent(pendingIntent);
         builder  .setSmallIcon(R.drawable.person_icon);
         builder.setDefaults(Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE);
         builder.setVibrate(new long[]{500,1000,500,1000});
