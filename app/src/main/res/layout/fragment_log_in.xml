@@ -121,10 +121,10 @@
             <TextView
                 android:id="@+id/logIn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="ليس لديك حساب؟"
                 android:textColor="#555555"
@@ -138,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="100dp"
+                android:layout_marginEnd="130dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="سجل من هنا"
                 android:textColor="@color/lightGreen"
@@ -146,28 +146,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
-            <TextView
-                android:id="@+id/forgetPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="56dp"
-                android:fontFamily="@font/arabic_medium_0"
-                android:text="نسيت كلمة المرور"
-                android:textColor="#555555"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/doerRegisterButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.85"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
-
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="70dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="213dp"
                 android:background="@color/white"
@@ -187,7 +171,7 @@
                 android:id="@+id/passwordMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="70dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="230dp"
                 android:background="@color/white"

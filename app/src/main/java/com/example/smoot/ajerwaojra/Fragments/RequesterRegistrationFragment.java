@@ -1,8 +1,10 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -59,6 +61,7 @@ public class RequesterRegistrationFragment extends Fragment {
     final String[] id = {""};
     Fragment logInFrag;
     String token;
+    Context context;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])" +
                  //   "(?=.*[A-Z])" +
@@ -69,6 +72,11 @@ public class RequesterRegistrationFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Nullable
+    @Override
+    public Context getContext() {
+        return context= getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -232,7 +240,7 @@ public class RequesterRegistrationFragment extends Fragment {
                                 names.add(goodModelArrayList.get(i).getName().toString());
                             }
 
-                            final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), simple_spinner_item, names);
+                            final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(context,simple_spinner_item, names);
                             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                             countrySpin.setAdapter(spinnerArrayAdapter);
                             final String[] selectedItemText = new String[1];
