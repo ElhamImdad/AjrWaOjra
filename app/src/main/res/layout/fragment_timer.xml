@@ -111,7 +111,7 @@
         android:id="@+id/start"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="55dp"
         android:background="@drawable/circle_button"
         android:fontFamily="@font/arabic_medium_0"
         android:shadowColor="@color/gray"
@@ -126,7 +126,7 @@
         android:id="@+id/stopUmra"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="55dp"
         android:background="@drawable/circle_button"
         android:fontFamily="@font/arabic_medium_0"
         android:shadowColor="@color/gray"
@@ -140,27 +140,26 @@
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="278dp"
         android:fontFamily="@font/arabic_light_0"
         android:text="العمرة نيابة عن "
         android:textColor="@color/darkGray"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start" />
 
     <TextView
         android:id="@+id/umraOwner"
-        android:layout_width="wrap_content"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="95dp"
         android:fontFamily="@font/dinnext_arabic_regula_0"
         android:text="اسم من له العمرة "
         android:textColor="@color/black"
         android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -168,40 +167,38 @@
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="272dp"
         android:fontFamily="@font/arabic_light_0"
         android:text="الدعاء المطلوب "
         android:textColor="@color/darkGray"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/umraOwner" />
 
     <ScrollView
         android:id="@+id/scrollView3"
-        android:layout_width="370dp"
+        android:layout_width="325dp"
         android:layout_height="107dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24"
-        >
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/doaa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:gravity="right"
                 android:fontFamily="@font/arabic_medium_0"
+                android:gravity="right"
                 android:text="اللهم لا سهل الا ما جعلته سهلا
 اللهم اجعل اندرويد سهلا"
                 android:textColor="@color/black" />
