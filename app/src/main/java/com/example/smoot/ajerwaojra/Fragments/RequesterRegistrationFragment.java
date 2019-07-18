@@ -242,9 +242,7 @@ public class RequesterRegistrationFragment extends Fragment {
                                      selectedItemText[0] = (String) parent.getItemAtPosition(position);
                                     spinnerArrayAdapter.notifyDataSetChanged();
                                     // Notify the selected item text
-                                    Toast.makeText
-                                            (getContext(), "Selected : " + selectedItemText[0], Toast.LENGTH_SHORT)
-                                            .show();
+                                 //   Toast.makeText(getContext(), "Selected : " + selectedItemText[0], Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override

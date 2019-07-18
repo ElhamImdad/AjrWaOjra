@@ -48,7 +48,8 @@ import java.util.Map;
 public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyViewHolder.onCardClick {
 
     ArrayList<UmraRequest> umraRequests = new ArrayList<UmraRequest>();
-    ArrayList<String> inHoldList ;
+    private static ArrayList<String> inHoldList = new ArrayList<>();
+    private  static ArrayList<String> progressList = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapterHD  adapterHD ;
@@ -68,7 +69,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         View v=  inflater.inflate(R.layout.fragment_doer_home, container, false);
         final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-        inHoldList = new ArrayList<>();
+
         goSetting = v.findViewById(R.id.goSetting);
         recyclerView = v.findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(getContext(),1);
@@ -100,7 +101,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
+        inholdOrders();
+        progressOrders();
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +151,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         String dateFromApi = object.getString("date");
                         String gregorianString = "";
                         if (dateFromApi != null){
-                            gregorianString = convertDte(dateFromApi);
+                          //  gregorianString = convertDte(dateFromApi);
                         }
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
@@ -180,12 +182,99 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         requestQueue.add(request);
 
     }
-    
+    public void inholdOrders() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_DOER_INHOLD_ORDER_USER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("hooooold", response.toString());
+                        try {
+                            JSONObject obj = new JSONObject((response));
+                            JSONArray doerArr = obj.getJSONArray("Doer onHold Request");
+                            for (int i=0 ; i< doerArr.length(); i++){
+                                String nameD = doerArr.getJSONObject(i).getString("doer_name");
+                                Log.e("hoooold name>>", nameD);
+                                inHoldList.add(nameD);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("catch hoold }},", e.toString());
+                        }
+                    }//end onResponse
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("erroooor hooold", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                //   Log.e("token for user", token);
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+    public void progressOrders() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_DOER_INBROGRESS_ORDER_USER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("proo", response.toString());
+                        try {
+                            JSONObject obj = new JSONObject((response));
+                            JSONArray doerArr = obj.getJSONArray("Doer InProgress Request");
+                            for (int i=0 ; i< doerArr.length(); i++){
+                                String nameP = doerArr.getJSONObject(i).getString("doer_name");
+                                Log.e("prooo name>>", nameP);
+                                progressList.add(nameP);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("catch proo }},", e.toString());
+                        }
+                    }//end onResponse
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("erroooor proo", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                //   Log.e("token for user", token);
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
     @Override
     public void onCardClickLis(int position) {
         inholdOrders();
+        progressOrders();
         Log.e("holdSize--", String.valueOf(inHoldList.size())+"??");
-        if (inHoldList.size() ==0) {
+        Log.e("nameInArrarString ***",inHoldList.toString()+"   :)");
+        if (inHoldList.size() ==0 && progressList.size() ==0) {
             UmraRequest umra = umraRequests.get(position);
             Bundle bundle = new Bundle();
             bundle.putInt("id", umra.getId());
@@ -205,14 +294,27 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             ft.replace(R.id.container, f);
             ft.addToBackStack(null);
             ft.commit();
+        }else if (inHoldList.size() !=0){
+            AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+            alert.setTitle("عذرا......");
+            alert.setMessage("لديك طلب عمرة قيد الموافقة");
+            alert.show();
+            inHoldList.clear();
         }else {
             AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
             alert.setTitle("عذرا......");
-            alert.setMessage("لديك طلب قيد الموافقة");
+            alert.setMessage("لديك طلب عمرة سابق لم يتم تنفيذه");
             alert.show();
-          //  inHoldList.clear();
+            progressList.clear();
         }
 
+    }
+    public Boolean isImpty(){
+        if (progressList.size() != 0){
+            return false;
+        }else {
+            return true;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -255,47 +357,5 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         Log.e("mydate is :",newdATE);
         return newdATE;
     }
-    public void inholdOrders() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_DOER_INHOLD_ORDER_USER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                          Log.e("hooooold", response.toString());
-                        try {
-                            JSONObject obj = new JSONObject((response));
-                            JSONArray doerArr = obj.getJSONArray("Doer onHold Request");
-                            for (int i=0 ; i< doerArr.length(); i++){
-                                String nameD = doerArr.getJSONObject(i).getString("doer_name");
-                                Log.e("hoooold name>>", nameD);
-                                inHoldList.add(nameD);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                              Log.e("catch hoold }},", e.toString());
-                        }
-                    }//end onResponse
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                          Log.e("erroooor hooold", error.toString());
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Accept", "application/json");
-                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
-                //   Log.e("token for user", token);
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }
 }

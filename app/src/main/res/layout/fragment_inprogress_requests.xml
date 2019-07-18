@@ -10,9 +10,9 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="60dp"
         android:background="@drawable/headerrectangle"
-        android:radius="15dp"
+        android:radius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,40 +22,44 @@
         android:id="@+id/talabOrderText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/arabic_medium_0"
         android:text="عمرة قيد التنفيذ"
         android:textColor="@android:color/background_light"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/returnBtnPro"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:src="@drawable/returnbtn"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toStartOf="@+id/talabOrderText"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <ImageView
+        android:id="@+id/setting2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/setting"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name_Omra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/arabic_medium_0"
         android:text="العمرة نيابةً عن"
         android:textColor="@color/gray"
-        android:textSize="18sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,8 +67,8 @@
 
     <ImageView
         android:id="@+id/personIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/person_icon"
@@ -74,15 +78,15 @@
 
     <TextView
         android:id="@+id/textViewOmraNamePro"
-        android:layout_width="315dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="35dp"
         android:fontFamily="@font/arabic_light_0"
-        android:textAlignment="textStart"
         android:paddingStart="9dp"
+        android:textAlignment="textStart"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/personIcon"
         app:layout_constraintTop_toBottomOf="@+id/name_Omra"
@@ -96,7 +100,7 @@
         android:fontFamily="@font/arabic_medium_0"
         android:text="اسم المعتمر"
         android:textColor="@color/gray"
-        android:textSize="18sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,8 +108,8 @@
 
     <ImageView
         android:id="@+id/personIcon2"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/person_icon"
@@ -115,20 +119,45 @@
 
     <TextView
         android:id="@+id/textDoerNamePro"
-        android:layout_width="315dp"
+        android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="35dp"
-        android:textAlignment="textStart"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="110dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
+        android:textAlignment="textStart"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/personIcon2"
         app:layout_constraintTop_toBottomOf="@+id/doer_name"
         tools:text="doer name" />
+
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/noStar"
+        app:layout_constraintTop_toBottomOf="@+id/doer_name" />
+
+    <TextView
+        android:id="@+id/noStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/arabic_light_0"
+        android:text="4.5"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/textDoerNamePro"
+        app:layout_constraintTop_toBottomOf="@+id/doer_name" />
 
     <TextView
         android:id="@+id/omraDate"
@@ -138,18 +167,19 @@
         android:fontFamily="@font/arabic_medium_0"
         android:text="التاريخ"
         android:textColor="@color/gray"
-        android:textSize="18sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personIcon2" />
 
+
     <ImageView
         android:id="@+id/dateIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/calender_icon"
         app:layout_constraintEnd_toStartOf="@+id/textViewDatePro"
         app:layout_constraintStart_toStartOf="parent"
@@ -157,15 +187,14 @@
 
     <TextView
         android:id="@+id/textViewDatePro"
-        android:layout_width="133dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
-        android:textColor="#000000"
         android:textAlignment="textStart"
-        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/omraDuration"
         app:layout_constraintStart_toEndOf="@+id/dateIcon"
         app:layout_constraintTop_toBottomOf="@+id/omraDate"
@@ -176,21 +205,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="190dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="125dp"
         android:fontFamily="@font/arabic_medium_0"
         android:text="مدة العمرة"
         android:textColor="@color/gray"
-        android:textSize="18sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/omraDate"
         app:layout_constraintTop_toBottomOf="@+id/personIcon2" />
 
     <ImageView
+        android:id="@+id/verticleLineCard"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:background="@color/gray"
+        android:src="@drawable/line"
+        app:layout_constraintEnd_toStartOf="@+id/timeIcon"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewDateDone"
+        app:layout_constraintTop_toBottomOf="@+id/omraDuration" />
+
+    <ImageView
         android:id="@+id/timeIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/timeicon"
         app:layout_constraintEnd_toStartOf="@+id/textViewTimePro"
         app:layout_constraintStart_toEndOf="@+id/textViewDatePro"
@@ -198,16 +240,17 @@
 
     <TextView
         android:id="@+id/textViewTimePro"
-        android:layout_width="133dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="35dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
         android:textAlignment="textStart"
-        android:textColor="#0E9447"
-        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timeIcon"
         app:layout_constraintTop_toBottomOf="@+id/omraDuration"
         tools:text="omra time" />
 
@@ -215,12 +258,12 @@
         android:id="@+id/TextDoaa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/arabic_medium_0"
+        android:textColor="@color/gray"
+        android:textSize="13sp"
         android:gravity="center"
         android:text="الدعاء المخصص"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -228,13 +271,13 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="360dp"
-        android:layout_height="210dp"
+        android:layout_width="325dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextDoaa"
-        app:layout_constraintVertical_bias="0.100000024">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/doaaPro"
@@ -248,8 +291,8 @@
             android:paddingStart="3dp"
             android:textAlignment="textStart"
             android:textAllCaps="false"
-            android:textColor="#000000"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             tools:text="doaa content" />
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

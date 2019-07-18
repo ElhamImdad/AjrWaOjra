@@ -36,6 +36,7 @@ import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -88,13 +89,13 @@ public class timerFragment extends Fragment {
 
         umraOwner = v.findViewById(R.id.umraOwner);
         doaa = v.findViewById(R.id.doaa);
-
-        Bundle bundle0 = getArguments();
+        id = readDataStartOmra();
+    /*    Bundle bundle0 = getArguments();
 
 
         umraOwner.setText(bundle0.getString("umraUner"));
         doaa.setText(bundle0.getString("doaa"));
-        id = bundle0.getInt("id");
+        id = bundle0.getInt("id");*/
 
 
 
@@ -110,14 +111,19 @@ public class timerFragment extends Fragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 getLocation();
-                if (city.equals("مكة")){
-                startTime = SystemClock.uptimeMillis();
-                myHandler.postDelayed(updateTimerMethod, 0);
-                startButton.setVisibility(View.INVISIBLE);
-                stopUmraaButton.setVisibility(View.VISIBLE);
-                    postStartOmra(id);}
-                else {
-                    showMessage();
+                if (city != null) {
+                    if (city.equals("مكة")) {
+                        Log.e("idOOOO////", id + "?");
+                        postStartOmra(id);
+                        startTime = SystemClock.uptimeMillis();
+                        myHandler.postDelayed(updateTimerMethod, 0);
+                        startButton.setVisibility(View.INVISIBLE);
+                        stopUmraaButton.setVisibility(View.VISIBLE);
+                    } else {
+                        showMessage();
+                    }
+                }else{
+                    showMessageLocation();
                 }
             }
         });
@@ -265,6 +271,7 @@ return  v;
 
                     @Override
                     public void onResponse(String response) {
+                        Log.e("postStartOmra respon>>",response);
                         try {
                             JSONObject ob = new JSONObject(response);
                         } catch (JSONException e) {
@@ -282,12 +289,18 @@ return  v;
 
                 }){
             @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(id));
+                return params;
+            }
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept","application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
                 headers.put("Authorization", "Bearer "+token);
-                headers.put("id", String.valueOf(id));
+
                 return headers;
             }
         };
@@ -296,6 +309,59 @@ return  v;
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+    public int readDataStartOmra() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.UPL_DOER_INBROGRESS_ORDER_USER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("doaaaaa", response.toString());
+                        try {
+                            JSONObject obj = new JSONObject((response));
+                            JSONArray doerArr = obj.getJSONArray("Doer InProgress Request");
+                            for (int i=0 ; i< doerArr.length(); i++){
+                                String nameOmra = doerArr.getJSONObject(i).getString("name");
+                                String doaA = doerArr.getJSONObject(i).getString("doaa");
+                                id = doerArr.getJSONObject(i).getInt("id");
+                                umraOwner.setText(nameOmra);
+                                doaa.setText(doaA);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                         //   Log.e("catch proo }},", e.toString());
+                        }
+                    }//end onResponse
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                     //   Log.e("erroooor proo", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                //   Log.e("token for user", token);
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+        return id;
+    }
+    public void showMessageLocation() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("عذرا.....");
+        alert.setMessage("يجب اعطاء صلاحيات الوصول الى الموقع ");
+        alert.show();
     }
 }
 

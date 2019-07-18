@@ -34,7 +34,8 @@ public class InprogressRequestsFragment extends Fragment {
             omraName.setText(getArguments().getString("omraName"));
             doerName.setText(getArguments().getString("doerName"));
             omraDate.setText(getArguments().getString("date"));
-            omraDuration.setText(getArguments().getString("time"));
+       //     omraDuration.setText(getArguments().getString("time"));
+            omraDuration.setText("00:00:00");
             doaaP.setText(getArguments().getString("doaa"));
         }
 

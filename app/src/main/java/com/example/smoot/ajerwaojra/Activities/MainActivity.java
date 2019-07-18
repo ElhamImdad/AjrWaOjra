@@ -22,6 +22,7 @@ import com.example.smoot.ajerwaojra.Fragments.OnholdRequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequesterAccountFragment;
 import com.example.smoot.ajerwaojra.Fragments.RequestsFragment;
 import com.example.smoot.ajerwaojra.Fragments.doerHomeFragment;
+import com.example.smoot.ajerwaojra.Fragments.timerFragment;
 import com.example.smoot.ajerwaojra.Helpers.RService;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.R;
@@ -83,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ft.replace(R.id.container,home);
         ft.commit();
     }
-    private void setFragment( Fragment fatwa) {
+    private void setFragment( Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container,fatwa);
+        ft.replace(R.id.container,fragment);
         ft.commit();}
 
     @Override
@@ -125,23 +126,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                     Log.e("Tag ", "outer if ");
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
+                        doerHomeFragment ddd = new  doerHomeFragment();
+                        if(ddd.isImpty() == false){
+                            setFragment(new timerFragment());
+                        }else {
+                            confirmMyOrder();
+                        }
+                        drawerLayout.closeDrawers();
                        // setHomeFragment(new doerHomeFragment());
                       //  drawerLayout.closeDrawers();
                     }
                     else {
                         setFragmentDialog();
-                      //  FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                     //   OnholdRequestsFragment dialog = OnholdRequestsFragment.newInstance();
-                     //   dialog.show(ft, "Tag");
-
-                     //   FragmentManager fm = getSupportFragmentManager();
-                    //  Fragment frag = fm.findFragmentByTag("service_tag");
-                     //   OnholdRequestsFragment onhold =new  OnholdRequestsFragment();
-
-                        //when the button clicked
-                    //    onhold.show(fm, "services_tag");
-
-                      //  setHomeFragment(new RequestsFragment());
                         drawerLayout.closeDrawers();
                     }
                 }
@@ -183,6 +179,18 @@ public void confirmLogout(){
        onhold.show(fm, "service_info");
         //when the button clicked
 
+    }
+    public void confirmMyOrder(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("عذراً..");
+        alert.setMessage("لاتوجد لديك طلبات لم يتم تنفيذها");
+        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                drawerLayout.closeDrawers();
+            }
+        });
+        alert.show();
     }
 
 }

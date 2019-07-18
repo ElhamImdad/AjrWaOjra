@@ -83,7 +83,7 @@
         android:id="@+id/textViewOmraNameDone"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="35dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
@@ -125,7 +125,7 @@
         android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="110dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
@@ -178,9 +178,9 @@
 
     <ImageView
         android:id="@+id/dateIcon"
-        android:layout_width="25dp"
+        android:layout_width="20dp"
         android:layout_height="25dp"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/calender_icon"
         app:layout_constraintEnd_toStartOf="@+id/textViewDateDone"
@@ -189,10 +189,9 @@
 
     <TextView
         android:id="@+id/textViewDateDone"
-        android:layout_width="133dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
         android:textAlignment="textStart"
@@ -208,21 +207,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="190dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="125dp"
         android:fontFamily="@font/arabic_medium_0"
-        android:textColor="@color/gray"
         android:text="مدة العمرة"
+        android:textColor="@color/gray"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/omraDate"
         app:layout_constraintTop_toBottomOf="@+id/personIcon2" />
 
     <ImageView
+        android:id="@+id/verticleLineCard"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:background="@color/gray"
+        android:src="@drawable/line"
+        app:layout_constraintEnd_toStartOf="@+id/timeIcon"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewDateDone"
+        app:layout_constraintTop_toBottomOf="@+id/omraDuration" />
+
+    <ImageView
         android:id="@+id/timeIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/timeicon"
         app:layout_constraintEnd_toStartOf="@+id/textViewTimeDone"
         app:layout_constraintStart_toEndOf="@+id/textViewDateDone"
@@ -230,9 +242,9 @@
 
     <TextView
         android:id="@+id/textViewTimeDone"
-        android:layout_width="133dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="35dp"
         android:fontFamily="@font/arabic_light_0"
         android:paddingStart="9dp"
@@ -276,13 +288,13 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="360dp"
+        android:layout_width="325dp"
         android:layout_height="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextDoaa"
-        app:layout_constraintVertical_bias="0.100000024">
+        app:layout_constraintVertical_bias="0.050000012">
 
         <TextView
             android:id="@+id/doaaDone"
@@ -303,7 +315,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="360dp"
+        android:layout_width="325dp"
         android:layout_height="80dp"
         android:layout_marginTop="4dp"
         android:orientation="horizontal"
