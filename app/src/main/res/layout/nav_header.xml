@@ -10,13 +10,14 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/userPicture"
         android:src="@drawable/ic_launcher_foreground"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Name "
-        android:id="@+id/userName"
+        android:text="الملف الشخصي "
+        android:id="@+id/userame"
         android:paddingStart="20dp"/>
 
 </LinearLayout>

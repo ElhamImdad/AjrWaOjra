@@ -17,8 +17,8 @@ public class Doer {
         return role;
     }
 
-    public  Doer(String doerEmail, String doerName ) {
-        this.doerEmail=doerEmail;
+    public  Doer(String DoerToken, String doerName ) {
+        this.DoerToken=DoerToken;
         this.doerName=doerName;
     }
     public  Doer( String doerEmail,String doerName, String phone,String token, String role ){

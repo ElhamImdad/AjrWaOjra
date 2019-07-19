@@ -42,11 +42,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-        userName = findViewById(R.id.userName);
+        userName = findViewById(R.id.userame);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             Log.e("Tag ", "outer if ");
             if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
-                // userName.setText(SharedPrefManager.getInstance(this).getDoer().getDoerName());
+           /*     String nn = SharedPrefManager.getInstance(this).getDoer().getDoerName();
+                if (nn!= null){
+                Log.e("nnnnnnnnnn",nn+"?");
+                userName.setText(nn);}*/
                 Log.e("inner ", " ineer if ");
                 setHomeFragment(new doerHomeFragment());
             } else {
@@ -154,12 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /*private void setFragmentDetails(Fragment details){
-         FragmentManager fm = getSupportFragmentManager();
-         FragmentTransaction ft = fm.beginTransaction();
-         ft.replace(R.id.reqDetailPage,details);
-         ft.commit();
-     }*/
     public void confirmLogout() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("تأكيد");

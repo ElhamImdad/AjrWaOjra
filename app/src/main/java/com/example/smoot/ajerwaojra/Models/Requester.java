@@ -16,8 +16,8 @@ public class Requester {
         return role;
     }
 
-    public  Requester(String email, String name){
-        this.email=email;
+    public  Requester(String token, String name){
+        this.token=token;
         this.name=name;
     }
 

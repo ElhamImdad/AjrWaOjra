@@ -182,6 +182,9 @@ public class RequestsFragment extends Fragment {
         if (umraListDone.size() !=0){
             umraListDone.clear();
         }
+        if (umra.size() !=0){
+            umra.clear();
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -196,6 +199,9 @@ public class RequestsFragment extends Fragment {
                     }
                     if (umraListDone.size() !=0){
                         umraListDone.clear();
+                    }
+                    if (umra.size() !=0){
+                        umra.clear();
                     }
                 }
                 swipeRefreshLayout.setRefreshing(false);

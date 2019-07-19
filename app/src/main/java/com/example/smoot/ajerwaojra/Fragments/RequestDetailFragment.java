@@ -39,7 +39,7 @@ import static com.example.smoot.ajerwaojra.Helpers.URLs.URL_OFFER_SERVICE;
 
 
 public class RequestDetailFragment extends Fragment {
-
+    private ImageView returnBTN;
     ImageView flag;
     TextView requester;
     TextView country;
@@ -139,6 +139,17 @@ public class RequestDetailFragment extends Fragment {
 
             }
         });*/
+        returnBTN = v.findViewById(R.id.returnBtndoer);
+        returnBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doerHomeFragment f = new doerHomeFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.container, f);
+                ft.commit();
+            }
+        });
 
         return v;
     }

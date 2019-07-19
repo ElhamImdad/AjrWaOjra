@@ -73,6 +73,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         goSetting = v.findViewById(R.id.goSetting);
         recyclerView = v.findViewById(R.id.recyclerView);
         layoutManager = new GridLayoutManager(getContext(),1);
+       // recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext()));
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         swipeRefreshLayout = v.findViewById(R.id.swapRefresh);
@@ -86,6 +87,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         adapterHD= new RecyclerAdapterHD(getContext(),umraRequests,this);
         recyclerView.setAdapter(adapterHD);
         adapterHD.notifyDataSetChanged();
+
+       // int prevSize = umraRequests.size();
+    //   adapterHD.notifyItemRangeInserted(prevSize - 1, umraRequests.size() -1);
+        Log.e("requests No ", ""+umraRequests.size());
         Log.e("Adapter ",adapterHD.toString());
        // recyclerView.setItemViewCacheSize(umraRequests.size());
 
@@ -146,16 +151,19 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         String dateFromApi = object.getString("date");
                         String gregorianString = "";
                         if (dateFromApi != null){
-                          //  gregorianString = convertDte(dateFromApi);
+                            gregorianString = convertDte(dateFromApi);
                         }
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
-                        umraRequests.add(umraRequest);
 
+                      //  int initialSize = umraRequests.size();
+                        umraRequests.add(umraRequest);
+                      //  adapterHD.notifyItemRangeInserted(initialSize, umraRequests.size()-1);
 
                     }
                     adapterHD.notifyDataSetChanged();
-                    Log.e("requests No ", ""+umraRequests.size());
+
+// some inser
                     // getContext() may makes error
 
 
