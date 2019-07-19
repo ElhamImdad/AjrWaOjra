@@ -183,7 +183,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
             public void onClick(DialogInterface dialog, int which) {
                 SharedPrefManager.getInstance(getApplicationContext()).logout();
                 Log.e("logOut ","uuhbhhbh");
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new FatwaFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.details,new FatwaFragment()).commit();
                 drawerLayout.closeDrawers();
             }
         });

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.DoerAccountFragment">
 
     <ImageView
@@ -14,6 +14,18 @@
         android:radius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/settingImage"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="341dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/setting"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,8 +58,8 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="370dp"
-                android:layout_height="310dp"
-                android:layout_marginTop="32dp"
+                android:layout_height="305dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/rectangle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.4"
@@ -143,7 +155,7 @@
                 app:layout_constraintTop_toTopOf="@+id/view" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/editDoerAccount"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="175dp"
@@ -166,7 +178,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintHorizontal_bias="0.274"
                 app:layout_constraintStart_toStartOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                app:layout_constraintTop_toBottomOf="@+id/editDoerAccount" />
 
             <TextView
                 android:id="@+id/textView30"
@@ -179,7 +191,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintHorizontal_bias="0.755"
                 app:layout_constraintStart_toStartOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                app:layout_constraintTop_toBottomOf="@+id/editDoerAccount" />
 
             <TextView
                 android:id="@+id/noOmraDoneDoer"
@@ -208,7 +220,7 @@
             <View
                 android:id="@+id/view2"
                 android:layout_width="370dp"
-                android:layout_height="158dp"
+                android:layout_height="170dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangle"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -251,6 +263,49 @@
                 app:layout_constraintEnd_toEndOf="@+id/view2"
                 app:layout_constraintStart_toStartOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+            <TextView
+                android:id="@+id/ourAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:fontFamily="@font/dinnext_arabic_regula_0"
+                android:text="theqatech.com"
+                android:textAllCaps="false"
+                android:textColor="@color/DarkGreen"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+            <ImageView
+                android:id="@+id/facbookReqIcon"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/facebook_logo"
+                app:layout_constraintStart_toEndOf="@+id/googleReqIcon"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+            <ImageView
+                android:id="@+id/twitterReqIcon"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/twitter"
+                app:layout_constraintStart_toStartOf="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+            <ImageView
+                android:id="@+id/googleReqIcon"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/google_plus"
+                app:layout_constraintStart_toEndOf="@+id/twitterReqIcon"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
         </android.support.constraint.ConstraintLayout>
     </FrameLayout>
 

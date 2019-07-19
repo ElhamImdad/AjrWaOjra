@@ -1,11 +1,13 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,7 @@ public class UpdateSettingRequesterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update_setting_requester, container, false);
-        save = view.findViewById(R.id.saveBtn);
+        save = view.findViewById(R.id.save);
         newEmail = view.findViewById(R.id.newEmail);
         newPhone = view.findViewById(R.id.newPhone);
         save.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +59,7 @@ public class UpdateSettingRequesterFragment extends Fragment {
         final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
 
-        settingIcon = view.findViewById(R.id.settingIconAcc2);
+        settingIcon = view.findViewById(R.id.settingImage);
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,11 +87,20 @@ public class UpdateSettingRequesterFragment extends Fragment {
                             try {
                                 JSONObject ob = new JSONObject(response);
                                 JSONObject USER = ob.getJSONObject("user");
-                                RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
-                                FragmentManager fm = getFragmentManager();
-                                FragmentTransaction ft = fm.beginTransaction();
-                                ft.replace(R.id.container, requesterAccount);
-                                ft.commit();
+                                AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+                                alert.setTitle("تأكيد......");
+                                alert.setMessage("تم تحديث بياناتك بنجاح");
+                                alert.setPositiveButton("حسنا", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
+                                        FragmentManager fm = getFragmentManager();
+                                        FragmentTransaction ft = fm.beginTransaction();
+                                        ft.replace(R.id.container, requesterAccount);
+                                        ft.commit();
+                                    }
+                                });
+                                alert.show();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
