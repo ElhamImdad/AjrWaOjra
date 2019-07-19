@@ -29,6 +29,7 @@
         <activity
             android:name=".Activities.OmrahDetailsActivity"
             android:label="@string/title_activity_omrah_details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SplashActivity">

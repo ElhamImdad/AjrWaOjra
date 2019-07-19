@@ -90,8 +90,10 @@ public class DoerRegistrationFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_doer_registration, container, false);
         howKnowus = view.findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      //  ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
+       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, R.layout.textview_with_font_change);
+        adapter.setDropDownViewResource(R.layout.textview_with_font_change);
         howKnowus.setAdapter(adapter);
 
         Intent i = new Intent();
@@ -242,16 +244,17 @@ public class DoerRegistrationFragment extends Fragment {
         String regexStr = "^\\+[0-9]{10,13}$";
 
         String number = textphone.getText().toString();
-
-        if (textphone.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
+        //|| number.matches(regexStr) == false
+        if (textphone.getText().toString().length() < 10 || number.length() > 13 ) {
             textphone.setError("ادخل رقم الجوال بشكل صحيح");
             textphone.requestFocus();
             return false;
-        } else if (!textphone.getText().toString().contains("+")) {
+        } /*else if (!textphone.getText().toString().contains("+")) {
             textphone.setError("يجب أن يحتوي على + ");
             textphone.requestFocus();
             return false;
-        }else {
+        }*/
+        else {
             textphone.setError(null);
             return true;
         }

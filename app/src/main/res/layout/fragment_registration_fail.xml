@@ -45,14 +45,13 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
             <TextView
                 android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="130dp"
+                android:layout_width="325dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/arabic_medium_0"
                 android:gravity="center"
@@ -62,7 +61,6 @@
                 android:text="لا تستطيع إنشاء حساب القيام بعمرة نظرا لعدم تواجدك في المملكة العربية السعودية بناء على موقعك الجغرافي, إذا كنت تود طلب عمرة لشخص متوفي أو غير قادر على القيام بها, نرجو منك إنشاء حساب طلب عمرة  "
                 android:textColor="@color/darkGray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
@@ -70,7 +68,7 @@
                 android:id="@+id/imageView13"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="50dp"
                 android:src="@drawable/manprayingbig"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

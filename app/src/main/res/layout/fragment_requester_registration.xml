@@ -119,16 +119,31 @@
                 android:layout_width="300dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="28dp"
-                android:background="@drawable/edittextbox"
+                android:layout_weight="1"
+                style="@style/SpinnerTheme"
                 android:fontFamily="@font/arabic_light_0"
-                android:paddingTop="6dp"
+                android:textSize="14sp"
+                android:textAlignment="gravity"
+                android:gravity="right"
+                android:paddingTop="4dp"
                 android:paddingRight="6dp"
                 android:paddingLeft="6dp"
-                android:textSize="14sp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputEmail"></Spinner>
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/arrow_in_circle_point_to_up"
+                app:layout_constraintBottom_toBottomOf="@+id/countrySpinner"
+                app:layout_constraintEnd_toEndOf="@+id/countrySpinner"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="@+id/countrySpinner"
+                app:layout_constraintTop_toTopOf="@+id/countrySpinner" />
 
             <EditText
                 android:id="@+id/textInputPassword"
@@ -155,16 +170,28 @@
                 android:layout_width="300dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="28dp"
-                android:background="@drawable/edittextbox"
                 android:fontFamily="@font/arabic_light_0"
-                android:paddingTop="6dp"
+                android:paddingTop="4dp"
                 android:paddingRight="6dp"
                 android:paddingLeft="6dp"
                 android:textSize="14sp"
+                android:textAlignment="gravity"
+                android:gravity="right"
+                style="@style/SpinnerTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputPassword"></Spinner>
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/arrow_in_circle_point_to_up"
+                app:layout_constraintBottom_toBottomOf="@+id/spinner"
+                app:layout_constraintEnd_toEndOf="@+id/spinner"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="@+id/spinner"
+                app:layout_constraintTop_toTopOf="@+id/spinner" />
 
             <TextView
                 android:id="@+id/textView3"

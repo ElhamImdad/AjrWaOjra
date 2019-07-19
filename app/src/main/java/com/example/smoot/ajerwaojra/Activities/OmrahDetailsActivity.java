@@ -2,6 +2,7 @@ package com.example.smoot.ajerwaojra.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -33,6 +34,8 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setContentView(R.layout.activity_omrah_details);
         drawerLayout= findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);

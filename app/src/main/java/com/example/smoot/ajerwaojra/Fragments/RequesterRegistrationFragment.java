@@ -1,15 +1,19 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import static android.R.layout.simple_spinner_item;
 
 public class RequesterRegistrationFragment extends Fragment {
 
@@ -104,8 +106,10 @@ public class RequesterRegistrationFragment extends Fragment {
             }
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.howDidKnowUs, R.layout.textview_with_font_change);
+        adapter.setDropDownViewResource(R.layout.textview_with_font_change);
         howKnowus.setAdapter(adapter);
         Intent i = new Intent();
         i.getExtras();
@@ -214,6 +218,8 @@ public class RequesterRegistrationFragment extends Fragment {
     private String getCountryListFromApi() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_COUNTRY,
                 new Response.Listener<String>() {
+                    @SuppressLint("ResourceType")
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(String response) {
                      //   Log.i("ccccountry>>", response);
@@ -233,20 +239,35 @@ public class RequesterRegistrationFragment extends Fragment {
                                 playerModel.setImgURL(dataobj.getString("image"));
 
                                 goodModelArrayList.add(playerModel);
-
                             }
 
                             for (int i = 0; i < goodModelArrayList.size(); i++){
                                 names.add(goodModelArrayList.get(i).getName().toString());
                             }
 
-                            final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(context,simple_spinner_item, names);
-                            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                       //     final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_item, names);
+                        //    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                            final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                                    context,R.layout.textview_with_font_change,names
+                            ){
+                                public View getDropDownView(int position, View convertView,ViewGroup parent) {
+
+                                    View v = super.getDropDownView(position, convertView,parent);
+
+                                    ((TextView) v).setGravity(Gravity.RIGHT);
+
+                                    return v;
+
+                                }
+                            };
+                            spinnerArrayAdapter.setDropDownViewResource(R.layout.textview_with_font_change);
                             countrySpin.setAdapter(spinnerArrayAdapter);
                             final String[] selectedItemText = new String[1];
+
                             countrySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    ((TextView) parent.getChildAt(0)).setGravity(Gravity.CENTER);
                                      selectedItemText[0] = (String) parent.getItemAtPosition(position);
                                     spinnerArrayAdapter.notifyDataSetChanged();
                                     // Notify the selected item text
@@ -324,13 +345,13 @@ Log.e("id of country method ",id[0]+"??");
 
     private boolean isValidMobile() {
         String regexStr = "^\\+[0-9]{10,13}$";
-
+//|| number.matches(regexStr) == false
         String number = textphone2.getText().toString();
-        if (!textphone2.getText().toString().contains("+")) {
+      /*  if (!textphone2.getText().toString().contains("+")) {
             textphone2.setError("يجب أن يحتوي على + ");
             textphone2.requestFocus();
             return false;
-        }else if (textphone2.getText().toString().length() < 10 || number.length() > 13 || number.matches(regexStr) == false) {
+        }else*/ if (textphone2.getText().toString().length() < 10 || number.length() > 13 ) {
             textphone2.setError("ادخل رقم الجوال بشكل صحيح");
             textphone2.requestFocus();
             return false;
