@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-
+        drawerLayout.closeDrawers();
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         navigationView.setNavigationItemSelectedListener(this);
         userName = findViewById(R.id.userName);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setFragment(new FatwaFragment());
         }
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Requester")) {
+            if (SharedPrefManager.getInstance(this).getRequester().getRole().equalsIgnoreCase("Requester")) {
                 if (RService.serviceIsRun == false) {
                     Log.e("inside if false", "yes");
                     RService.serviceIsRun = true;
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
         }
     }
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (RService.serviceIsRun == true) {
                     RService.serviceIsRun = false;
                 }
-                if (drawerLayout.isDrawerOpen(navigationView)){drawerLayout.closeDrawers();}
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 SharedPrefManager.getInstance(getApplicationContext()).logout();
                 Log.e("logOut ", "uuhbhhbh");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new FatwaFragment()).commit();

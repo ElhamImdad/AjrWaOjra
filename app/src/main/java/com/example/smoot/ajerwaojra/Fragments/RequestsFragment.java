@@ -90,7 +90,7 @@ public class RequestsFragment extends Fragment {
         final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
 
-
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         linearLayout = v.findViewById(R.id.linearLayout);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
         norequestImg = (LinearLayout) v.findViewById(R.id.noRequestImg);
@@ -218,15 +218,18 @@ public class RequestsFragment extends Fragment {
     }
     private void clickImProgress(){
         adapter.updateData(umraListInProgress );
+        Log.e("In Progress size",umraListInProgress.size()+" item");
         adapter.notifyDataSetChanged();
     }
     private void clickPending(){
         adapter = new RequestsAdapter(umra, getContext());
         recyclerView.setAdapter(adapter);
+        Log.e("Pending size",umra.size()+" item");
      adapter.notifyDataSetChanged();
     }
     private void clickDone(){
         adapter.updateData(umraListDone );
+        Log.e("Done size",umraListDone.size()+" item");
         adapter.notifyDataSetChanged();
 
     }

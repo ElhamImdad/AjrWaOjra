@@ -78,8 +78,6 @@ public class logInFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                     login();
             }
         });
@@ -87,7 +85,6 @@ public class logInFragment extends Fragment {
         return v;
 
     }
-
 
 
     public  void login (){

@@ -22,27 +22,15 @@
         android:id="@+id/talabOmraText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/dinnext_arabic_regula_0"
         android:text="تفاصيل العمرة"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/goSetting"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="320dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="45dp"
-        android:background="@drawable/setting"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <FrameLayout
         android:layout_width="395dp"

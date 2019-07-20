@@ -52,19 +52,12 @@ import java.util.ArrayList;
             }
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
 
         @Override
         public int getItemCount() {
             return requestList.size();
         }
-        @Override
-        public int getItemViewType(int position) {
-            return position;
-        }
+
 
         public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             TextView requesterName;
@@ -125,7 +118,17 @@ import java.util.ArrayList;
 
                 }
             }
+
         }
         // DownloadImage AsyncTask
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+        }
+        public void updateData(ArrayList<UmraRequest> viewModels) {
+            requestList.clear();
+            requestList.addAll(viewModels);
+            notifyDataSetChanged();
+        }
 
     }

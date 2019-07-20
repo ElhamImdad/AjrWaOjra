@@ -71,6 +71,7 @@ public class DoerAccountFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.container,f);
+                ft.addToBackStack("hh");
                 ft.commit();
             }
         });
