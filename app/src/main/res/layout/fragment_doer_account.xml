@@ -21,32 +21,32 @@
         android:id="@+id/settingImage"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="341dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="25dp"
         android:src="@drawable/setting"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/mainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="235dp"
+        android:fontFamily="@font/arabic_medium_0"
         android:text="حسابي"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayout4"
-        android:layout_width="395dp"
-        android:layout_height="513dp"
+        android:layout_width="match_parent"
+        android:layout_height="540dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
@@ -57,12 +57,11 @@
 
             <View
                 android:id="@+id/view"
-                android:layout_width="370dp"
-                android:layout_height="305dp"
+                android:layout_width="325dp"
+                android:layout_height="280dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/rectangle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,11 +69,12 @@
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="45dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="280dp"
+                android:layout_marginEnd="310dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="الاسم "
+                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/view" />
@@ -83,10 +83,12 @@
                 android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="272dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="البريد الالكتروني "
+                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameAccDoer" />
@@ -95,10 +97,12 @@
                 android:id="@+id/textView25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="297dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:text="رقم الجوال "
+                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailAccDoer" />
@@ -109,8 +113,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="272dp"
-                android:fontFamily="@font/arabic_medium_0"
+                android:fontFamily="@font/dinnext_arabic_regula_0"
+                android:gravity="right"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
@@ -121,9 +127,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
                 android:layout_marginEnd="275dp"
-                android:fontFamily="@font/arabic_medium_0"
-
+                android:fontFamily="@font/dinnext_arabic_regula_0"
+                android:gravity="right"
+                android:paddingRight="19dp"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
@@ -134,17 +142,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="264dp"
-                android:fontFamily="@font/arabic_medium_0"
+                android:fontFamily="@font/dinnext_arabic_regula_0"
+                android:gravity="right"
+                android:paddingRight="12dp"
                 android:textColor="@color/black"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.533"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+                app:layout_constraintTop_toBottomOf="@+id/textView25"
+                tools:text="34567890" />
 
             <ImageView
                 android:id="@+id/imageView9"
-                android:layout_width="94dp"
-                android:layout_height="82dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="44dp"
@@ -156,16 +168,18 @@
 
             <Button
                 android:id="@+id/editDoerAccount"
-                android:layout_width="320dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="175dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/button"
+                android:fontFamily="@font/arabic_medium_0"
                 android:text="تعديل"
+                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view" />
+                app:layout_constraintTop_toBottomOf="@+id/phoneAccDoer" />
 
             <TextView
                 android:id="@+id/textView29"
@@ -175,6 +189,7 @@
                 android:fontFamily="@font/arabic_light_0"
                 android:text="العمرة المكتملة "
                 android:textColor="@color/darkGray"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintHorizontal_bias="0.274"
                 app:layout_constraintStart_toStartOf="@+id/view"
@@ -188,6 +203,7 @@
                 android:fontFamily="@font/arabic_light_0"
                 android:text="الربح من التطبيق "
                 android:textColor="@color/darkGray"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintHorizontal_bias="0.755"
                 app:layout_constraintStart_toStartOf="@+id/view"
@@ -198,30 +214,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="100dp"
-                android:fontFamily="@font/arabic_light_0"
+                android:fontFamily="@font/arabic_medium_0"
                 android:textColor="@color/DarkGreen"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"
-                app:layout_constraintHorizontal_bias="0.417"
+                app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toStartOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/textView29" />
+                app:layout_constraintTop_toBottomOf="@+id/textView29"
+                tools:text="3" />
 
             <TextView
                 android:id="@+id/winFromApp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
-                android:fontFamily="@font/arabic_light_0"
+                android:fontFamily="@font/arabic_medium_0"
                 android:textColor="@color/DarkGreen"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"
-                app:layout_constraintHorizontal_bias="0.625"
+                app:layout_constraintHorizontal_bias="0.55"
                 app:layout_constraintStart_toStartOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+                app:layout_constraintTop_toBottomOf="@+id/textView30"
+                tools:text="3" />
 
             <View
                 android:id="@+id/view2"
-                android:layout_width="370dp"
-                android:layout_height="170dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="325dp"
+                android:layout_height="210dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/rectangle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.48"
@@ -232,10 +252,11 @@
                 android:id="@+id/textView33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/arabic_medium_0"
+                android:fontFamily="@font/dinnext_arabic_regula_0"
                 android:gravity="center"
                 android:text="من نحن "
                 android:textColor="@color/darkGray"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/view2" />
@@ -243,10 +264,9 @@
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="282dp"
-                android:layout_height="88dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/arabic_light_0"
                 android:gravity="center"
-
                 android:text="ﻫﻨﺎك ﺣﻘﻴﻘﺔ ﻣﺜﺒﺘﺔ ﻣﻨﺬ زﻣﻦ ﻃﻮﻳﻞ وﻫﻲ أن اﻟﻤﺤﺘﻮى اﻟﻤﻘﺮوء ﻟﺼﻔﺤﺔ ﻣﺎ ﺳﻴﻠﻬﻲ اﻟﻘﺎرئ ﻋﻦ اﻟﺘﺮﻛﻴﺰ ﻋﻠﻰ اﻟﺸﻜﻞ اﻟﺨﺎرﺟﻲ ﻟﻠﻨﺺ أو ﺷﻜﻞ ﺗﻮﺿﻊ اﻟﻔﻘﺮات ﻓﻲ اﻟﺼﻔﺤﺔ اﻟﺘﻲ ﻳﻘﺮأﻫﺎ. وﻟﺬﻟﻚ ﻳﺘﻢ اﺳﺘﺨﺪام ﻃﺮﻳﻘﺔ ﻟﻮرﻳﻢ إﻳﺒﺴﻮم ﻷﻧﻬﺎ ﺗﻌﻄﻲ ﺗﻮزﻳﻌﺎَ ﻃﺒﻴﻌﻴﺎَ"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -257,9 +277,10 @@
                 android:id="@+id/textView35"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/arabic_medium_0"
+                android:fontFamily="@font/dinnext_arabic_regula_0"
                 android:text="تواصل معنا"
                 android:textColor="@color/darkGray"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/view2"
                 app:layout_constraintStart_toStartOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/textView34" />
@@ -274,6 +295,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/DarkGreen"
                 android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
                 app:layout_constraintEnd_toEndOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
@@ -282,8 +304,8 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="6dp"
                 android:src="@drawable/facebook_logo"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
                 app:layout_constraintStart_toEndOf="@+id/googleReqIcon"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
@@ -292,8 +314,8 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="6dp"
                 android:src="@drawable/twitter"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
                 app:layout_constraintStart_toStartOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
@@ -302,8 +324,8 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="6dp"
                 android:src="@drawable/google_plus"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
                 app:layout_constraintStart_toEndOf="@+id/twitterReqIcon"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
         </android.support.constraint.ConstraintLayout>

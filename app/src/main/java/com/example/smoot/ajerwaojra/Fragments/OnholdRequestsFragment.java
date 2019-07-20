@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -65,29 +66,11 @@ public class OnholdRequestsFragment extends DialogFragment {
         //ADAPTER
         adapter = new OnHoldRequestsAdapter(myServicesList, this.getActivity());
         recycler.setAdapter(adapter);
+        if (myServicesList.size() == 0){
+            noOrder();
+        }
 
 //        this.getDialog().setTitle("طلبات العمرة");
-
-        /*if (getArguments() != null){
-            String myObtion = getArguments().getString("option");
-            switch (myObtion){
-                case "positive":{
-                    orderIdP = getArguments().getInt("OrderId");
-                  //  acceptOrder(orderIdP);
-                }break;
-                case "negative":{
-                    orderIdN = getArguments().getInt("OrderId");
-                    rejectOrder(orderIdN);
-                }break;
-            }
-            Log.e("WOOW", "its done");
-            *//*RequestsFragment f = new RequestsFragment();
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.details, f);
-            ft.commit();*//*
-        }*/
-
         return rootview;
     }
     private void viewServicesDate() {
@@ -96,7 +79,7 @@ public class OnholdRequestsFragment extends DialogFragment {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onResponse(String response) {
-                           // Log.e("respons of servisec", response.toString());
+                            Log.e("respons of servisec", response.toString());
                             try {
                                 JSONObject obj = new JSONObject((response));
 
@@ -187,7 +170,6 @@ public class OnholdRequestsFragment extends DialogFragment {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept", "application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                //   Log.e("token for user", token);
                 headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
@@ -210,14 +192,15 @@ public class OnholdRequestsFragment extends DialogFragment {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                          //  Log.e("catch eroor }},", e.toString());
+                            Log.e("catch eroor }},", e.toString());
                         }
                     }//end onResponse
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                      //  Log.e("erroooor response", error.toString());
+
+                        Log.e("erroooor response", error.toString());
                     }
                 }) {
             @Override
@@ -231,7 +214,6 @@ public class OnholdRequestsFragment extends DialogFragment {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept", "application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                //   Log.e("token for user", token);
                 headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
@@ -279,6 +261,12 @@ public class OnholdRequestsFragment extends DialogFragment {
                 newdATE = datearr[0] + " ذو الحجة " +datearr[2] + " هـ " ; break;
         }
         return newdATE;
+    }
+    private void noOrder(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("عذرًا..");
+        alert.setMessage("لاتوجد لديك طلبات لم تتم الموافقة عليها");
+        alert.show();
     }
 
 

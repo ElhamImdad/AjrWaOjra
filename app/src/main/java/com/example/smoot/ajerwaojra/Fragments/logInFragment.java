@@ -102,10 +102,10 @@ public class logInFragment extends Fragment {
 
                         JSONObject client = obj.getJSONObject("user");
                         role = client.getString("role");
-
+                        String userName = client.getString("name");
                         if (role.equalsIgnoreCase("Requester")){
                             Log.e("Requester","Requester");
-                            Requester user = new Requester(token);
+                            Requester user = new Requester(token, userName);
                             SharedPrefManager.getInstance(getContext()).userLogin(user);
                             Fragment fragment = new RequestsFragment();
                             FragmentManager fm = getFragmentManager();
@@ -115,7 +115,10 @@ public class logInFragment extends Fragment {
 
                         }
                         else {
-                            Doer doer = new Doer(token);
+
+
+                            Doer doer = new Doer(token,userName);
+                         //   Doer doer = new Doer(token);
                             SharedPrefManager.getInstance(getContext()).userLogin(doer);
                             Fragment f = new doerHomeFragment();
                             FragmentManager fm = getFragmentManager();

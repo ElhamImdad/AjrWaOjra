@@ -182,6 +182,9 @@ public class RequestsFragment extends Fragment {
         if (umraListDone.size() !=0){
             umraListDone.clear();
         }
+        if (umra.size() !=0){
+            umra.clear();
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -196,6 +199,9 @@ public class RequestsFragment extends Fragment {
                     }
                     if (umraListDone.size() !=0){
                         umraListDone.clear();
+                    }
+                    if (umra.size() !=0){
+                        umra.clear();
                     }
                 }
                 swipeRefreshLayout.setRefreshing(false);
@@ -273,31 +279,46 @@ public class RequestsFragment extends Fragment {
                                omraInfoObject.setDate(gregorianString);
 
                                if (status.equals("2")){
-                                   umraListInProgress.add(omraInfoObject);
-                                  // Log.e("my list is >---",status+"\n\n\n");
+                                 //  umraListInProgress.add(omraInfoObject);
+                                   if (umraListInProgress.size() != 0 ) {
+                                       umraListInProgress.clear();
+                                   }
                                    adapter.notifyDataSetChanged();
+                                   umraListInProgress.add( omraInfoObject);// add new data
+                                   adapter.notifyItemRangeInserted(0, umraListInProgress.size());// notify adapter of new data
 
                                }else if ((status.equals("1")) || (status.equals("4"))){
-                                   umraListPending.add(omraInfoObject);
+                               //    umraListPending.add(omraInfoObject);
+                                   if (umraListPending.size() !=0){
+                                       umraListPending.clear();
+                                   }
                                   adapter.notifyDataSetChanged();
+                                   umraListPending.add(omraInfoObject);
+                                   adapter.notifyItemRangeInserted(0, umraListPending.size());// notify adapter of new data
                                }else if (status.equals("3")){
                                    omraPhotoList = new ArrayList<>();
                                    JSONArray omraImages = jsonObj.getJSONObject(i).getJSONObject("order").getJSONArray("omra_images");
-                                //   Log.e("array length---", String.valueOf(omraImages.length()));
+
                                    String urlPhoto;
                                    for (int j = 0; j< omraImages.length(); j++){
                                  //      Log.e("array length---","----------------------------------------------");
                                        omraPhotoList.add(omraImages.getJSONObject(j).getString("path"));
                                    }
                                    omraInfoObject.setPhotos(omraPhotoList);
+                                   if (umraListDone.size() !=0){
+                                       umraListDone.clear();
+                                   }
+                                   adapter.notifyDataSetChanged();
                                    umraListDone.add(omraInfoObject);
-                                //   omraPhotoList.clear();
-                                  adapter.notifyDataSetChanged();
                                }
 
                             }
                             int f = umraListPending.size()-1;
                             for (int i=0 ; i<umraListPending.size();i++){
+                                if (umra.size() !=0){
+                                    umra.clear();
+                                }
+                                adapter.notifyDataSetChanged();
                                 umra.add(i,umraListPending.get(f-i));
                             }
                             visibleNorequestImage();

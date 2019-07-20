@@ -2,6 +2,7 @@ package com.example.smoot.ajerwaojra.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.smoot.ajerwaojra.Fragments.DoerAccountFragment;
@@ -32,27 +34,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     TextView userName;
-
+    View mHeaderView;
+    ImageView userIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
         drawerLayout.closeDrawers();
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+
+        // NavigationView Header
+        mHeaderView =  navigationView.getHeaderView(0);
+
+        // View
+ /*       userName = mHeaderView.findViewById(R.id.userame);
+        userIcon =  mHeaderView.findViewById(R.id.userPicture);
+*/
+
         navigationView.setNavigationItemSelectedListener(this);
-        userName = findViewById(R.id.userName);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             Log.e("Tag ", "outer if ");
             if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
-                // userName.setText(SharedPrefManager.getInstance(this).getDoer().getDoerName());
+                String nn = SharedPrefManager.getInstance(this).getDoer().getDoerName();
+                Log.e("nnnnnnnnnn",nn+"????");
+                if (nn!= null){
+                userName.setText(nn);}
+                userIcon.setImageResource(R.drawable.avatar);
                 Log.e("inner ", " ineer if ");
                 setHomeFragment(new doerHomeFragment());
             } else {
+                String nn = SharedPrefManager.getInstance(this).getRequester().getName();
+                if (nn!= null){
+                    userName.setText(nn);}
                 Log.e("Tag", "inner else ");
-                // userName.setText(SharedPrefManager.getInstance(this).getRequester().getName());
                 setHomeFragment(new RequestsFragment());
             }
 
@@ -73,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-
     }
 
     @Override
@@ -154,12 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /*private void setFragmentDetails(Fragment details){
-         FragmentManager fm = getSupportFragmentManager();
-         FragmentTransaction ft = fm.beginTransaction();
-         ft.replace(R.id.reqDetailPage,details);
-         ft.commit();
-     }*/
     public void confirmLogout() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("تأكيد");

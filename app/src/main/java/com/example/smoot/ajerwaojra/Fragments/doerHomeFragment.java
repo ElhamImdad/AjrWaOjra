@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +71,11 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         goSetting = v.findViewById(R.id.goSetting);
         recyclerView = v.findViewById(R.id.recyclerView);
+        layoutManager = new GridLayoutManager(getContext(),1);
+       // recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
         swipeRefreshLayout = v.findViewById(R.id.swapRefresh);
        // layoutManager = new GridLayoutManager(getContext(), 1);
         //
@@ -82,7 +88,18 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
         adapterHD = new RecyclerAdapterHD(getContext(), umraRequests, this);
         recyclerView.setAdapter(adapterHD);
+
         // it is so importent to clear the array list in order to prevent items from duplication
+
+        adapterHD.notifyDataSetChanged();
+
+       // int prevSize = umraRequests.size();
+    //   adapterHD.notifyItemRangeInserted(prevSize - 1, umraRequests.size() -1);
+        Log.e("requests No ", ""+umraRequests.size());
+        Log.e("Adapter ",adapterHD.toString());
+       // recyclerView.setItemViewCacheSize(umraRequests.size());
+
+
         // set onRefresh method
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -137,6 +154,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
                         String dateFromApi = object.getString("date");
                         String gregorianString = "";
+
                         if (dateFromApi != null) {
                             //  gregorianString = convertDte(dateFromApi);
 
@@ -150,10 +168,19 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                    adapterHD.notifyDataSetChanged();
 
                     Log.e("requests No ", "" + umraRequests.size());
-                    // getContext() may makes error
 
+                      /*  if (dateFromApi != null){
+                       //     gregorianString = convertDte(dateFromApi);
+                        }
+                        umraRequests.setDate(gregorianString);*/
+                        // add the umra object to the arrayList
+                      //  int initialSize = umraRequests.size();
+                      //  adapterHD.notifyItemRangeInserted(initialSize, umraRequests.size()-1);
 
-                } catch (JSONException e) {
+                    }
+                  //  adapterHD.notifyDataSetChanged();
+
+                 catch (JSONException e) {
                     e.printStackTrace();
                 }
 

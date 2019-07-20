@@ -8,15 +8,20 @@
     android:gravity="bottom">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/userPicture"
+        android:paddingRight="15dp"
         android:src="@drawable/ic_launcher_foreground"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Name "
-        android:id="@+id/userName"
+        android:text="الملف الشخصي "
+        android:id="@+id/userame"
+        android:fontFamily="@font/arabic_altra_light_0"
+        android:textColor="@color/white"
+        android:textSize="17sp"
         android:paddingStart="20dp"/>
 
 </LinearLayout>

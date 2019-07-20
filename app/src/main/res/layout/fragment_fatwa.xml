@@ -53,6 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/arabic_light_0"
                     android:layout_marginStart="22dp"
                     android:layout_marginEnd="21dp"
                     android:paddingLeft="4dp"
@@ -60,7 +61,8 @@
                     android:paddingRight="4dp"
                     android:paddingBottom="4dp"
                     android:textAlignment="center"
-                    android:textSize="18sp"
+                    android:textColor="@color/darkGray"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -112,39 +114,86 @@
         android:text="اختر نوع الحساب"
         android:textAlignment="center"
         android:textColor="#555555"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
 
-    <ImageButton
-        android:id="@+id/requester"
-        android:layout_width="118dp"
-        android:layout_height="104dp"
-        android:background="@drawable/rectangle"
-        android:padding="6dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="9dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/doer"
-        app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
-        app:layout_constraintVertical_bias="0.32999998"
-        app:srcCompat="@drawable/requester" />
-
-
-    <ImageButton
-        android:id="@+id/doer"
-        android:layout_width="109dp"
-        android:layout_height="104dp"
-        android:background="@drawable/rectangle"
-        android:padding="6dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/requester"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg"
-        app:layout_constraintVertical_bias="0.32999998"
-        app:srcCompat="@drawable/doer" />
+        app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg">
+
+        <LinearLayout
+            android:id="@+id/doer"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingTop="9dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/man" />
+
+            <TextView
+                android:id="@+id/textDoOmra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/arabic_medium_0"
+                android:text="القيام بعمرة"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/requester"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingTop="9dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/noreqimg" />
+
+            <TextView
+                android:id="@+id/textTalabOmra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/arabic_medium_0"
+                android:gravity="center"
+                android:text="طلب عمرة"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

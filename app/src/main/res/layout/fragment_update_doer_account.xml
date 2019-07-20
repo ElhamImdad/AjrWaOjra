@@ -88,7 +88,7 @@
         android:id="@+id/save"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/button"
         android:fontFamily="@font/arabic_medium_0"
         android:text="حفظ"

@@ -39,11 +39,12 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
          ServiceInfo items = listServices.get(i);
          float review = Float.parseFloat(items.getRating());
+        Log.e("numberofStar is" , String.valueOf(review));
         myHolder.doerName.setText(items.getDoerName());
         Log.e("cooooo", String.valueOf(items.getNoCompletedOrder()));
         myHolder.numCompletedOrder.setText(" عدد الطلبات " +items.getNoCompletedOrder());
         myHolder.date.setText(items.getDate());
-        myHolder.omraName.setText(" سيقوم بالعمرة عن "+items.getOmraName());
+        myHolder.omraName.setText("\n سيقوم بالعمرة عن "+items.getOmraName());
         myHolder.ratingBar.setRating(review);
         final  int orderId = items.getOrder_id();
      //   final Bundle bundle = new Bundle();
@@ -53,10 +54,6 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
                 Log.e("yeeeees", "yes");
                 OnholdRequestsFragment on = new OnholdRequestsFragment();
                 on.acceptOrder(orderId);
-               /* bundle.putString("option", "positive");
-                bundle.putInt("OrderId", orderId);
-                OnholdRequestsFragment OH = new OnholdRequestsFragment();
-                OH.setArguments(bundle);*/
 
                 Intent intent = new Intent(context, OmrahDetailsActivity.class);
                 intent.putExtra("option", "positive");
@@ -70,10 +67,6 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
             public void onClick(View v) {
                 OnholdRequestsFragment on2 = new OnholdRequestsFragment();
                 on2.rejectOrder(orderId);
-                /*bundle.putString("option", "negative");
-                bundle.putInt("OrderId", orderId);
-                OnholdRequestsFragment OH = new OnholdRequestsFragment();
-                OH.setArguments(bundle);*/
 
                 Intent intent = new Intent(context, OmrahDetailsActivity.class);
                 intent.putExtra("option", "negative");

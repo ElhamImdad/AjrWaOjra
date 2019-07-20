@@ -1,32 +1,28 @@
 package com.example.smoot.ajerwaojra.Fragments;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
-import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 
 public class FatwaFragment extends Fragment {
-    ImageButton doer ;
-    ImageButton requester;
+    LinearLayout doer, requester ;
     Fragment doerFrag;
     Fragment requesterFrag;
-    TextView advisoryOpinion;
+    TextView advisoryOpinion, doOmra, talabOmra;
     LocationManager locationManager;
     CheckBox checked ;
     @Override
@@ -36,6 +32,8 @@ public class FatwaFragment extends Fragment {
         checked = view.findViewById(R.id.checkBox);
         doer = view.findViewById(R.id.doer);
         requester = view.findViewById(R.id.requester);
+        doOmra = view.findViewById(R.id.textDoOmra);
+        talabOmra = view.findViewById(R.id.textTalabOmra);
         advisoryOpinion = view.findViewById(R.id.advisoryOpinion);
         advisoryOpinion.setText("فإن الحج عن الميت والعمرة عن الميت من أفضل القربات، وينتفع بها الميت المسلم كثيرًا، فقد سئل النبي ﷺ عن ذلك مرات كثيرة فقال للسائل: حج عن أبيك، وللسائلة: حجي عن أبيك، والآخر: عن أمك، وسأله آخر قال: إني لبيت عن شبرمة قال: من شبرمة؟ قال: أخ لي أو قريب لي. قال: حج عن نفسك ثم حج عن شبرمة." +
                 "فالناس أقسام منهم من قد حج الفريضة وأدى العمرة الفريضة هذا إذا حج عنه يكون نافلة، وإذا اعتمر عنه يكون نافلة، حج عنه أخوه أو أبوه أو قريب له أو أخ من إخوانه في الله كل ذلك طيب وهكذا العمرة، وإذا كان ما أدى الحج ولا أدى العمرة فإن الذي يحج عنه يكون قد أدى عنه الفريضة، وهكذا العمرة يكون قد أدى عنه عمرة الفريضة، وهو على كل حال مأجور والميت مأجور كلاهما مأجور، هذا عن عمله الطيب وإحسانه إلى أخيه مأجور والميت مأجور بذلك، وهكذا الصدقة وهكذا الدعاء إذا تصدق عن أخيه يؤجر هو والميت جميعًا، وهكذا إذا دعا لأخيه الميت يؤجر هو وينتفع الميت بالدعاء. نعم.");
@@ -58,6 +56,7 @@ public class FatwaFragment extends Fragment {
         doer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showMessage();
               /*  doerFrag = new DoerRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
@@ -75,6 +74,11 @@ public class FatwaFragment extends Fragment {
                 }
                 else
                 {
+                    requester.setBackgroundResource(R.drawable.rectangle_greentab);
+                    talabOmra.setTextColor(getResources().getColor(R.color.white));
+
+                    doer.setBackgroundResource(R.drawable.rectangle);
+                    doOmra.setTextColor(getResources().getColor(R.color.darkGray));
                 requesterFrag = new RequesterRegistrationFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -94,6 +98,11 @@ public class FatwaFragment extends Fragment {
         alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                doer.setBackgroundResource(R.drawable.rectangle_greentab);
+                doOmra.setTextColor(getResources().getColor(R.color.white));
+
+                requester.setBackgroundResource(R.drawable.rectangle);
+                talabOmra.setTextColor(getResources().getColor(R.color.darkGray));
                /* if ( !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                     // if the GPS is not enabled
                     Log.e("i am in if", "hi ");
