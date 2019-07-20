@@ -313,7 +313,6 @@
                 android:layout_width="282dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/arabic_light_0"
-
                 android:gravity="center"
                 android:text="ﻫﻨﺎك ﺣﻘﻴﻘﺔ ﻣﺜﺒﺘﺔ ﻣﻨﺬ زﻣﻦ ﻃﻮﻳﻞ وﻫﻲ أن اﻟﻤﺤﺘﻮى اﻟﻤﻘﺮوء ﻟﺼﻔﺤﺔ ﻣﺎ ﺳﻴﻠﻬﻲ اﻟﻘﺎرئ ﻋﻦ اﻟﺘﺮﻛﻴﺰ ﻋﻠﻰ اﻟﺸﻜﻞ اﻟﺨﺎرﺟﻲ ﻟﻠﻨﺺ أو ﺷﻜﻞ ﺗﻮﺿﻊ اﻟﻔﻘﺮات ﻓﻲ اﻟﺼﻔﺤﺔ اﻟﺘﻲ ﻳﻘﺮأﻫﺎ. وﻟﺬﻟﻚ ﻳﺘﻢ اﺳﺘﺨﺪام ﻃﺮﻳﻘﺔ ﻟﻮرﻳﻢ إﻳﺒﺴﻮم ﻷﻧﻬﺎ ﺗﻌﻄﻲ ﺗﻮزﻳﻌﺎَ ﻃﺒﻴﻌﻴﺎَ"
                 android:textSize="12sp"

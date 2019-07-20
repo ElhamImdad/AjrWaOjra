@@ -15,6 +15,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.smoot.ajerwaojra.Fragments.DoerAccountFragment;
 import com.example.smoot.ajerwaojra.Fragments.FatwaFragment;
@@ -31,6 +33,8 @@ import com.example.smoot.ajerwaojra.R;
 public class OmrahDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    TextView userName;
+    View mHeaderView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,13 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
         drawerLayout= findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        mHeaderView =  navigationView.getHeaderView(0);
+
+        // View
+        userName = (TextView) mHeaderView.findViewById(R.id.userame);
+        String nn = SharedPrefManager.getInstance(this).getRequester().getName();
+        if (nn!= null){
+            userName.setText(nn);}
 
         Intent intent = getIntent();
         Bundle bundle;

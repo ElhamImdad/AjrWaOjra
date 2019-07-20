@@ -83,6 +83,7 @@ public class DoerAccountFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response) {
+                        Log.e("account response", response.toString());
                         try {
                             JSONObject ob = new JSONObject(response);
                             JSONObject USER = ob.getJSONObject("user");
@@ -101,7 +102,7 @@ public class DoerAccountFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //  Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("account response", error.toString());
+                        Log.e("account errrr", error.toString());
                     }
 
                 }){

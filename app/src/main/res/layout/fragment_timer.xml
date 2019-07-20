@@ -153,7 +153,7 @@
 
     <TextView
         android:id="@+id/umraOwner"
-        android:layout_width="325dp"
+        android:layout_width="315dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dinnext_arabic_regula_0"
         android:text="اسم من له العمرة "

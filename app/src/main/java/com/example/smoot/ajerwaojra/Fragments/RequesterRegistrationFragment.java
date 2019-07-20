@@ -150,9 +150,10 @@ public class RequesterRegistrationFragment extends Fragment {
 
                             JSONObject ob = new JSONObject(response);
                             token = ob.getString("access_token");
+                            String userName = ob.getJSONObject("message").getString("name");
                             Log.v("access_token", token);
                             String countryId = ob.getJSONObject("message").getString("country_id");
-                            Requester requester = new Requester(token);
+                            Requester requester = new Requester(token, userName);
                             requester.setCountry(countryId);
                             SharedPrefManager.getInstance(getContext()).userLogin(requester);
                             Toast.makeText(getContext(), "تم تسجيلك بنجاح", Toast.LENGTH_LONG).show();
@@ -201,20 +202,7 @@ public class RequesterRegistrationFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-//    private void getCountryList() {
-//        Locale[] locales = Locale.getAvailableLocales();
-//        ArrayList<String> countries = new ArrayList<String>();
-//        for (Locale locale : locales) {
-//            String country = locale.getDisplayCountry();
-//            if (country.trim().length() > 0 && !countries.contains(country)) {
-//                countries.add(country);
-//            }
-//        }
-//        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, countries);
-//        countrySpin.setAdapter(adapter);
-//
-//    }
+
     private String getCountryListFromApi() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_COUNTRY,
                 new Response.Listener<String>() {
@@ -244,9 +232,6 @@ public class RequesterRegistrationFragment extends Fragment {
                             for (int i = 0; i < goodModelArrayList.size(); i++){
                                 names.add(goodModelArrayList.get(i).getName().toString());
                             }
-
-                       //     final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_item, names);
-                        //    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                             final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                                     context,R.layout.textview_with_font_change,names
                             ){

@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.smoot.ajerwaojra.Fragments.DoerAccountFragment;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     TextView userName;
-
+    View mHeaderView;
+    ImageView userIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,23 +44,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
+        // NavigationView Header
+        mHeaderView =  navigationView.getHeaderView(0);
+
+        // View
+        userName = (TextView) mHeaderView.findViewById(R.id.userame);
+        userIcon = (ImageView) mHeaderView.findViewById(R.id.userPicture);
+
         navigationView.setNavigationItemSelectedListener(this);
-        userName = findViewById(R.id.userame);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             Log.e("Tag ", "outer if ");
             if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
-           /*     String nn = SharedPrefManager.getInstance(this).getDoer().getDoerName();
+                String nn = SharedPrefManager.getInstance(this).getDoer().getDoerName();
+                Log.e("nnnnnnnnnn",nn+"????");
                 if (nn!= null){
-                Log.e("nnnnnnnnnn",nn+"?");
-                userName.setText(nn);}*/
+                userName.setText(nn);}
+                userIcon.setImageResource(R.drawable.avatar);
                 Log.e("inner ", " ineer if ");
                 setHomeFragment(new doerHomeFragment());
             } else {
+                String nn = SharedPrefManager.getInstance(this).getRequester().getName();
+                if (nn!= null){
+                    userName.setText(nn);}
                 Log.e("Tag", "inner else ");
-                // userName.setText(SharedPrefManager.getInstance(this).getRequester().getName());
                 setHomeFragment(new RequestsFragment());
             }
 
@@ -79,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-
     }
 
     @Override

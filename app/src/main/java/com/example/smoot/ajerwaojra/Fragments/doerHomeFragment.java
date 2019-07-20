@@ -151,7 +151,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         String dateFromApi = object.getString("date");
                         String gregorianString = "";
                         if (dateFromApi != null){
-                            gregorianString = convertDte(dateFromApi);
+                       //     gregorianString = convertDte(dateFromApi);
                         }
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList

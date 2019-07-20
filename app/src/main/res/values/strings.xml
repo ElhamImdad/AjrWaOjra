@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AjerWaOjra</string>
+    <string name="app_name">أجر وأجرة</string>
     <string name="date_defoult_value" translatable="false">تحت الطلب</string>
     <string-array name="howDidKnowUs">
         <item>عن طريق تويتر </item>

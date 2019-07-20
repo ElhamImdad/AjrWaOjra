@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -167,8 +168,8 @@ public class DoerRegistrationFragment extends Fragment {
                             token = ob.getString("access_token");
                             String userName = ob.getJSONObject("message").getString("name");
                             Log.v("access_token", token);
-                         //   Doer doer = new Doer(token,userName);
-                            Doer doer = new Doer(token);
+                            Doer doer = new Doer(token,userName);
+                         //   Doer doer = new Doer(token);
                             Log.e("token From obj ", doer.getDoerToken());
                             SharedPrefManager.getInstance(getContext()).userLogin(doer);
                             String print = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
@@ -288,6 +289,7 @@ public class DoerRegistrationFragment extends Fragment {
                     e.printStackTrace();
                 }
                 exactLocation = addresses.get(0).getCountryName().trim();
+                Toast.makeText(getContext(), "  موقعك الحالي هو .....  "+exactLocation, Toast.LENGTH_LONG).show();
 
                 Log.e("t----", exactLocation);
             } else {
