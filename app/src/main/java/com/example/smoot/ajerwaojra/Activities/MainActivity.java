@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mHeaderView =  navigationView.getHeaderView(0);
 
         // View
- /*       userName = mHeaderView.findViewById(R.id.userame);
+        userName = mHeaderView.findViewById(R.id.userame);
         userIcon =  mHeaderView.findViewById(R.id.userPicture);
-*/
+
 
         navigationView.setNavigationItemSelectedListener(this);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 String nn = SharedPrefManager.getInstance(this).getRequester().getName();
                 if (nn!= null){
-                    userName.setText(nn);}
+                  //  userName.setText(nn);
+                }
                 Log.e("Tag", "inner else ");
                 setHomeFragment(new RequestsFragment());
             }

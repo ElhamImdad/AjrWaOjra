@@ -156,8 +156,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         String gregorianString = "";
 
                         if (dateFromApi != null) {
-                            //  gregorianString = convertDte(dateFromApi);
-
+                              gregorianString = convertDte(dateFromApi);
                         }
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
@@ -168,22 +167,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                    adapterHD.notifyDataSetChanged();
 
                     Log.e("requests No ", "" + umraRequests.size());
-
-                      /*  if (dateFromApi != null){
-                       //     gregorianString = convertDte(dateFromApi);
-                        }
-                        umraRequests.setDate(gregorianString);*/
-                        // add the umra object to the arrayList
-                      //  int initialSize = umraRequests.size();
-                      //  adapterHD.notifyItemRangeInserted(initialSize, umraRequests.size()-1);
-
                     }
-                  //  adapterHD.notifyDataSetChanged();
-
                  catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -193,10 +180,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         }
 
         );
-
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
-
     }
 
     public void inholdOrders() {

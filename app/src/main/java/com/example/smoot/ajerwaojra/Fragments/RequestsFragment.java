@@ -332,6 +332,7 @@ public class RequestsFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                if (getContext()!= null)
                 Toast.makeText(getContext(), "لايوجد اتصال بالانترنت", Toast.LENGTH_LONG).show();
                 Log.e("volleyErro in list req>",error.toString());
             }
