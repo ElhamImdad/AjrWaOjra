@@ -23,6 +23,7 @@ import java.util.Map;
 public class RService extends IntentService {
     public static boolean serviceIsRun = false;
     private ArrayList<ServiceInfo> myServicesList;
+    int no;
     private ArrayList<String> doers = new ArrayList<>();
     public String doerName;
     String doerID = "";
@@ -102,6 +103,7 @@ public class RService extends IntentService {
                                     Log.e("raaating}}}", orderInfo.getJSONObject(j).getString("review"));
                                 }
                                 myServicesList.add(serviceInfo);
+                                no = myServicesList.size();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -133,4 +135,6 @@ public class RService extends IntentService {
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
+
+    private void viewDoneRequests(){}
 }

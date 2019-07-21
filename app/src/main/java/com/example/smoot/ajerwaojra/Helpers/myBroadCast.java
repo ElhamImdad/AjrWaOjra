@@ -20,25 +20,25 @@ import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.R;
 
 public class myBroadCast extends BroadcastReceiver {
-Context context;
 
     public Context getContext() {
-        return context= this.getContext();
+        return getContext();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
         final Bundle bundle = intent.getExtras();
-     if (intent.getAction().equalsIgnoreCase("NewOffer")){
+         if (intent.getAction().equalsIgnoreCase("NewOffer")){
          // make notification
          Log.e("MMM","yes");
-
-       makeNotification(context,bundle);
-
+         makeNotification(context,bundle);
          Toast.makeText(context,bundle.getString("Message"),Toast.LENGTH_LONG).show();
          Toast.makeText(context,bundle.getString("Doer Name"),Toast.LENGTH_LONG).show();
      }
+         if (intent.getAction().equals("AcceptOffer")){
+
+         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

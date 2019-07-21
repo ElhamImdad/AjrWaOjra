@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -113,16 +112,17 @@ public class timerFragment extends Fragment {
             public void onClick(View view) {
                 getLocation();
                 if (city != null) {
-                    if (city.equals("مكة")) {
+                //    if (city.equals("مكة")) {
                         Log.e("idOOOO////", id + "?");
                         postStartOmra(id);
                         startTime = SystemClock.uptimeMillis();
                         myHandler.postDelayed(updateTimerMethod, 0);
                         startButton.setVisibility(View.INVISIBLE);
                         stopUmraaButton.setVisibility(View.VISIBLE);
-                    } else {
-                        showMessage();
-                    }
+                  //  }
+                    //else {
+                     //   showMessage();
+                    //}
                 }else{
                     showMessageLocation();
                 }
@@ -211,8 +211,8 @@ return  v;
                 //String country = addresses.get(0).getAdminArea();// return مكة المكرمة
                 //String country = addresses.get(0).getFeatureName(); return number
                 String Neighborhood = addresses.get(0).getSubLocality(); // return العدل
-                Log.e("country is ",Neighborhood);
-                Toast.makeText(getContext(),Neighborhood,Toast.LENGTH_LONG).show();
+               // Log.e("country is ",Neighborhood);
+               // Toast.makeText(getContext(),Neighborhood,Toast.LENGTH_LONG).show();
                 //getThoroughfare() and getSubThoroughfare() does not work
 
 

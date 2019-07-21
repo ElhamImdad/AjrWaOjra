@@ -169,7 +169,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                     }
                 }
                 break;
-            case R.id.orders:
+           /* case R.id.orders:
                 if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                     Log.e("Tag ", "outer if ");
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
@@ -181,7 +181,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                         drawerLayout.closeDrawers();
                     }
                 }
-                break;
+                break;*/
 
         }
         return true;

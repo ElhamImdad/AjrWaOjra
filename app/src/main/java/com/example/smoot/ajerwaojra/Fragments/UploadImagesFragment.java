@@ -189,7 +189,6 @@ public class UploadImagesFragment extends Fragment {
         }
     }
 
-
     public String ConvertBitmapToBase64Format(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
@@ -199,7 +198,6 @@ public class UploadImagesFragment extends Fragment {
         return imageString;
 
     }
-
 
     public void uploadUserImage() {
         Log.e("Raghad click button", " yes");
@@ -226,6 +224,8 @@ public class UploadImagesFragment extends Fragment {
                             ft.commit();
                         }
                     });
+                    alert.show();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -259,7 +259,7 @@ public class UploadImagesFragment extends Fragment {
 
                     }
                 }
-                param.put("image", images.toString());
+                param.put("image", encodedImage1);
                 return param;
             }
 
