@@ -54,26 +54,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mHeaderView =  navigationView.getHeaderView(0);
 
         // View
- /*       userName = mHeaderView.findViewById(R.id.userame);
-        userIcon =  mHeaderView.findViewById(R.id.userPicture);
-*/
+      //  userName = mHeaderView.findViewById(R.id.userame);
+       // userIcon =  mHeaderView.findViewById(R.id.userPicture);
+
 
         navigationView.setNavigationItemSelectedListener(this);
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             Log.e("Tag ", "outer if ");
             if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
-                String nn = SharedPrefManager.getInstance(this).getDoer().getDoerName();
-                Log.e("nnnnnnnnnn",nn+"????");
-                if (nn!= null){
-                userName.setText(nn);}
-                userIcon.setImageResource(R.drawable.avatar);
+             //   String nn = SharedPrefManager.getInstance(this).getDoer().getDoerName();
+
+             //   if (nn!= null){
+              //  userName.setText(nn);}
+              //  userIcon.setImageResource(R.drawable.avatar);
                 Log.e("inner ", " ineer if ");
                 setHomeFragment(new doerHomeFragment());
             } else {
-                String nn = SharedPrefManager.getInstance(this).getRequester().getName();
-                if (nn!= null){
-                    userName.setText(nn);}
-                userIcon.setImageResource(R.drawable.person_icon);
+              //  String nn = SharedPrefManager.getInstance(this).getRequester().getName();
+              //  if (nn!= null){
+              //      userName.setText(nn);}
+               // userIcon.setImageResource(R.drawable.person_icon);
                 Log.e("Tag", "inner else ");
                 setHomeFragment(new RequestsFragment());
             }

@@ -58,7 +58,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:text="لا تستطيع إنشاء حساب القيام بعمرة نظرا لعدم تواجدك في المملكة العربية السعودية بناء على موقعك الجغرافي, إذا كنت تود طلب عمرة لشخص متوفي أو غير قادر على القيام بها, نرجو منك إنشاء حساب طلب عمرة  "
+                android:text="لا تستطيع إنشاء حساب القيام بالحج نظرا لعدم تواجدك في المملكة العربية السعودية بناء على موقعك الجغرافي, إذا كنت تود طلب حج لشخص متوفي أو غير قادر على القيام بها, نرجو منك إنشاء حساب طلب حج  "
                 android:textColor="@color/darkGray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

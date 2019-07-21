@@ -187,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/arabic_light_0"
-                android:text="العمرة المكتملة "
+                android:text="الحج المكتمل"
                 android:textColor="@color/darkGray"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"

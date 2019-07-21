@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/dinnext_arabic_regula_0"
-                android:text="العمرة المكتملة "
+                android:text="الحج المكتمل"
                 android:textColor="@color/darkGray"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"
@@ -210,7 +210,7 @@
                 android:textColor="@color/DarkGreen"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@+id/view"
-                app:layout_constraintHorizontal_bias="0.27"
+                app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/textView29"
                 tools:text="3" />

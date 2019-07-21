@@ -44,7 +44,7 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
         Log.e("cooooo", String.valueOf(items.getNoCompletedOrder()));
         myHolder.numCompletedOrder.setText(" عدد الطلبات " +items.getNoCompletedOrder());
         myHolder.date.setText(items.getDate());
-        myHolder.omraName.setText("\n سيقوم بالعمرة عن "+items.getOmraName());
+        myHolder.omraName.setText("\n سيقوم بالحج عن "+items.getOmraName());
         myHolder.ratingBar.setRating(review);
         final  int orderId = items.getOrder_id();
      //   final Bundle bundle = new Bundle();
