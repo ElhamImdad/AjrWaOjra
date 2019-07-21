@@ -66,10 +66,6 @@ public class OnholdRequestsFragment extends DialogFragment {
         //ADAPTER
         adapter = new OnHoldRequestsAdapter(myServicesList, this.getActivity());
         recycler.setAdapter(adapter);
-        if (myServicesList.size() == 0){
-            noOrder();
-        }
-
 //        this.getDialog().setTitle("طلبات العمرة");
         return rootview;
     }
@@ -79,8 +75,12 @@ public class OnholdRequestsFragment extends DialogFragment {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onResponse(String response) {
-                            Log.e("respons of servisec", response.toString());
+
                             try {
+                                Log.e("respooons of servisec", response.toString());
+                                if (response.equals("{\"doer offer\":[]}")){
+                                    noOrder();
+                                }
                                 JSONObject obj = new JSONObject((response));
 
                                 JSONArray jsonArray = obj.getJSONArray("doer offer");

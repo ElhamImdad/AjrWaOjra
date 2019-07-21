@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -73,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 String nn = SharedPrefManager.getInstance(this).getRequester().getName();
                 if (nn!= null){
-                  //  userName.setText(nn);
+                    userName.setText(nn);
                 }
+                userIcon.setImageResource(R.drawable.person_icon);
                 Log.e("Tag", "inner else ");
                 setHomeFragment(new RequestsFragment());
             }
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Log.e("make it true", "yes");
                     Intent intent = new Intent(this, RService.class);
                     Log.e("before start service ", "yes");
-                    startService(intent);
+                 //   startService(intent);
 
                 }
             }
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
                 break;
-            case R.id.orders:
+          /*  case R.id.orders:
                 if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                     Log.e("Tag ", "outer if ");
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
@@ -170,8 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
 
-                break;
-
+                break;*/
         }
         return true;
     }
@@ -208,20 +207,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         OnholdRequestsFragment onhold = new OnholdRequestsFragment();
         onhold.show(fm, "service_info");
         //when the button clicked
+    }
 
-    }
-    public void confirmMyOrder(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("عذراً..");
-        alert.setMessage("لاتوجد لديك طلبات لم يتم تنفيذها");
-        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                drawerLayout.closeDrawers();
-            }
-        });
-        alert.show();
-    }
 
 }
 

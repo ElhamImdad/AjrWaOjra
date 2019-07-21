@@ -144,6 +144,20 @@ public class UploadImagesFragment extends Fragment {
                     takePhotoMessage();
                 } else {
                     uploadUserImage();
+                    AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle("تأكيد....");
+                    alert.setMessage("تم تحميل الصور وإنهاء الطلب بنجاح...شكرا لك.");
+                    alert.setPositiveButton("حسنا", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            doerHomeFragment doerHome = new doerHomeFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, doerHome);
+                            ft.commit();
+                        }
+                    });
+                    alert.show();
                 }
             }
         });
@@ -189,7 +203,6 @@ public class UploadImagesFragment extends Fragment {
         }
     }
 
-
     public String ConvertBitmapToBase64Format(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
@@ -199,7 +212,6 @@ public class UploadImagesFragment extends Fragment {
         return imageString;
 
     }
-
 
     public void uploadUserImage() {
         Log.e("Raghad click button", " yes");
@@ -226,6 +238,8 @@ public class UploadImagesFragment extends Fragment {
                             ft.commit();
                         }
                     });
+                    alert.show();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -259,7 +273,7 @@ public class UploadImagesFragment extends Fragment {
 
                     }
                 }
-                param.put("image", images.toString());
+                param.put("image", encodedImage1);
                 return param;
             }
 

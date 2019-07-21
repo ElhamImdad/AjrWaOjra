@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.smoot.ajerwaojra.Fragments.DoerAccountFragment;
@@ -35,6 +36,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
     NavigationView navigationView;
     TextView userName;
     View mHeaderView;
+    ImageView userIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +50,11 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
 
         // View
         userName = (TextView) mHeaderView.findViewById(R.id.userame);
+        userIcon = (ImageView) mHeaderView.findViewById(R.id.userPicture);
         String nn = SharedPrefManager.getInstance(this).getRequester().getName();
         if (nn!= null){
             userName.setText(nn);}
+        userIcon.setImageResource(R.drawable.person_icon);
 
         Intent intent = getIntent();
         Bundle bundle;
@@ -165,7 +169,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                     }
                 }
                 break;
-            case R.id.orders:
+           /* case R.id.orders:
                 if (SharedPrefManager.getInstance(this).isLoggedIn()) {
                     Log.e("Tag ", "outer if ");
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
@@ -177,7 +181,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                         drawerLayout.closeDrawers();
                     }
                 }
-                break;
+                break;*/
 
         }
         return true;

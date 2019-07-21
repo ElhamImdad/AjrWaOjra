@@ -65,9 +65,10 @@ public class RequestsFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     private TextView textViewUmraName;
     private RequestQueue mQueue;
-    private ImageView   settingIcon;
+    private ImageView   settingIcon , noti, redCircle ;
     private Button addRequestBtn, pendingBTN, doneBTN, inProgressBTN;
     private LinearLayout linearLayout, norequestImg;
+    String ifNoti;
 
     public void startService(View view){
      //bindService(new Intent(getContext(),RService.class),mConnection, Context.BIND_AUTO_CREATE);
@@ -89,7 +90,7 @@ public class RequestsFragment extends Fragment {
 */
         final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-
+        redCircle = v.findViewById(R.id.redCircle);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         linearLayout = v.findViewById(R.id.linearLayout);
         addRequestBtn = v.findViewById(R.id.requestUmrabutton);
@@ -97,12 +98,12 @@ public class RequestsFragment extends Fragment {
         pendingBTN = v.findViewById(R.id.waitingBtn);
         doneBTN = v.findViewById(R.id.donBtn);
         inProgressBTN = v.findViewById(R.id.inProgressBtn);
-
+        noti = v.findViewById(R.id.noti);
         umraListInProgress = new ArrayList<>();
         umraListDone = new ArrayList<>();
         umraListPending = new ArrayList<>();
         umra= new ArrayList<>();
-
+        redCircle.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = v.findViewById(R.id.swapRefreshLayout);
 
         recyclerView = v.findViewById(R.id.recyclerView11);
@@ -203,10 +204,19 @@ public class RequestsFragment extends Fragment {
                     if (umra.size() !=0){
                         umra.clear();
                     }
+                    doneBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                    doneBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                    inProgressBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                    inProgressBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                    pendingBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                    pendingBTN.setTextColor(getResources().getColor(R.color.white));
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
         settingIcon = v.findViewById(R.id.setting1);
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,8 +230,21 @@ public class RequestsFragment extends Fragment {
             }
         });
 
+        noti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              setFragmentDialog();
+            }
+        });
         return v;
     }
+    private void setFragmentDialog() {
+        FragmentManager fm = getFragmentManager();
+        OnholdRequestsFragment onhold = new OnholdRequestsFragment();
+        onhold.show(fm, "service_info");
+        //when the button clicked
+    }
+
     private void clickImProgress(){
         adapter.updateData(umraListInProgress );
         Log.e("In Progress size",umraListInProgress.size()+" item");
@@ -252,7 +275,6 @@ public class RequestsFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.e("list order respons>>---",response.toString());
                         try {
-
                             JSONArray jsonObj = response.getJSONArray("orders");
 
                             OmraInfo omraInfoObject;
@@ -288,6 +310,10 @@ public class RequestsFragment extends Fragment {
                                    adapter.notifyItemRangeInserted(0, umraListInProgress.size());// notify adapter of new data
 
                                }else if ((status.equals("1")) || (status.equals("4"))){
+                                   ifNoti=status;
+                                   if (ifNoti.equals("4")){
+                                       redCircle.setVisibility(View.VISIBLE);
+                                   }
                                //    umraListPending.add(omraInfoObject);
                                    if (umraListPending.size() !=0){
                                        umraListPending.clear();
@@ -301,7 +327,6 @@ public class RequestsFragment extends Fragment {
 
                                    String urlPhoto;
                                    for (int j = 0; j< omraImages.length(); j++){
-                                 //      Log.e("array length---","----------------------------------------------");
                                        omraPhotoList.add(omraImages.getJSONObject(j).getString("path"));
                                    }
                                    omraInfoObject.setPhotos(omraPhotoList);

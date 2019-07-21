@@ -9,10 +9,10 @@
             android:icon="@drawable/homeicon"
             android:id="@+id/home"
             android:title="الرئيسية" />
-        <item
+      <!--  <item
             android:icon="@drawable/listicon"
             android:id="@+id/orders"
-            android:title="طلبات العمرة" />
+            android:title="طلبات العمرة" />-->
         <item
             android:icon="@drawable/personicon2"
             android:id="@+id/account"
