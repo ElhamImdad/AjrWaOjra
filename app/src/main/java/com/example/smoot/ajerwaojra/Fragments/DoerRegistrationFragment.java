@@ -131,7 +131,7 @@ public class DoerRegistrationFragment extends Fragment {
                 getLocation();
 
                 if (isValidMobile() && validateEmail() && validatePassword()) {
-                    if (exactLocation.equals("السعودية")){
+                    if (exactLocation.equals("السعودية")|| exactLocation.equals("المملكة العربية السعودية")){
                     Log.e("Are you in Saudi", "yes");
                     doerRegister();
                 }

@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -211,6 +212,7 @@ return  v;
                 //String country = addresses.get(0).getFeatureName(); return number
                 String Neighborhood = addresses.get(0).getSubLocality(); // return العدل
                 Log.e("country is ",Neighborhood);
+                Toast.makeText(getContext(),Neighborhood,Toast.LENGTH_LONG).show();
                 //getThoroughfare() and getSubThoroughfare() does not work
 
 

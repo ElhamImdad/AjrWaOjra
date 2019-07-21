@@ -38,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -208,21 +209,26 @@ public class UploadImagesFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST, URLs.UPL_FINISH_REQUEST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 try {
                     JSONObject ob = new JSONObject(response);
-
                     String uu = ob.getString("message");
                     Log.e("message response", uu);
-                    doerHomeFragment doerHome = new doerHomeFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.container, doerHome);
-                ft.commit();
+                    AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle("تأكيد....");
+                    alert.setMessage("تم تحميل الصور وإنهاء الطلب بنجاح...شكرا لك.");
+                    alert.setPositiveButton("حسنا", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            doerHomeFragment doerHome = new doerHomeFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, doerHome);
+                            ft.commit();
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 Log.i("Myresponse", "" + response);
             }
         }, new Response.ErrorListener() {
@@ -239,19 +245,21 @@ public class UploadImagesFragment extends Fragment {
                 param.put("id", String.valueOf(id));
 
                 encodedImage1 = ConvertBitmapToBase64Format(imageBitmap1);
-                param.put("image", encodedImage1);
+                ArrayList <String> images = new ArrayList<>();
+                images.add(encodedImage1);
                 Log.i("Mynewsam", encodedImage1);
                 if (imageBitmap2 != null) {
                     encodedImage2 = ConvertBitmapToBase64Format(imageBitmap2);
                     Log.i("Mynewsam", "" + encodedImage2);
-                    param.put("image", encodedImage2);
+                    images.add(encodedImage2);
                     if (imageBitmap3 != null) {
                         encodedImage3 = ConvertBitmapToBase64Format(imageBitmap3);
                         Log.i("Mynewsam", "" + encodedImage3);
-                        param.put("image", encodedImage3);
+                        images.add(encodedImage3);
+
                     }
                 }
-
+                param.put("image", images.toString());
                 return param;
             }
 
