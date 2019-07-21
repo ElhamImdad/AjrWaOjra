@@ -88,12 +88,6 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         recyclerView.setAdapter(adapterHD);
         adapterHD.notifyDataSetChanged();
 
-       // int prevSize = umraRequests.size();
-    //   adapterHD.notifyItemRangeInserted(prevSize - 1, umraRequests.size() -1);
-        Log.e("requests No ", ""+umraRequests.size());
-        Log.e("Adapter ",adapterHD.toString());
-       // recyclerView.setItemViewCacheSize(umraRequests.size());
-
         // set onRefresh method
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -142,7 +136,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         umraRequest.setCountry_id(object.getString("country_id"));
                         umraRequest.setCountryFlagImagePath(object.getJSONObject("country").getString("image"));
                         umraRequest.setCountry(object.getJSONObject("country").getString("name"));
-                        umraRequest.setDate(object.getString("date"));
+                     //   umraRequest.setDate(object.getString("date"));
                         umraRequest.setRequesterName(object.getString("requester_name"));
                         umraRequest.setDoaa(object.getString("doaa"));
                         umraRequest.setUmraOwner(object.getString("name"));
@@ -151,7 +145,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         String dateFromApi = object.getString("date");
                         String gregorianString = "";
                         if (dateFromApi != null){
-                       //     gregorianString = convertDte(dateFromApi);
+                            gregorianString = convertDte(dateFromApi);
                         }
                         umraRequest.setDate(gregorianString);
                         // add the umra object to the arrayList
@@ -159,13 +153,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                       //  int initialSize = umraRequests.size();
                         umraRequests.add(umraRequest);
                       //  adapterHD.notifyItemRangeInserted(initialSize, umraRequests.size()-1);
-
                     }
                     adapterHD.notifyDataSetChanged();
-
-// some inser
-                    // getContext() may makes error
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

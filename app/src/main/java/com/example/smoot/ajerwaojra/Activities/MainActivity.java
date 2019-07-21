@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String nn = SharedPrefManager.getInstance(this).getRequester().getName();
                 if (nn!= null){
                     userName.setText(nn);}
+                userIcon.setImageResource(R.drawable.person_icon);
                 Log.e("Tag", "inner else ");
                 setHomeFragment(new RequestsFragment());
             }

@@ -203,10 +203,19 @@ public class RequestsFragment extends Fragment {
                     if (umra.size() !=0){
                         umra.clear();
                     }
+                    doneBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                    doneBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                    inProgressBTN.setBackgroundColor(getResources().getColor(R.color.white));
+                    inProgressBTN.setTextColor(getResources().getColor(R.color.lightGreen));
+
+                    pendingBTN.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                    pendingBTN.setTextColor(getResources().getColor(R.color.white));
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
         settingIcon = v.findViewById(R.id.setting1);
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +258,6 @@ public class RequestsFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.e("list order respons>>---",response.toString());
                         try {
-
                             JSONArray jsonObj = response.getJSONArray("orders");
 
                             OmraInfo omraInfoObject;
@@ -298,7 +306,6 @@ public class RequestsFragment extends Fragment {
 
                                    String urlPhoto;
                                    for (int j = 0; j< omraImages.length(); j++){
-                                 //      Log.e("array length---","----------------------------------------------");
                                        omraPhotoList.add(omraImages.getJSONObject(j).getString("path"));
                                    }
                                    omraInfoObject.setPhotos(omraPhotoList);
