@@ -62,7 +62,7 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
                 context.startActivity(intent);
             }
         });
-        myHolder.negativeBtn.setOnClickListener(new View.OnClickListener() {
+       /* myHolder.negativeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OnholdRequestsFragment on2 = new OnholdRequestsFragment();
@@ -74,7 +74,7 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
 
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
@@ -85,7 +85,7 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
     public class MyHolder extends RecyclerView.ViewHolder  {
         TextView doerName, numCompletedOrder, date, omraName;
         RatingBar ratingBar;
-        Button positiveBtn, negativeBtn;
+        Button positiveBtn;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -96,7 +96,7 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
             ratingBar = itemView.findViewById(R.id.ratingBarPic);
 
             positiveBtn = itemView.findViewById(R.id.acceptBtn);
-            negativeBtn = itemView.findViewById(R.id.notAcceptBtn);
+          //  negativeBtn = itemView.findViewById(R.id.notAcceptBtn);
 
         }
 
