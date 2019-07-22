@@ -302,9 +302,9 @@ public class RequestsFragment extends Fragment {
 
                                if (status.equals("2")){
                                  //  umraListInProgress.add(omraInfoObject);
-                                   if (umraListInProgress.size() != 0 ) {
+                                   /*if (umraListInProgress.size() != 0 ) {
                                        umraListInProgress.clear();
-                                   }
+                                   }*/
                                    adapter.notifyDataSetChanged();
                                    umraListInProgress.add( omraInfoObject);// add new data
                                    adapter.notifyItemRangeInserted(0, umraListInProgress.size());// notify adapter of new data
@@ -315,9 +315,9 @@ public class RequestsFragment extends Fragment {
                                        redCircle.setVisibility(View.VISIBLE);
                                    }
                                //    umraListPending.add(omraInfoObject);
-                                   if (umraListPending.size() !=0){
+                                 /*  if (umraListPending.size() !=0){
                                        umraListPending.clear();
-                                   }
+                                   }*/
                                   adapter.notifyDataSetChanged();
                                    umraListPending.add(omraInfoObject);
                                    adapter.notifyItemRangeInserted(0, umraListPending.size());// notify adapter of new data
@@ -330,9 +330,9 @@ public class RequestsFragment extends Fragment {
                                        omraPhotoList.add(omraImages.getJSONObject(j).getString("path"));
                                    }
                                    omraInfoObject.setPhotos(omraPhotoList);
-                                   if (umraListDone.size() !=0){
+                                  /* if (umraListDone.size() !=0){
                                        umraListDone.clear();
-                                   }
+                                   }*/
                                    adapter.notifyDataSetChanged();
                                    umraListDone.add(omraInfoObject);
                                }
@@ -340,9 +340,9 @@ public class RequestsFragment extends Fragment {
                             }
                             int f = umraListPending.size()-1;
                             for (int i=0 ; i<umraListPending.size();i++){
-                                if (umra.size() !=0){
+                              /*  if (umra.size() !=0){
                                     umra.clear();
-                                }
+                                }*/
                                 adapter.notifyDataSetChanged();
                                 umra.add(i,umraListPending.get(f-i));
                             }

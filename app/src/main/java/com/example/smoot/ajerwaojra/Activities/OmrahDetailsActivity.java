@@ -49,12 +49,12 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
         mHeaderView =  navigationView.getHeaderView(0);
 
         // View
-        userName = (TextView) mHeaderView.findViewById(R.id.userame);
-        userIcon = (ImageView) mHeaderView.findViewById(R.id.userPicture);
-        String nn = SharedPrefManager.getInstance(this).getRequester().getName();
-        if (nn!= null){
-            userName.setText(nn);}
-        userIcon.setImageResource(R.drawable.person_icon);
+       // userName = (TextView) mHeaderView.findViewById(R.id.userame);
+      //  userIcon = (ImageView) mHeaderView.findViewById(R.id.userPicture);
+    //    String nn = SharedPrefManager.getInstance(this).getRequester().getName();
+       // if (nn!= null){
+       //     userName.setText(nn);}
+      //  userIcon.setImageResource(R.drawable.person_icon);
 
         Intent intent = getIntent();
         Bundle bundle;

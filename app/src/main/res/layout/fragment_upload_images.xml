@@ -22,13 +22,12 @@
         android:id="@+id/talabOmraText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/dinnext_arabic_regula_0"
+        android:fontFamily="@font/arabic_medium_0"
         android:text="تفاصيل العمرة"
         android:textColor="@android:color/background_light"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 

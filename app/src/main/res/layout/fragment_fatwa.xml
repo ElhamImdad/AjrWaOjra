@@ -77,7 +77,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/arabic_light_0"
                 android:gravity="center"
-                android:text="فتوى العمرة"
+                android:text="فتوى الحج"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +160,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:fontFamily="@font/arabic_medium_0"
-                android:text="القيام بعمرة"
+                android:text="القيام بالحج"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -191,7 +191,7 @@
                 android:layout_marginBottom="4dp"
                 android:fontFamily="@font/arabic_medium_0"
                 android:gravity="center"
-                android:text="طلب عمرة"
+                android:text="طلب حج"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

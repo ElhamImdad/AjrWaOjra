@@ -14,7 +14,7 @@
         android:layout_marginTop="44dp"
         android:fontFamily="@font/arabic_medium_0"
         android:gravity="center"
-        android:text="عداد وقت لاحتساب وقت العمرة"
+        android:text="عداد وقت لاحتساب وقت الحج"
         android:textColor="@color/darkGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
         android:background="@drawable/circle_button"
         android:fontFamily="@font/arabic_medium_0"
         android:shadowColor="@color/gray"
-        android:text="إنهاء العمرة"
+        android:text="إنهاء الحج"
         android:textColor="@color/DarkGreen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -143,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/arabic_light_0"
-        android:text="العمرة نيابة عن "
+        android:text="الحج نيابة عن "
         android:textColor="@color/darkGray"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +156,7 @@
         android:layout_width="315dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dinnext_arabic_regula_0"
-        android:text="اسم من له العمرة "
+        tools:text="اسم من له العمرة "
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +199,7 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/arabic_medium_0"
                 android:gravity="right"
-                android:text="اللهم لا سهل الا ما جعلته سهلا
+                tools:text="اللهم لا سهل الا ما جعلته سهلا
 اللهم اجعل اندرويد سهلا"
                 android:textColor="@color/black" />
         </LinearLayout>
