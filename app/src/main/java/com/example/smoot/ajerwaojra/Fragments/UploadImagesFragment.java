@@ -246,20 +246,24 @@ public class UploadImagesFragment extends Fragment {
 
                 encodedImage1 = ConvertBitmapToBase64Format(imageBitmap1);
                 ArrayList <String> images = new ArrayList<>();
-                images.add(encodedImage1);
+                String imArr []= new String[3];
+              //  images.add(encodedImage1);
+                imArr[0]= encodedImage1;
                 Log.i("Mynewsam", encodedImage1);
                 if (imageBitmap2 != null) {
                     encodedImage2 = ConvertBitmapToBase64Format(imageBitmap2);
                     Log.i("Mynewsam", "" + encodedImage2);
-                    images.add(encodedImage2);
+                  //  images.add(encodedImage2);
+                    imArr[1]= encodedImage2;
                     if (imageBitmap3 != null) {
                         encodedImage3 = ConvertBitmapToBase64Format(imageBitmap3);
                         Log.i("Mynewsam", "" + encodedImage3);
-                        images.add(encodedImage3);
-
+                       // images.add(encodedImage3);
+                        imArr[2]= encodedImage3;
                     }
                 }
-                param.put("image", encodedImage1);
+                Log.e("coding", String.valueOf(imArr));
+                param.put("image", String.valueOf(imArr));
                 return param;
             }
 

@@ -217,10 +217,21 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Log.e("erroeIndoerHome", error.toString());
             }
         }
 
-        );
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
+              //  String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
+                //   Log.e("token for user", token);
+           //     headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
     }
