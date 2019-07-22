@@ -155,6 +155,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.e("AllRequests Doer",response.toString());
                     JSONArray jsonArray = response.getJSONArray("orders");
                     int size = jsonArray.length();
                     Log.d("Array Size is ", " " + size);
@@ -220,15 +221,11 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                 Log.e("erroeIndoerHome", error.toString());
             }
         }
-
         ){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept", "application/json");
-              //  String token = SharedPrefManager.getInstance(getContext()).getDoer().getDoerToken();
-                //   Log.e("token for user", token);
-           //     headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
         };

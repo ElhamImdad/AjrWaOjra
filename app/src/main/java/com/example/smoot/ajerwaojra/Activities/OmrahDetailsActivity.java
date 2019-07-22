@@ -77,6 +77,8 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                         bundle2.putString("doaa", bundle.getString("doaa"));
                         bundle2.putStringArrayList("photos", bundle.getStringArrayList("photos"));
                         bundle2.putString("review", bundle.getString("review"));
+                        bundle2.putInt("id", bundle.getInt("id"));
+                        bundle2.putString("doer_id", bundle.getString("doer_id"));
 
                         RequestDetailsFragment doneObj = new RequestDetailsFragment();
                         doneObj.setArguments(bundle2);

@@ -174,7 +174,7 @@ public class RequestsFragment extends Fragment {
                 ft.commit();
             }
         });
-        /*if (umraListInProgress.size() != 0 ) {
+ /*       if (umraListInProgress.size() != 0 ) {
             umraListInProgress.clear();
         }
         if (umraListPending.size() !=0){
@@ -192,7 +192,7 @@ public class RequestsFragment extends Fragment {
                 if (swipeRefreshLayout.isRefreshing()) {
 
                     showRequest();
-                 /*   if (umraListInProgress.size() != 0 ) {
+                    /*if (umraListInProgress.size() != 0 ) {
                         umraListInProgress.clear();
                     }
                     if (umraListPending.size() !=0){
@@ -296,6 +296,7 @@ public class RequestsFragment extends Fragment {
 
                                omraInfoObject = new OmraInfo();
                                omraInfoObject.setId(jsonObj.getJSONObject(i).getJSONObject("order").getInt("id"));
+                               omraInfoObject.setDoer_id(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_id"));
                                omraInfoObject.setReview(jsonObj.getJSONObject(i).getString("doer review"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));
