@@ -102,7 +102,6 @@ public class DoerAccountFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //  Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("account errrr", error.toString());
                     }
 

@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         mHeaderView =  navigationView.getHeaderView(0);
+     //   drawerLayout.closeDrawer(GravityCompat.END);
 
         // View
        // userName = (TextView) mHeaderView.findViewById(R.id.userame);
@@ -109,26 +111,14 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
             if (OrderOption != null) {
                 switch (OrderOption) {
                     case "positive":
-                  //      Bundle bundleP = new Bundle();
-                  //      bundleP.putString("option", "positive");
-                   //     bundleP.putInt("OrderIdP", bundle.getInt("OrderIdP"));
-
                         RequestsFragment posativeObj = new RequestsFragment();
-                   //     posativeObj.setArguments(bundleP);
                         setFragment2(posativeObj);
                         break;
-                    case "negative":
-                     //   Bundle bundleN = new Bundle();
-                     //   bundleN.putString("option", "negative");
-                     //   bundleN.putInt("OrderIdN", bundle.getInt("OrderIdN"));
-
+                    /*case "negative":
                         RequestsFragment negativeObj = new RequestsFragment();
-                       // negativeObj.setArguments(bundleN);
                         setFragment2(negativeObj);
-                        break;
-
+                        break;*/
                 }
-
             }
         }
     }
@@ -137,7 +127,9 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         }else {
-            super.onBackPressed();}
+            //super.onBackPressed();
+            drawerLayout.openDrawer(Gravity.LEFT);
+        }
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -153,20 +145,18 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
                         drawerLayout.closeDrawers();
                     }
                     else {
-                        setHomeFragment(new RequesterAccountFragment());
+                        setFragment2(new RequesterAccountFragment());
                         drawerLayout.closeDrawers();
                     }
                 }
                 break;
             case R.id.home:
                 if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-                    Log.e("Tag ", "outer if ");
                     if (SharedPrefManager.getInstance(this).getDoer().getRole().equalsIgnoreCase("Doer")) {
                         setHomeFragment(new doerHomeFragment());
                         drawerLayout.closeDrawers();
-                    }
-                    else {
-                        setHomeFragment(new RequestsFragment());
+                    } else {
+                        setFragment2(new RequestsFragment());
                         drawerLayout.closeDrawers();
                     }
                 }

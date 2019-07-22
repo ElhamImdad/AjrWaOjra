@@ -97,8 +97,6 @@ public class timerFragment extends Fragment {
         doaa.setText(bundle0.getString("doaa"));
         id = bundle0.getInt("id");*/
 
-
-
         stopUmraaButton = v.findViewById(R.id.stopUmra);
         stopUmraaButton.setVisibility(View.INVISIBLE);
         secondss = v.findViewById(R.id.textView19);
@@ -112,17 +110,17 @@ public class timerFragment extends Fragment {
             public void onClick(View view) {
                 getLocation();
                 if (city != null) {
-                //    if (city.equals("مكة")) {
+                    if (city.equals("مكة")) {
                         Log.e("idOOOO////", id + "?");
                         postStartOmra(id);
                         startTime = SystemClock.uptimeMillis();
                         myHandler.postDelayed(updateTimerMethod, 0);
                         startButton.setVisibility(View.INVISIBLE);
                         stopUmraaButton.setVisibility(View.VISIBLE);
-                  //  }
-                    //else {
-                     //   showMessage();
-                    //}
+                    }
+                    else {
+                        showMessage();
+                    }
                 }else{
                     showMessageLocation();
                 }
@@ -152,9 +150,6 @@ public class timerFragment extends Fragment {
                 ft.commit();
             }
         });
-
-
-
 return  v;
     }
 
