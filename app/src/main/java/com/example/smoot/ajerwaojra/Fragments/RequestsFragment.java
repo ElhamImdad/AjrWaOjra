@@ -174,7 +174,7 @@ public class RequestsFragment extends Fragment {
                 ft.commit();
             }
         });
-        if (umraListInProgress.size() != 0 ) {
+ /*       if (umraListInProgress.size() != 0 ) {
             umraListInProgress.clear();
         }
         if (umraListPending.size() !=0){
@@ -185,14 +185,14 @@ public class RequestsFragment extends Fragment {
         }
         if (umra.size() !=0){
             umra.clear();
-        }
+        }*/
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (swipeRefreshLayout.isRefreshing()) {
 
                     showRequest();
-                    if (umraListInProgress.size() != 0 ) {
+                    /*if (umraListInProgress.size() != 0 ) {
                         umraListInProgress.clear();
                     }
                     if (umraListPending.size() !=0){
@@ -203,7 +203,7 @@ public class RequestsFragment extends Fragment {
                     }
                     if (umra.size() !=0){
                         umra.clear();
-                    }
+                    }*/
                     doneBTN.setBackgroundColor(getResources().getColor(R.color.white));
                     doneBTN.setTextColor(getResources().getColor(R.color.lightGreen));
 
@@ -278,12 +278,25 @@ public class RequestsFragment extends Fragment {
                             JSONArray jsonObj = response.getJSONArray("orders");
 
                             OmraInfo omraInfoObject;
+                            if (umraListInProgress.size() != 0 ) {
+                                umraListInProgress.clear();
+                            }
+                            if (umraListPending.size() !=0){
+                                umraListPending.clear();
+                            }
+                            if (umraListDone.size() !=0){
+                                umraListDone.clear();
+                            }
+                            if (umra.size() !=0){
+                                umra.clear();
+                            }
                            for (int i = 0; i < jsonObj.length(); i++){
 
                                String status = jsonObj.getJSONObject(i).getJSONObject("order").getString("status_id");
 
                                omraInfoObject = new OmraInfo();
                                omraInfoObject.setId(jsonObj.getJSONObject(i).getJSONObject("order").getInt("id"));
+                               omraInfoObject.setDoer_id(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_id"));
                                omraInfoObject.setReview(jsonObj.getJSONObject(i).getString("doer review"));
                                omraInfoObject.setDoerOmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("doer_name"));
                                omraInfoObject.setUmraName(jsonObj.getJSONObject(i).getJSONObject("order").getString("name"));

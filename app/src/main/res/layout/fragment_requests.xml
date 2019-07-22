@@ -189,7 +189,7 @@
         android:layout_width="45dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="14dp"
         android:src="@drawable/iconbell"
         app:layout_constraintEnd_toStartOf="@+id/setting1"
         app:layout_constraintHorizontal_bias="0.957"

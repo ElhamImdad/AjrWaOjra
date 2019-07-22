@@ -155,6 +155,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.e("AllRequests Doer",response.toString());
                     JSONArray jsonArray = response.getJSONArray("orders");
                     int size = jsonArray.length();
                     Log.d("Array Size is ", " " + size);
@@ -217,10 +218,18 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Log.e("error fffff",error.toString());
             }
         }
+        ){
+         /*   @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
 
-        );
+                return headers;
+            }*/
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
     }

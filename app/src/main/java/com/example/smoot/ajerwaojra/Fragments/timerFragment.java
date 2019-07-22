@@ -135,7 +135,7 @@ public class timerFragment extends Fragment {
                 timeSwap += timeInMillies;
                 myHandler.removeCallbacks(updateTimerMethod);
 
-                String total = hours.getText()+":"+minuts.getText()+":";
+                String total = hours.getText()+":"+minuts.getText()+":"+secondss.getText();
                 Log.e("total ",total);
 
                 Bundle bundle = new Bundle();

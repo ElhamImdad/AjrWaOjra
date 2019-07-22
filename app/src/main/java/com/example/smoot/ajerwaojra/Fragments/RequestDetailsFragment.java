@@ -1,16 +1,20 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -20,7 +24,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
+import com.example.smoot.ajerwaojra.Helpers.URLs;
+import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
+import com.example.smoot.ajerwaojra.Models.Requester;
 import com.example.smoot.ajerwaojra.R;
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +43,11 @@ public class RequestDetailsFragment extends Fragment {
     private ImageView returnBTN, image_1, image_2, image_3 ,setting;
     private RequestQueue mQueue;
     private TextView omraName, doerName, omraDate, omraDuration, doaaDone, review;
-
+    private Button rateClose;
+    private RatingBar ratingBar;
+    private int rate;
+    private int requestID;
+    private String doer_ID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,6 +66,9 @@ public class RequestDetailsFragment extends Fragment {
         image_2.setVisibility(View.INVISIBLE);
         image_3.setVisibility(View.INVISIBLE);
         String urlImage1, urlImage2, urlImage3;
+        rateClose = view.findViewById(R.id.rateClose);
+        ratingBar = view.findViewById(R.id.ratingBar);
+        rate = (int)ratingBar.getRating();
         final ArrayList<String> urlsPHOTOS;
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         if (getArguments() != null) {
@@ -65,7 +80,9 @@ public class RequestDetailsFragment extends Fragment {
             doaaDone.setText(getArguments().getString("doaa"));
             review.setText(getArguments().getString("review"));
             urlsPHOTOS = getArguments().getStringArrayList("photos");
-
+            requestID =getArguments().getInt("id");
+            doer_ID =getArguments().getString("doer_id");
+            Log.e("doerID ,OrderID",doer_ID+" / "+requestID);
             switch (urlsPHOTOS.size()){
                 case 3 :
                     image_3.setVisibility(View.VISIBLE);
@@ -163,7 +180,12 @@ public class RequestDetailsFragment extends Fragment {
               drawerLayout.openDrawer(navigationView);
             }
         });
-
+        rateClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadUserImage();
+            }
+        });
         return view;
     }
     public void setFragment(Fragment f){
@@ -223,5 +245,63 @@ public class RequestDetailsFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         mQueue.add(request);
+    }
+
+    public void uploadUserImage() {
+        Log.e("click button rateClose", " yes");
+        Requester r = SharedPrefManager.getInstance(getContext()).getRequester();
+        final String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+        Log.e("Token Shared", token);
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.UPL_RATING_DOER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject ob = new JSONObject(response);
+                    String uu = ob.getString("doer review");
+                    Log.e("message rating", uu);
+                    AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle("تأكيد....");
+                    alert.setMessage("تم التقييم وإنهاء الطلب بنجاح...شكرا لك.");
+                    alert.setPositiveButton("حسنا", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            RequestsFragment requesterHome = new RequestsFragment();
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.container, requesterHome);
+                            ft.commit();
+                        }
+                    });
+                    alert.show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("response of rateClose", "" + response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error volley error Rate", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("rate",String.valueOf(rate));
+                param.put("doer_id",doer_ID);
+                return param;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                headers.put("Authorization", "Bearer " + token);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 }
