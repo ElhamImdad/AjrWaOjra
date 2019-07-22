@@ -1,7 +1,6 @@
 package com.example.smoot.ajerwaojra.Activities;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             setFragment(new FatwaFragment());
         }
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+        /*if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             if (SharedPrefManager.getInstance(this).getRequester().getRole().equalsIgnoreCase("Requester")) {
                 if (RService.serviceIsRun == false) {
                     Log.e("inside if false", "yes");
@@ -86,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Log.e("make it true", "yes");
                     Intent intent = new Intent(this, RService.class);
                     Log.e("before start service ", "yes");
-                 //   startService(intent);
+                    startService(intent);
 
                 }
             }
-        }
+        }*/
     }
 
     @Override

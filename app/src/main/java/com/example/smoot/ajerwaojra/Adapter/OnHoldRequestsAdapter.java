@@ -38,7 +38,12 @@ public class OnHoldRequestsAdapter extends RecyclerView.Adapter<OnHoldRequestsAd
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
          ServiceInfo items = listServices.get(i);
-         float review = Float.parseFloat(items.getRating());
+     //    float review = Float.parseFloat(items.getRating());
+        float review = 8;
+         if (review > 5){
+             int r = (int)review/5;
+             review = r;
+         }
         Log.e("numberofStar is" , String.valueOf(review));
         myHolder.doerName.setText(items.getDoerName());
         Log.e("cooooo", String.valueOf(items.getNoCompletedOrder()));
