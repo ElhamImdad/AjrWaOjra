@@ -39,7 +39,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -264,14 +263,9 @@ public class UploadImagesFragment extends Fragment {
                         imArr[2]= encodedImage3;
                     }
                 }
-                Log.e("coding", String.valueOf(imArr));
-              //  param.put("image", imArr);
-                HashMap<String ,String[]> paramsss=new HashMap<String, String[]>(3);
-                for (int s= 0 ; s<imArr.length; s++){
-                    paramsss.put("image",imArr);
+           //     Log.e("coding", String.valueOf(imArr));
+                param.put("image", encodedImage1);
 
-                }
-                Log.e("9999999", Arrays.toString(imArr));
                 return param;
             }
 
