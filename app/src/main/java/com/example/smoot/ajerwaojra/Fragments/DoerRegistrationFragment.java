@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -131,7 +130,7 @@ public class DoerRegistrationFragment extends Fragment {
                 getLocation();
 
                 if (isValidMobile() && validateEmail() && validatePassword()) {
-                    if (exactLocation.equals("السعودية")|| exactLocation.equals("المملكة العربية السعودية")){
+                    if (exactLocation.equals("السعودية")|| exactLocation.equals("المملكة العربية السعودية")|| exactLocation.equalsIgnoreCase("Saudi Arabia")){
                     Log.e("Are you in Saudi", "yes");
                     doerRegister();
                 }
@@ -289,7 +288,8 @@ public class DoerRegistrationFragment extends Fragment {
                     e.printStackTrace();
                 }
                 exactLocation = addresses.get(0).getCountryName().trim();
-                Toast.makeText(getContext(), "  موقعك الحالي هو .....  "+exactLocation, Toast.LENGTH_LONG).show();
+
+            //    Toast.makeText(getContext(), "  موقعك الحالي هو .....  "+exactLocation, Toast.LENGTH_LONG).show();
 
                 Log.e("t----", exactLocation);
             } else {
