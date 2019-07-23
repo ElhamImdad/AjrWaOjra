@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,11 +32,11 @@ import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
 import com.example.smoot.ajerwaojra.Models.Doer;
 import com.example.smoot.ajerwaojra.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -167,6 +166,7 @@ public class UploadImagesFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e("rrqqqqq of volley ", response.toString());
                     JSONObject ob = new JSONObject(response);
                     String uu = ob.getString("message");
                     Log.e("message response", uu);
@@ -205,6 +205,7 @@ public class UploadImagesFragment extends Fragment {
                 encodedImage1 = ConvertBitmapToBase64Format(imageBitmap1);
                 Log.i("encodedImage1", encodedImage1);
                 param.put("image", encodedImage1);
+                Log.i("Mynewsam", encodedImage1);
                 return param;
             }
 

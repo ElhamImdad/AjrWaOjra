@@ -110,7 +110,7 @@ public class timerFragment extends Fragment {
             public void onClick(View view) {
                 getLocation();
                 if (city != null) {
-                    if (city.equals("مكة")) {
+                    if (city.equals("مكة") || city.equalsIgnoreCase("Makkah")) {
                         Log.e("idOOOO////", id + "?");
                         postStartOmra(id);
                         startTime = SystemClock.uptimeMillis();

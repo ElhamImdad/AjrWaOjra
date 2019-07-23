@@ -14,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -128,7 +127,7 @@ public class OmrahDetailsActivity extends AppCompatActivity implements Navigatio
             drawerLayout.closeDrawer(GravityCompat.START);
         }else {
             //super.onBackPressed();
-            drawerLayout.openDrawer(Gravity.LEFT);
+          //  drawerLayout.openDrawer(Gravity.LEFT);
         }
     }
     @Override
