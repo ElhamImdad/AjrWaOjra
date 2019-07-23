@@ -38,7 +38,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,18 +51,12 @@ public class UploadImagesFragment extends Fragment {
     }
 
     Button b1;
-    Button b2;
-    Button b3;
 
     Button close;
 
     ImageView image1;
-    ImageView image2;
-    ImageView image3;
 
     Bitmap imageBitmap1;
-    Bitmap imageBitmap2;
-    Bitmap imageBitmap3;
 
     String date;
     String totalTime;
@@ -73,8 +66,7 @@ public class UploadImagesFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     String encodedImage1;
-    String encodedImage2;
-    String encodedImage3;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,41 +93,21 @@ public class UploadImagesFragment extends Fragment {
         close = v.findViewById(R.id.button4);
 
         b1 = v.findViewById(R.id.button5);
-        b2 = v.findViewById(R.id.button6);
-        b2.setVisibility(View.INVISIBLE);
-        b3 = v.findViewById(R.id.button7);
-        b3.setVisibility(View.INVISIBLE);
+
 
         image1 = v.findViewById(R.id.imageView10);
         image1.setVisibility(View.INVISIBLE);
-        image2 = v.findViewById(R.id.imageView11);
-        image2.setVisibility(View.INVISIBLE);
-        image3 = v.findViewById(R.id.imageView12);
-        image3.setVisibility(View.INVISIBLE);
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b1.setVisibility(View.INVISIBLE);
                 takePhoto();
-                b2.setVisibility(View.VISIBLE);
+
             }
         });
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                b2.setVisibility(View.INVISIBLE);
-                takePhoto();
-                b3.setVisibility(View.VISIBLE);
-            }
-        });
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                b3.setVisibility(View.INVISIBLE);
-                takePhoto();
-            }
-        });
+
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,23 +130,10 @@ public class UploadImagesFragment extends Fragment {
             Bundle extras = data.getExtras();
 
             if (b1.isEnabled()) {
-                b2.setEnabled(false);
-                b3.setEnabled(false);
                 imageBitmap1 = (Bitmap) extras.get("data");
                 image1.setVisibility(View.VISIBLE);
                 image1.setImageBitmap(imageBitmap1);
-                b2.setEnabled(true);
                 b1.setEnabled(false);
-            } else if (b2.isEnabled()) {
-                imageBitmap2 = (Bitmap) extras.get("data");
-                image2.setVisibility(View.VISIBLE);
-                image2.setImageBitmap(imageBitmap2);
-                b3.setEnabled(true);
-                b2.setEnabled(false);
-            } else if (b3.isEnabled()) {
-                imageBitmap3 = (Bitmap) extras.get("data");
-                image3.setVisibility(View.VISIBLE);
-                image3.setImageBitmap(imageBitmap3);
             }
         }
     }
@@ -243,27 +202,9 @@ public class UploadImagesFragment extends Fragment {
                 param.put("date", date);
                 param.put("time", totalTime);
                 param.put("id", String.valueOf(id));
-
                 encodedImage1 = ConvertBitmapToBase64Format(imageBitmap1);
-                ArrayList <String> images = new ArrayList<>();
-                String imArr []= new String[3];
-              //  images.add(encodedImage1);
-                imArr[0]= encodedImage1;
-                Log.i("Mynewsam", encodedImage1);
-                if (imageBitmap2 != null) {
-                    encodedImage2 = ConvertBitmapToBase64Format(imageBitmap2);
-                    Log.i("Mynewsam", "" + encodedImage2);
-                  //  images.add(encodedImage2);
-                    imArr[1]= encodedImage2;
-                    if (imageBitmap3 != null) {
-                        encodedImage3 = ConvertBitmapToBase64Format(imageBitmap3);
-                        Log.i("Mynewsam", "" + encodedImage3);
-                       // images.add(encodedImage3);
-                        imArr[2]= encodedImage3;
-                    }
-                }
-                Log.e("coding", String.valueOf(imArr));
-                param.put("image", String.valueOf(imArr));
+                Log.i("encodedImage1", encodedImage1);
+                param.put("image", encodedImage1);
                 return param;
             }
 
@@ -282,7 +223,7 @@ public class UploadImagesFragment extends Fragment {
     public void takePhotoMessage() {
         android.support.v7.app.AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("عذرا......");
-        alert.setMessage("يجب أن تقوم بالتقاط صورة واحدة على الاقل ");
+        alert.setMessage("يجب أن تقوم بارفاق صورة للحج ");
         alert.show();
     }
 

@@ -156,7 +156,7 @@
         android:layout_width="315dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dinnext_arabic_regula_0"
-        tools:text="اسم من له العمرة "
+        tools:text="اسم من له الحج "
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
