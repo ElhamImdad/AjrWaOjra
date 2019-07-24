@@ -202,8 +202,15 @@ public class DoerRegistrationFragment extends Fragment {
                 params.put("password", password);
                 params.put("payment", String.valueOf(0));
                 params.put("review", String.valueOf(0));
+             //   params.put("rating", String.valueOf(0));
                 return params;
             }
+           /* @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                  headers.put("Accept","application/json");
+                return headers;
+            }*/
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }

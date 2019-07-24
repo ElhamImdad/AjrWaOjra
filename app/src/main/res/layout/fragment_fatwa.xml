@@ -16,10 +16,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/Ajer_Ojra"
         android:layout_width="160dp"
         android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="@+id/headerLogin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,9 +56,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/arabic_light_0"
                     android:layout_marginStart="22dp"
                     android:layout_marginEnd="21dp"
+                    android:fontFamily="@font/arabic_light_0"
                     android:paddingLeft="4dp"
                     android:paddingTop="4dp"
                     android:paddingRight="4dp"
@@ -109,13 +112,15 @@
         android:id="@+id/choseTypeOfReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/arabic_altra_light_0"
         android:text="اختر نوع الحساب"
         android:textAlignment="center"
         android:textColor="#555555"
         android:textSize="17sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout3" />
@@ -125,11 +130,13 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="61dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="9dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choseTypeOfReg">
@@ -149,8 +156,8 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:paddingTop="9dp"
                 android:layout_gravity="center"
+                android:paddingTop="9dp"
                 app:srcCompat="@drawable/man" />
 
             <TextView
@@ -179,8 +186,8 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:paddingTop="9dp"
                 android:layout_gravity="center"
+                android:paddingTop="9dp"
                 app:srcCompat="@drawable/noreqimg" />
 
             <TextView
