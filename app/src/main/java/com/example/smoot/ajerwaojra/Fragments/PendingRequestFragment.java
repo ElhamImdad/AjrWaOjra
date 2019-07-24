@@ -1,9 +1,11 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,9 @@ public class PendingRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pending_request, container, false);
+        final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+
         omraName = view.findViewById(R.id.OmraNamePending);
         doaaP = view.findViewById(R.id.doaaPending);
 
@@ -45,11 +50,7 @@ public class PendingRequestFragment extends Fragment {
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequesterAccountFragment requesterAccount = new RequesterAccountFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.details, requesterAccount);
-                ft.commit();
+                drawerLayout.openDrawer(navigationView);
             }
         });
         return view;

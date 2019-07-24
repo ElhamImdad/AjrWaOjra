@@ -358,6 +358,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:stepSize="1"
+        android:theme="@style/RatingBar"
+        app:layout_constraintBottom_toTopOf="@+id/rateClose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
