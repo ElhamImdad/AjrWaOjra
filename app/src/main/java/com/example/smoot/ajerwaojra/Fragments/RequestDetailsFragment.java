@@ -276,7 +276,7 @@ public class RequestDetailsFragment extends Fragment {
                             RequestsFragment requesterHome = new RequestsFragment();
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
-                            ft.replace(R.id.container, requesterHome);
+                            ft.replace(R.id.details, requesterHome);
                             ft.commit();
                         }
 
