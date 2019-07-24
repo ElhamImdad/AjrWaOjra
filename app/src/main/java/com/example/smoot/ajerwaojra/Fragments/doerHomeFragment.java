@@ -101,6 +101,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
        // recyclerView.setItemViewCacheSize(umraRequests.size());
 
         // set onRefresh method
+        progressListSize();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -109,6 +110,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                     adapterHD.updateData(umraRequests);
                     progressOrders();
                     inholdOrders();
+                    if(progressList.size()==0){
+                        redCircle.setVisibility(View.INVISIBLE);
+
+                    }
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -122,7 +127,7 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         noti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             if (progressListSize()){
+             if (progressList.size() == 0){
                  // do not have requests
                  confirmMyOrder();
              }else {
@@ -137,6 +142,13 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
         });
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        redCircle.setVisibility(View.INVISIBLE);
+    }
+
     public void confirmMyOrder(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("عذراً..");
@@ -293,6 +305,8 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                                 Log.e("prooo name>>", nameP);
                                 progressList.add(nameP);
                             }
+                            int size = progressList.size();
+                            if (size>0) redCircle.setVisibility(View.VISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("catch proo }},", e.toString());
@@ -367,9 +381,10 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
 
     public Boolean progressListSize() {
         if (progressList.size() != 0) {
-            redCircle.setVisibility(View.VISIBLE);
+           // redCircle.setVisibility(View.VISIBLE);
             return false;
         } else {
+            redCircle.setVisibility(View.INVISIBLE);
             return true;
         }
     }

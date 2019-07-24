@@ -102,7 +102,7 @@ public class UploadImagesFragment extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                b1.setVisibility(View.INVISIBLE);
+                //b1.setVisibility(View.INVISIBLE);
                 takePhoto();
 
             }
@@ -131,9 +131,10 @@ public class UploadImagesFragment extends Fragment {
 
             if (b1.isEnabled()) {
                 imageBitmap1 = (Bitmap) extras.get("data");
+                if (imageBitmap1 != null){
                 image1.setVisibility(View.VISIBLE);
                 image1.setImageBitmap(imageBitmap1);
-                b1.setEnabled(false);
+                b1.setEnabled(false);}
             }
         }
     }
