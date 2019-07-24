@@ -45,7 +45,7 @@ public class RequestDetailsFragment extends Fragment {
     private TextView omraName, doerName, omraDate, omraDuration, doaaDone, review;
     private Button rateClose;
     private RatingBar ratingBar;
-    private int rate;
+  //  private int rate;
     private int requestID;
     private String doer_ID;
     @Override
@@ -68,7 +68,11 @@ public class RequestDetailsFragment extends Fragment {
         String urlImage1, urlImage2, urlImage3;
         rateClose = view.findViewById(R.id.rateClose);
         ratingBar = view.findViewById(R.id.ratingBar);
-        rate = (int)ratingBar.getRating();
+      //  final float rate = ratingBar.getRating();
+
+     //   Log.e("ratingBar", String.valueOf(rate));
+       // uploadUserImage( requestID);
+
         final ArrayList<String> urlsPHOTOS;
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         if (getArguments() != null) {
@@ -80,11 +84,11 @@ public class RequestDetailsFragment extends Fragment {
             doaaDone.setText(getArguments().getString("doaa"));
             review.setText(getArguments().getString("review"));
             urlsPHOTOS = getArguments().getStringArrayList("photos");
-            requestID =getArguments().getInt("id");
+             requestID =getArguments().getInt("id");
             doer_ID =getArguments().getString("doer_id");
             Log.e("doerID ,OrderID",doer_ID+" / "+requestID);
             switch (urlsPHOTOS.size()){
-                case 3 :
+         /*       case 3 :
                     image_3.setVisibility(View.VISIBLE);
                     Picasso.with(getContext())
                             .load(urlsPHOTOS.get(2))
@@ -133,7 +137,7 @@ public class RequestDetailsFragment extends Fragment {
                             setFragment(image2Obj);
 
                         }
-                    });
+                    });*/
                 case 1 :
                     Picasso.with(getContext())
                             .load(urlsPHOTOS.get(0))
@@ -172,7 +176,6 @@ public class RequestDetailsFragment extends Fragment {
                 ft.commit();
             }
         });
-     //   mQueue = Volley.newRequestQueue(getContext());
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +186,9 @@ public class RequestDetailsFragment extends Fragment {
         rateClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadUserImage();
+                uploadUserImage( requestID);
+             //   ratingBar.setVisibility(View.GONE);
+             //   rateClose.setVisibility(View.GONE);
             }
         });
         return view;
@@ -231,11 +236,9 @@ public class RequestDetailsFragment extends Fragment {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Accept","application/json");
                 String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
-                Log.e("token in details",token);
+           //     Log.e("token in details",token);
                 headers.put("Authorization", "Bearer "+token);
 
-
-                Log.e("--------omrah request","header");
                 return headers;
             }
         };
@@ -247,18 +250,23 @@ public class RequestDetailsFragment extends Fragment {
         mQueue.add(request);
     }
 
-    public void uploadUserImage() {
+    public void uploadUserImage( final int id) {
+         final float rate = ratingBar.getRating();
+
+        Log.e("ratingBar", String.valueOf(rate));
         Log.e("click button rateClose", " yes");
         Requester r = SharedPrefManager.getInstance(getContext()).getRequester();
         final String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
         Log.e("Token Shared", token);
+
         StringRequest request = new StringRequest(Request.Method.POST, URLs.UPL_RATING_DOER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e("333333333333333 rating", response);
                     JSONObject ob = new JSONObject(response);
-                    String uu = ob.getString("doer review");
-                    Log.e("message rating", uu);
+                 //   String uu = ob.getString("doer review");
+                  //  Log.e("message rating", uu);
                     AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
                     alert.setTitle("تأكيد....");
                     alert.setMessage("تم التقييم وإنهاء الطلب بنجاح...شكرا لك.");
@@ -271,25 +279,28 @@ public class RequestDetailsFragment extends Fragment {
                             ft.replace(R.id.container, requesterHome);
                             ft.commit();
                         }
+
                     });
                     alert.show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("response of rateClose", "" + e.toString());
                 }
-                Log.i("response of rateClose", "" + response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("error volley error Rate", error.toString());
+                Log.e("errrror volley  Rate", error.toString());
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
-                param.put("rate",String.valueOf(rate));
-                param.put("doer_id",doer_ID);
+                param.put("review",String.valueOf(rate));
+                param.put("id", String.valueOf(id));
+                Log.e("dooooer_id", String.valueOf(id)+"?");
+                Log.e("do4444er_id", String.valueOf(rate)+"?");
                 return param;
             }
 
@@ -297,8 +308,10 @@ public class RequestDetailsFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Accept", "application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+                Log.e("token for user", token);
                 headers.put("Authorization", "Bearer " + token);
-                headers.put("token", token);
+             //   headers.put("token", token);
                 return headers;
             }
         };
