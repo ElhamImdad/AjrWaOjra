@@ -1,6 +1,7 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.Helpers.SharedPrefManager;
 import com.example.smoot.ajerwaojra.Helpers.URLs;
 import com.example.smoot.ajerwaojra.Helpers.VolleySingleton;
@@ -43,15 +45,17 @@ public class RequestDetailsFragment extends Fragment {
     private ImageView returnBTN, image_1, image_2, image_3 ,setting;
     private RequestQueue mQueue;
     private TextView omraName, doerName, omraDate, omraDuration, doaaDone, review;
-    private Button rateClose;
-    private RatingBar ratingBar;
+    private Button RateClose;
+    private RatingBar RatingBar;
   //  private int rate;
-    private int requestID;
+    private int requestID, rateNum;
+    private String help []=new String[1];
     private String doer_ID;
+    String helperstring;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_request_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_request_details, container, false);
         final DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
         omraName = view.findViewById(R.id.textViewOmraNameDone);
         doerName = view.findViewById(R.id.textDoeNameDone);
@@ -66,17 +70,15 @@ public class RequestDetailsFragment extends Fragment {
         image_2.setVisibility(View.INVISIBLE);
         image_3.setVisibility(View.INVISIBLE);
         String urlImage1, urlImage2, urlImage3;
-        rateClose = view.findViewById(R.id.rateClose);
-        ratingBar = view.findViewById(R.id.ratingBar);
-      //  final float rate = ratingBar.getRating();
+           RateClose = view.findViewById(R.id.rateCloseB);
+           RatingBar = view.findViewById(R.id.ratingBarB);
 
-     //   Log.e("ratingBar", String.valueOf(rate));
-       // uploadUserImage( requestID);
+
 
         final ArrayList<String> urlsPHOTOS;
         final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         if (getArguments() != null) {
-            Log.e("data in bindle-->",getArguments().getString("doerName")+"-");
+            Log.e("data in bindle-->", getArguments().getString("doerName") + "-");
             omraName.setText(getArguments().getString("omraName"));
             doerName.setText(getArguments().getString("doerName"));
             omraDate.setText(getArguments().getString("date"));
@@ -84,10 +86,12 @@ public class RequestDetailsFragment extends Fragment {
             doaaDone.setText(getArguments().getString("doaa"));
             review.setText(getArguments().getString("review"));
             urlsPHOTOS = getArguments().getStringArrayList("photos");
-             requestID =getArguments().getInt("id");
-            doer_ID =getArguments().getString("doer_id");
-            Log.e("doerID ,OrderID",doer_ID+" / "+requestID);
-            switch (urlsPHOTOS.size()){
+
+
+            requestID = getArguments().getInt("id");
+            doer_ID = getArguments().getString("doer_id");
+            Log.e("doerID ,OrderID", doer_ID + " / " + requestID);
+            switch (urlsPHOTOS.size()) {
          /*       case 3 :
                     image_3.setVisibility(View.VISIBLE);
                     Picasso.with(getContext())
@@ -138,7 +142,7 @@ public class RequestDetailsFragment extends Fragment {
 
                         }
                     });*/
-                case 1 :
+                case 1:
                     Picasso.with(getContext())
                             .load(urlsPHOTOS.get(0))
                             .into(image_1);
@@ -147,15 +151,15 @@ public class RequestDetailsFragment extends Fragment {
                         public void onClick(View v) {
                             Bundle bundle1 = new Bundle();
 
-                            bundle1.putString("omraName",getArguments().getString("omraName"));
-                            bundle1.putString("doerName",getArguments().getString("doerName"));
-                            bundle1.putString("date",getArguments().getString("date"));
-                            bundle1.putString("time",getArguments().getString("time"));
-                            bundle1.putString("doaa",getArguments().getString("doaa"));
-                            bundle1.putString("review",getArguments().getString("review"));
+                            bundle1.putString("omraName", getArguments().getString("omraName"));
+                            bundle1.putString("doerName", getArguments().getString("doerName"));
+                            bundle1.putString("date", getArguments().getString("date"));
+                            bundle1.putString("time", getArguments().getString("time"));
+                            bundle1.putString("doaa", getArguments().getString("doaa"));
+                            bundle1.putString("review", getArguments().getString("review"));
                             bundle1.putStringArrayList("photos", getArguments().getStringArrayList("photos"));
 
-                            bundle1.putString("image",urlsPHOTOS.get(0));
+                            bundle1.putString("image", urlsPHOTOS.get(0));
                             ZoomImageOmraFragment image1Obj = new ZoomImageOmraFragment();
                             image1Obj.setArguments(bundle1);
                             setFragment(image1Obj);
@@ -165,32 +169,28 @@ public class RequestDetailsFragment extends Fragment {
 
             }
         }
+
         returnBTN = view.findViewById(R.id.returnBtnDone);
         returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestsFragment f = new RequestsFragment();
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+             /*   RequestsFragment f = new RequestsFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.details, f);
-                ft.commit();
+                ft.commit();*/
             }
         });
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              drawerLayout.openDrawer(navigationView);
+                drawerLayout.openDrawer(navigationView);
             }
         });
-        rateClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadUserImage( requestID);
-             //   ratingBar.setVisibility(View.GONE);
-             //   rateClose.setVisibility(View.GONE);
-            }
-        });
+        checkRating(requestID);
         return view;
     }
     public void setFragment(Fragment f){
@@ -251,9 +251,9 @@ public class RequestDetailsFragment extends Fragment {
     }
 
     public void uploadUserImage( final int id) {
-         final float rate = ratingBar.getRating();
+         final float rate = RatingBar.getRating();
 
-        Log.e("ratingBar", String.valueOf(rate));
+        Log.e("ratingBar", String.valueOf(rate)+"---");
         Log.e("click button rateClose", " yes");
         Requester r = SharedPrefManager.getInstance(getContext()).getRequester();
         final String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
@@ -263,10 +263,10 @@ public class RequestDetailsFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("333333333333333 rating", response);
+                    Log.e("333333666333333 rating", response);
                     JSONObject ob = new JSONObject(response);
-                 //   String uu = ob.getString("doer review");
-                  //  Log.e("message rating", uu);
+                  //  rateNum = ob.getJSONObject("doer review").getInt("rating");
+                  //  Log.e("mmmmessage rating", String.valueOf(rateNum));
                     AlertDialog.Builder  alert = new AlertDialog.Builder(getContext());
                     alert.setTitle("تأكيد....");
                     alert.setMessage("تم التقييم وإنهاء الطلب بنجاح...شكرا لك.");
@@ -278,6 +278,7 @@ public class RequestDetailsFragment extends Fragment {
                             FragmentTransaction ft = fm.beginTransaction();
                             ft.replace(R.id.details, requesterHome);
                             ft.commit();
+
                         }
 
                     });
@@ -315,6 +316,82 @@ public class RequestDetailsFragment extends Fragment {
                 return headers;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
+    public void checkRating( final int id) {
+
+
+      //  Log.e("ratingBar", String.valueOf(rate));
+        Log.e("click button rateClose", " yes");
+        Requester r = SharedPrefManager.getInstance(getContext()).getRequester();
+        final String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+        Log.e("Token Shared", token);
+
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.UPL_CHECK_RATING_DOER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.e("3333333999999 rating", response);
+                    JSONObject ob = new JSONObject(response);
+                    help[0] = ob.getString("Rating");
+                    Log.e("MMMMkessage rating", help[0]);
+
+                    if (help[0] != null){
+                        Log.e("whaaaaat i'm gonna die",help[0]);
+                        if (help[0].equalsIgnoreCase("there is rating")) {
+                            RatingBar.setVisibility(View.INVISIBLE);
+                            RateClose.setVisibility(View.INVISIBLE);
+                        } else {
+                            RateClose.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    uploadUserImage(requestID);
+                                }
+                            });
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("Tresponse of rateClose", "" + e.toString());
+                }
+            //    helperstring = help[0];
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Terrrror volley  Rate", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+
+                param.put("id", String.valueOf(id));
+                Log.e("Oooooerder_id", String.valueOf(id)+"?");
+                return param;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                String token = SharedPrefManager.getInstance(getContext()).getRequester().getToken();
+                Log.e("token for user", token);
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+
+    }
+
 }

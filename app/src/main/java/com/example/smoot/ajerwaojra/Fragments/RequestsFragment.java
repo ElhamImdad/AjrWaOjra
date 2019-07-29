@@ -115,11 +115,9 @@ public class RequestsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
-       /* adapter = new RequestsAdapter(umraListPending, getContext());
-        recyclerView.setAdapter(adapter);
-        Log.e("addapter", adapter.toString()+"++");*/
+
         visibleNorequestImage();
-       // pendingBTN.setSelected(true);
+
         inProgressBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

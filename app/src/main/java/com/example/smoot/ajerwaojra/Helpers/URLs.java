@@ -17,4 +17,5 @@ public class URLs {
     public static final String UPL_DOER_INHOLD_ORDER_USER="http://ajrandojra.website/api/doerHoldList";
     public static final String UPL_DOER_INBROGRESS_ORDER_USER="http://ajrandojra.website/api/doerInprogressList";
     public static final String UPL_RATING_DOER="http://ajrandojra.website/api/rating";
+    public static final String UPL_CHECK_RATING_DOER="http://ajrandojra.website/api/checkRating";
 }

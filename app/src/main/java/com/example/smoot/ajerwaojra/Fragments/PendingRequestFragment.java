@@ -1,10 +1,9 @@
 package com.example.smoot.ajerwaojra.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.smoot.ajerwaojra.Activities.MainActivity;
 import com.example.smoot.ajerwaojra.R;
 
 public class PendingRequestFragment extends Fragment {
@@ -39,11 +39,13 @@ public class PendingRequestFragment extends Fragment {
         returnBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestsFragment f = new RequestsFragment();
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+          /*      RequestsFragment f = new RequestsFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.details, f);
-                ft.commit();
+                ft.commit();*/
             }
         });
         settingIcon = view.findViewById(R.id.setting2);

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/parenttt"
     tools:context=".Fragments.RequestDetailsFragment">
 
     <ImageView
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/arabic_medium_0"
-        android:text="حج مكتمل"
+        android:text="عمرة مكتملة"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
@@ -60,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/arabic_medium_0"
-        android:text="الحج نيابةً عن"
+        android:text="العمرة نيابةً عن"
         android:textColor="@color/gray"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/arabic_medium_0"
-        android:text="اسم الحاج"
+        android:text="اسم المعتمر"
         android:textColor="@color/gray"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -210,7 +211,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="125dp"
         android:fontFamily="@font/arabic_medium_0"
-        android:text="مــدة الحج"
+        android:text="مدة العمرة"
         android:textColor="@color/gray"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -353,19 +354,19 @@
     </LinearLayout>
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/ratingBarB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:stepSize="1"
         android:theme="@style/RatingBar"
-        app:layout_constraintBottom_toTopOf="@+id/rateClose"
+        app:layout_constraintBottom_toTopOf="@+id/rateCloseB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <Button
-        android:id="@+id/rateClose"
+        android:id="@+id/rateCloseB"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -377,6 +378,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarB" />
 
 </android.support.constraint.ConstraintLayout>

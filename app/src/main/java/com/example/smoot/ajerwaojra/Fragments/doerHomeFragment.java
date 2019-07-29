@@ -167,8 +167,6 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                         UmraRequest umraRequest = new UmraRequest();
                         // get objects from the array
                         JSONObject object = jsonArray.getJSONObject(i);
-                        // get the data from the object
-                        // set the attributes of the umra object
                         // umraRequest.setCountry(object.getString("country"));
                         umraRequest.setCountry_id(object.getString("country_id"));
                         umraRequest.setCountryFlagImagePath(object.getJSONObject("country").getString("image"));
@@ -199,16 +197,6 @@ public class doerHomeFragment extends Fragment implements RecyclerAdapterHD.MyVi
                     Log.e("requests No ", "" + umraRequests.size());
 
                 }
-
-
-                      /*  if (dateFromApi != null){
-                       //     gregorianString = convertDte(dateFromApi);
-                        }
-                        umraRequests.setDate(gregorianString);*/
-                // add the umra object to the arrayList
-                //  int initialSize = umraRequests.size();
-                //  adapterHD.notifyItemRangeInserted(initialSize, umraRequests.size()-1);
-
                 catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -120,13 +120,11 @@ public class OmrahRequestFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         Log.e("respons of request", response.toString());
                         try {
-
-                            Log.e("Hi girl", ":((");
                             //converting response to json object
                             JSONObject jsonObj = new JSONObject(response);
                             JSONObject orderr = jsonObj.getJSONObject("order");
                             OmraInfo omraInfoObject;
-                            //   for (int i = 0; i < jsonArray.length(); i++){
+
                             omraInfoObject = new OmraInfo();
                             omraInfoObject.setUmraName(orderr.getString("name"));
                             omraInfoObject.setStatus(orderr.getString("status"));
