@@ -43,7 +43,7 @@ public class OmrahRequestFragment extends Fragment {
     private ImageView returnBTN;
     private ProgressBar progressBar;
     private ArrayList<OmraInfo> umraList;
-    private String url= "http://ajrandojra.website/api/createRequest";
+    private String url= "http://ajrwaojra.com/service/public/api/createRequest";
 
     public OmrahRequestFragment() {
     }
@@ -159,7 +159,6 @@ public class OmrahRequestFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);
                 params.put("doaa", pryer);
-                //   params.put("requester_id", String.valueOf(3));
                 Log.e("doaa>-----", pryer);
                 return params;
             }

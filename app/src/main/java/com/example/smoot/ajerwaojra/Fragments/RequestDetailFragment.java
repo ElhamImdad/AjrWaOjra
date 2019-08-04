@@ -219,7 +219,7 @@ public class RequestDetailFragment extends Fragment {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("تم عرض الخدمة على  "+requester.getText());
         alert.setMessage("سيتم إعلامك في حال موافقة  "+requester.getText()+"  لتبدأ بالعمرة ");
-        alert.setPositiveButton("حسنا, فهمت ", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
              doerHomeFragment f = new doerHomeFragment();

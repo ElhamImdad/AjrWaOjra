@@ -240,7 +240,7 @@ public class RequestsFragment extends Fragment {
     private void showRequest(){
         mQueue.start();
 
-        String url = "http://ajrandojra.website/api/listRequestsR";
+        String url = "http://ajrwaojra.com/service/public/api/listRequestsR";
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject>() {
